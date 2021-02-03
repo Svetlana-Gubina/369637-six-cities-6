@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Светлана Терентьева](https://up.htmlacademy.ru/react/6/user/369637).
-* Наставник: `Неизвестно`.
+* Наставник: [Богдан Волик](https://github.com/kultism).
 
 ---
 
