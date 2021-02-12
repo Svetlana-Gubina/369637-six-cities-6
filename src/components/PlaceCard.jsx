@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
 
 const PlaceCard = (props) => {
   const {imgSrc, placeCardPriceValue, placeCardName, placeCardType} = props;
@@ -44,7 +45,9 @@ const PlaceCard = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeCardName}</a>
+          <Link to="/offer">
+            {placeCardName}
+          </Link>
         </h2>
         <p className="place-card__type">{placeCardType}</p>
       </div>
