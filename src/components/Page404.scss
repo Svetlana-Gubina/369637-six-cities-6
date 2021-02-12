@@ -21,6 +21,18 @@ body{
 		}
 	}
 }
+
+.contain__link {
+  position: absolute;
+  top: 100%;
+  left: 35%;
+
+  &:hover,
+  &:focus {
+    opacity: 0.5;
+  }
+}
+
 @keyframes empty{
 	0%{
 		clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);

@@ -1,5 +1,6 @@
 import React from "react";
 import './Page404.scss';
+import {Link} from "react-router-dom";
 
 const Page404 = () => {
   return (
@@ -52,6 +53,9 @@ const Page404 = () => {
 	c-3.6,0-7.2-0.1-10.8-0.3c-3.6-0.2-7.2-0.4-10.8-0.9c-3.6-0.4-7.2-1-10.7-1.7c-1.8-0.4-3.5-0.8-5.3-1.4c-0.9-0.3-1.7-0.6-2.5-1
 	C70.4,250.2,69.5,249.8,69,249z" />
       </svg>
+      <Link className="contain__link" to="/">
+        Back home
+      </Link>
     </div>
   );
 };
