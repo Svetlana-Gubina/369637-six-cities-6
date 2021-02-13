@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 
 const PlaceCard = (props) => {
-  const {imgSrc, placeCardPriceValue, placeCardName, placeCardType} = props;
+  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActiveElement} = props;
 
   return (
     <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to="/offer" onMouseEnter={() => setActiveElement(id)} onMouseLeave={() => setActiveElement(0)}>
           <img
             className="place-card__image"
             src={`img/` + imgSrc + `.jpg`}
@@ -16,7 +16,7 @@ const PlaceCard = (props) => {
             height="200"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -56,17 +56,12 @@ const PlaceCard = (props) => {
 };
 
 PlaceCard.propTypes = {
+  id: PropTypes.number,
   imgSrc: PropTypes.string,
   placeCardPriceValue: PropTypes.number,
   placeCardName: PropTypes.string,
-  placeCardType: PropTypes.string
-};
-
-PlaceCard.defaultProps = {
-  imgSrc: `room`,
-  placeCardPriceValue: 80,
-  placeCardName: `Wood and stone place`,
-  placeCardType: `Private room`
+  placeCardType: PropTypes.string,
+  setActiveElement: PropTypes.func,
 };
 
 

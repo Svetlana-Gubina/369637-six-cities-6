@@ -1,8 +1,7 @@
 import React from "react";
-import PlaceCard from "./PlaceCard";
-import {v4 as uuidv4} from "uuid";
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
+import PlacesList from './PlacesList';
 
 const WelcomeScreen = (props) => {
   const {placesInfo, authorized} = props;
@@ -116,13 +115,7 @@ const WelcomeScreen = (props) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {placesInfo.map((placeInfo) => <PlaceCard
-                  key={uuidv4()}
-                  imgSrc={placeInfo.imgSrc}
-                  placeCardPriceValue={placeInfo.placeCardPriceValue}
-                  placeCardName={placeInfo.placeCardName}
-                  placeCardType={placeInfo.placeCardType}
-                />)}
+                <PlacesList placesInfo={placesInfo} />
               </div>
             </section>
             <div className="cities__right-section">
