@@ -5,13 +5,10 @@ import PlaceCard from './PlaceCard';
 
 const PlacesList = (props) => {
   const {placesInfo} = props;
-  const [activeElementId, setActiveElement] = useState(0);
+  const [, setActiveElement] = useState(0);
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      <div style={{
-        display: `none`
-      }}>{activeElementId}</div>
       {placesInfo.map((placeInfo) => <PlaceCard
         key={uuidv4()}
         id={placeInfo.id}
