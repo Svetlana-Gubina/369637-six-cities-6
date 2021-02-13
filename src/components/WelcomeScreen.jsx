@@ -2,9 +2,10 @@ import React from "react";
 import PlaceCard from "./PlaceCard";
 import {v4 as uuidv4} from "uuid";
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
 
 const WelcomeScreen = (props) => {
-  const {placesInfo} = props;
+  const {placesInfo, authorized} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -25,15 +26,19 @@ const WelcomeScreen = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
+                  {authorized ?
+                    <Link className="header__nav-link header__nav-link--profile" to="/favorites">
+                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
-                    </span>
-                  </a>
+                      </span>
+                    </Link> :
+                    <Link className="header__nav-link header__nav-link--profile" to="/login">
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__login">Sign in</span>
+                    </Link>
+                  }
                 </li>
               </ul>
             </nav>
@@ -137,6 +142,7 @@ WelcomeScreen.propTypes = {
     placeCardName: PropTypes.string,
     placeCardType: PropTypes.string
   })),
+  authorized: PropTypes.bool,
 };
 
 export default WelcomeScreen;

@@ -9,6 +9,7 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, 'public'),
         open: true,
+        historyApiFallback: true,
     },
     module: {
         rules: [
@@ -18,6 +19,14 @@ module.exports = {
             use: {
             loader: 'babel-loader',
             },
+        },
+        {
+          test: /\.(sass|scss)$/,
+          use: [
+            "style-loader", //3. Inject styles into DOM
+            "css-loader", //2. Turns css into commonjs
+            "sass-loader" //1. Turns sass into css
+          ]
         }
         ],
     },

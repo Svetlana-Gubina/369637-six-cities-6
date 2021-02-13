@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./components/App";
 
+const authorized = true;
+
 const PlaceType = {
   APARTMENT: `Apartment`,
   PRIVATE_ROOM: `Private room`
@@ -36,6 +38,7 @@ const placesInfo = [
 ReactDOM.render(
     <App
       placesInfo={placesInfo}
+      authorized={authorized}
     />,
     document.querySelector(`#root`)
 );
