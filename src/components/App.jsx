@@ -16,7 +16,7 @@ const App = (props) => {
         <WelcomeScreen placesInfo={placesInfo} authorized={authorized}/>;
       </Route>
       <Route exact path="/favorites">
-        <Favorites />
+        <Favorites placesInfo={placesInfo} />
       </Route>
       <Route exact path="/offer/:id?">
         <Room authorized={authorized} />
