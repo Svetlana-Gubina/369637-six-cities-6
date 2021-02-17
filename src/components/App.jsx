@@ -36,7 +36,11 @@ App.propTypes = {
     imgSrc: PropTypes.string,
     placeCardPriceValue: PropTypes.number,
     placeCardName: PropTypes.string,
-    placeCardType: PropTypes.string
+    placeCardType: PropTypes.string,
+    placeCoords: PropTypes.shape({
+      lat: PropTypes.number,
+      long: PropTypes.number
+    }),
   })),
   authorized: PropTypes.bool,
 };
