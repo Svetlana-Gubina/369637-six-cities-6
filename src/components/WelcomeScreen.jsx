@@ -2,6 +2,13 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import PlacesList from './PlacesList';
+import Map from './Map';
+
+const city = {
+  zoom: 12,
+  lat: 52.38333,
+  lng: 4.9,
+};
 
 const WelcomeScreen = (props) => {
   const {placesInfo, authorized} = props;
@@ -119,7 +126,9 @@ const WelcomeScreen = (props) => {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={city} points={placesInfo} />
+              </section>
             </div>
           </div>
         </div>
