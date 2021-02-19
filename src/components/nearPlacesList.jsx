@@ -22,7 +22,6 @@ const NearPlacesList = ({placesInfo}) => {
       setActiveElement={setActiveElement}
       className={className}
       specialCardClass={specialCardClass}
-      additionalClass={``}
     />)}
   </div>;
 };

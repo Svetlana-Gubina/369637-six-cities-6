@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {placeCardInfoType} from '../propTypes';
 
 const PlaceCard = (props) => {
-  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActiveElement, className, specialCardClass, additionalClass} = props;
+  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActiveElement, className, specialCardClass, additionalClass = ``} = props;
 
   return (
     <article className={specialCardClass + ` place-card`}>

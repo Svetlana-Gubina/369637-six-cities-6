@@ -24,7 +24,6 @@ const PlacesList = (props) => {
         setActiveElement={setActiveElement}
         className={className}
         specialCardClass={specialCardClass}
-        additionalClass={``}
       />)}
     </div>
   );
