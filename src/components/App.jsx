@@ -1,25 +1,25 @@
 import React from "react";
-import WelcomeScreen from "./WelcomeScreen";
-import Favorites from './Favorites';
-import Page404 from './Page404';
-import Room from './Room';
-import SignIn from './SignIn';
-import PropTypes from 'prop-types';
+import WelcomeScreen from "./welcomeScreen";
+import Favorites from './favorites';
+import Page404 from './page404';
+import Room from './room';
+import SignIn from './signIn';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {cityType, placesInfoType, authorizedType, reviewItemsType} from '../propTypes';
 
 const App = (props) => {
-  const {placesInfo, authorized} = props;
+  const {reviewItems, city, placesInfo, authorized} = props;
 
   return <BrowserRouter>
     <Switch>
       <Route exact path="/">
-        <WelcomeScreen placesInfo={placesInfo} authorized={authorized}/>;
+        <WelcomeScreen city={city} placesInfo={placesInfo} authorized={authorized}/>;
       </Route>
       <Route exact path="/favorites">
         <Favorites placesInfo={placesInfo} />
       </Route>
       <Route exact path="/offer/:id?">
-        <Room authorized={authorized} />
+        <Room city={city} placesInfo={placesInfo} reviewItems={reviewItems} authorized={authorized} />
       </Route>
       <Route exact path="/login">
         <SignIn />
@@ -32,17 +32,10 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  placesInfo: PropTypes.arrayOf(PropTypes.shape({
-    imgSrc: PropTypes.string,
-    placeCardPriceValue: PropTypes.number,
-    placeCardName: PropTypes.string,
-    placeCardType: PropTypes.string,
-    placeCoords: PropTypes.shape({
-      lat: PropTypes.number,
-      long: PropTypes.number
-    }),
-  })),
-  authorized: PropTypes.bool,
+  reviewItems: reviewItemsType,
+  city: cityType,
+  placesInfo: placesInfoType,
+  authorized: authorizedType,
 };
 
 export default App;

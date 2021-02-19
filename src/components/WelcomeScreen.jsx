@@ -1,17 +1,11 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
-import PlacesList from './PlacesList';
-import Map from './Map';
-
-const city = {
-  zoom: 12,
-  lat: 52.38333,
-  lng: 4.9,
-};
+import PlacesList from './placesList';
+import Map from './map';
+import {cityType, placesInfoType, authorizedType} from '../propTypes';
 
 const WelcomeScreen = (props) => {
-  const {placesInfo, authorized} = props;
+  const {city, placesInfo, authorized} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -138,13 +132,9 @@ const WelcomeScreen = (props) => {
 };
 
 WelcomeScreen.propTypes = {
-  placesInfo: PropTypes.arrayOf(PropTypes.shape({
-    imgSrc: PropTypes.string,
-    placeCardPriceValue: PropTypes.number,
-    placeCardName: PropTypes.string,
-    placeCardType: PropTypes.string
-  })),
-  authorized: PropTypes.bool,
+  city: cityType,
+  placesInfo: placesInfoType,
+  authorized: authorizedType,
 };
 
 export default WelcomeScreen;

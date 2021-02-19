@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
-import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import {cityType, pointsType} from '../propTypes';
 
 const Map = ({city, points}) => {
   const mapRef = useRef();
@@ -48,21 +48,14 @@ const Map = ({city, points}) => {
 
   return (
     <div id="map" style={{
-      height: `500px`
+      height: `600px`
     }} ref={mapRef}></div>
   );
 };
 
 Map.propTypes = {
-  points: PropTypes.arrayOf(PropTypes.shape({
-    lat: PropTypes.number,
-    lng: PropTypes.number,
-  })),
-  city: PropTypes.shape({
-    zoom: PropTypes.number,
-    lat: PropTypes.number,
-    lng: PropTypes.number,
-  }),
+  points: pointsType,
+  city: cityType,
 };
 
 export default Map;

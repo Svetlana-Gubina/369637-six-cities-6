@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import {v4 as uuidv4} from "uuid";
-import PropTypes from 'prop-types';
-import PlaceCard from './PlaceCard';
+import PlaceCard from './placeCard';
+import {placeCardInfoType} from '../propTypes';
 
 const PlacesList = (props) => {
   const {placesInfo} = props;
+  const className = `cities`;
+  const specialCardClass = className + `__place-card`;
   const [activeElementId, setActiveElement] = useState(0);
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={className + `__places-list places__list tabs__content`}>
       <div style={{
         display: `none`
       }}>{activeElementId}</div>
@@ -20,18 +22,14 @@ const PlacesList = (props) => {
         placeCardName={placeInfo.placeCardName}
         placeCardType={placeInfo.placeCardType}
         setActiveElement={setActiveElement}
+        className={className}
+        specialCardClass={specialCardClass}
+        additionalClass={``}
       />)}
     </div>
   );
 };
 
-PlacesList.propTypes = {
-  placesInfo: PropTypes.arrayOf(PropTypes.shape({
-    imgSrc: PropTypes.string,
-    placeCardPriceValue: PropTypes.number,
-    placeCardName: PropTypes.string,
-    placeCardType: PropTypes.string
-  })),
-};
+PlacesList.propTypes = placeCardInfoType;
 
 export default PlacesList;

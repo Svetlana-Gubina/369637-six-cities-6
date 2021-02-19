@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import PropTypes from 'prop-types';
+import FavoritesList from './favoritesList';
+import {placesInfoType} from '../propTypes';
 
 const Favorites = (props) => {
   const {placesInfo} = props;
@@ -44,95 +45,7 @@ const Favorites = (props) => {
                     </a>
                   </div>
                 </div>
-                <div className="favorites__places">
-                  <article className="favorites__card place-card">
-                    <div className="favorites__image-wrapper place-card__image-wrapper">
-                      <Link to="/offer">
-                        <img
-                          className="place-card__image"
-                          src={`img/` + placesInfo[2].smallImgSrc + `.jpg`}
-                          width="150"
-                          height="110"
-                          alt="Place image"
-                        />
-                      </Link>
-                    </div>
-                    <div className="favorites__card-info place-card__info">
-                      <div className="place-card__price-wrapper">
-                        <div className="place-card__price">
-                          <b className="place-card__price-value">
-                          &euro;{placesInfo[2].placeCardPriceValue}
-                          </b>
-                          <span className="place-card__price-text">&#47;&nbsp;night</span>
-                        </div>
-                        <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-                          <svg className="place-card__bookmark-icon" width="18" height="19">
-                            <use xlinkHref="#icon-bookmark"></use>
-                          </svg>
-                          <span className="visually-hidden">In bookmarks</span>
-                        </button>
-                      </div>
-                      <div className="place-card__rating rating">
-                        <div className="place-card__stars rating__stars">
-                          <span style={{
-                            width: `100%`,
-                          }}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <h2 className="place-card__name">
-                        <Link to="/offer">
-                          {placesInfo[2].placeCardName}
-                        </Link>
-                      </h2>
-                      <p className="place-card__type">Apartment</p>
-                    </div>
-                  </article>
-
-                  <article className="favorites__card place-card">
-                    <div className="favorites__image-wrapper place-card__image-wrapper">
-                      <Link to="/offer">
-                        <img
-                          className="place-card__image"
-                          src={`img/` + placesInfo[3].smallImgSrc + `.jpg`}
-                          width="150"
-                          height="110"
-                          alt="Place image"
-                        />
-                      </Link>
-                    </div>
-                    <div className="favorites__card-info place-card__info">
-                      <div className="place-card__price-wrapper">
-                        <div className="place-card__price">
-                          <b className="place-card__price-value">
-                          &euro;{placesInfo[3].placeCardPriceValue}
-                          </b>
-                          <span className="place-card__price-text">&#47;&nbsp;night</span>
-                        </div>
-                        <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-                          <svg className="place-card__bookmark-icon" width="18" height="19">
-                            <use xlinkHref="#icon-bookmark"></use>
-                          </svg>
-                          <span className="visually-hidden">In bookmarks</span>
-                        </button>
-                      </div>
-                      <div className="place-card__rating rating">
-                        <div className="place-card__stars rating__stars">
-                          <span style={{
-                            width: `80%`,
-                          }}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <h2 className="place-card__name">
-                        <Link to="/offer">
-                          {placesInfo[3].placeCardName}
-                        </Link>
-                      </h2>
-                      <p className="place-card__type">Private room</p>
-                    </div>
-                  </article>
-                </div>
+                <FavoritesList placesInfo={placesInfo.slice(2, 4)} />
               </li>
 
               <li className="favorites__locations-items">
@@ -143,51 +56,7 @@ const Favorites = (props) => {
                     </a>
                   </div>
                 </div>
-                <div className="favorites__places">
-                  <article className="favorites__card place-card">
-                    <div className="favorites__image-wrapper place-card__image-wrapper">
-                      <Link to="/offer">
-                        <img
-                          className="place-card__image"
-                          src={`img/` + placesInfo[2].smallImgSrc + `.jpg`}
-                          width="150"
-                          height="110"
-                          alt="Place image"
-                        />
-                      </Link>
-                    </div>
-                    <div className="favorites__card-info place-card__info">
-                      <div className="place-card__price-wrapper">
-                        <div className="place-card__price">
-                          <b className="place-card__price-value">
-                          &euro;{placesInfo[2].placeCardPriceValue}
-                          </b>
-                          <span className="place-card__price-text">&#47;&nbsp;night</span>
-                        </div>
-                        <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-                          <svg className="place-card__bookmark-icon" width="18" height="19">
-                            <use xlinkHref="#icon-bookmark"></use>
-                          </svg>
-                          <span className="visually-hidden">In bookmarks</span>
-                        </button>
-                      </div>
-                      <div className="place-card__rating rating">
-                        <div className="place-card__stars rating__stars">
-                          <span style={{
-                            width: `100%`,
-                          }}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <h2 className="place-card__name">
-                        <Link to="/offer">
-                          {placesInfo[2].placeCardName}
-                        </Link>
-                      </h2>
-                      <p className="place-card__type">Apartment</p>
-                    </div>
-                  </article>
-                </div>
+                <FavoritesList placesInfo={placesInfo.slice(0, 1)} />
               </li>
             </ul>
           </section>
@@ -203,13 +72,7 @@ const Favorites = (props) => {
 };
 
 Favorites.propTypes = {
-  placesInfo: PropTypes.arrayOf(PropTypes.shape({
-    imgSrc: PropTypes.string,
-    smallImgSrc: PropTypes.string,
-    placeCardPriceValue: PropTypes.number,
-    placeCardName: PropTypes.string,
-    placeCardType: PropTypes.string
-  })),
+  placesInfo: placesInfoType,
 };
 
 export default Favorites;
