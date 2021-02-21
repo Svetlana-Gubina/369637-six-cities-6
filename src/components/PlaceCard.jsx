@@ -1,24 +1,24 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
+import {placeCardInfoType} from '../propTypes';
 
 const PlaceCard = (props) => {
-  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActiveElement} = props;
+  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActiveElement, className, specialCardClass, additionalClass = ``} = props;
 
   return (
-    <article className="cities__place-card place-card">
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article className={`${specialCardClass} place-card`}>
+      <div className={`${className}__image-wrapper place-card__image-wrapper`}>
         <Link to="/offer" onMouseEnter={() => setActiveElement(id)} onMouseLeave={() => setActiveElement(0)}>
           <img
             className="place-card__image"
-            src={`img/` + imgSrc + `.jpg`}
+            src={`img/${imgSrc}.jpg`}
             width="260"
             height="200"
             alt="Place image"
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${additionalClass} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">
@@ -55,14 +55,7 @@ const PlaceCard = (props) => {
   );
 };
 
-PlaceCard.propTypes = {
-  id: PropTypes.number,
-  imgSrc: PropTypes.string,
-  placeCardPriceValue: PropTypes.number,
-  placeCardName: PropTypes.string,
-  placeCardType: PropTypes.string,
-  setActiveElement: PropTypes.func,
-};
+PlaceCard.propTypes = placeCardInfoType;
 
 
 export default PlaceCard;
