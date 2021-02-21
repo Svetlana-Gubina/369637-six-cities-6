@@ -1,6 +1,6 @@
 import React from "react";
 import dayjs from 'dayjs';
-import {reviewsItemType} from '../propTypes';
+import {reviewsItemType} from '../../prop-types';
 
 const ReviewsItem = (props) => {
   const {userAvatar, userName, userRate, reviewText, reviewTime} = props;

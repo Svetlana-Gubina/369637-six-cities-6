@@ -43,3 +43,30 @@ export const offers = [
     lng: 4.939309666406198,
   },
 ];
+
+export const options = [
+  {
+    name: `Paris`,
+    availableOffers: offers,
+  },
+  {
+    name: `Cologne`,
+    availableOffers: offers,
+  },
+  {
+    name: `Brussels`,
+    availableOffers: offers,
+  },
+  {
+    name: `Amsterdam`,
+    availableOffers: offers,
+  },
+  {
+    name: `Hamburg`,
+    availableOffers: offers,
+  },
+  {
+    name: `Dusseldorf`,
+    availableOffers: offers,
+  }
+];

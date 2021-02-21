@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import FavoritesList from './favoritesList';
-import {placesInfoType} from '../propTypes';
+import FavoritesList from '../favorites-list/favorites-list';
+import {placesInfoType} from '../../prop-types';
 
 const Favorites = (props) => {
   const {placesInfo} = props;

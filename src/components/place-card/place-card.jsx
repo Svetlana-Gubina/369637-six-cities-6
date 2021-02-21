@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {placeCardInfoType} from '../propTypes';
+import {placeCardInfoType} from '../../prop-types';
 
 const PlaceCard = (props) => {
   const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActiveElement, className, specialCardClass, additionalClass = ``} = props;

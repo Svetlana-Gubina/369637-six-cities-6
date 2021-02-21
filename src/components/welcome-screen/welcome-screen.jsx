@@ -1,8 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import PlacesList from './placesList';
-import Map from './map';
-import {cityType, placesInfoType, authorizedType} from '../propTypes';
+import PlacesList from '../places-list/places-list';
+import Map from '../map/map';
+import {cityType, placesInfoType, authorizedType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
   const {city, placesInfo, authorized} = props;

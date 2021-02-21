@@ -25,14 +25,6 @@ module.exports = {
           use: [`style-loader`, `css-loader`],
         },
         {
-          test: /\.(sass|scss)$/,
-          use: [
-            "style-loader", //3. Inject styles into DOM
-            "css-loader", //2. Turns css into commonjs
-            "sass-loader" //1. Turns sass into css
-          ]
-        },
-        {
           test: /\.(png|jpe?g|gif)$/i,
           use: ['file-loader'],
         },

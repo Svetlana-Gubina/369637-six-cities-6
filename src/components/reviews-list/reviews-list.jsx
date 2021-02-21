@@ -1,7 +1,7 @@
 import React from "react";
-import ReviewsItem from './reviewsItem';
+import ReviewsItem from '../reviews-item/reviews-item';
 import {v4 as uuidv4} from "uuid";
-import {reviewItemsType} from '../propTypes';
+import {reviewItemsType} from '../../prop-types';
 
 const ReviewsList = (props) => {
   const {reviewItems} = props;

@@ -1,10 +1,10 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import ReviewForm from './reviewForm';
-import ReviewsList from './reviewsList';
-import NearPlacesList from './nearPlacesList';
-import Map from './map';
-import {cityType, placesInfoType, authorizedType, reviewItemsType} from '../propTypes';
+import ReviewForm from '../review-form/review-form';
+import ReviewsList from '../reviews-list/reviews-list';
+import NearPlacesList from '../near-places-list/near-places-list';
+import Map from '../map/map';
+import {cityType, placesInfoType, authorizedType, reviewItemsType} from '../../prop-types';
 
 const Room = (props) => {
   const {city, placesInfo, reviewItems, authorized} = props;
