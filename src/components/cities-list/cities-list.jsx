@@ -22,6 +22,7 @@ const CitiesList = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   setActiveCityItem(cityName) {
     dispatch(ActionCreator.choseCity(cityName));
+    dispatch(ActionCreator.updateOffers(cityName));
   },
 });
 

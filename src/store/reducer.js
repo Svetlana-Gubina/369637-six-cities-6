@@ -1,4 +1,4 @@
-import {options} from '../mocks/offers';
+import {options, getOffersForCity} from '../mocks/offers';
 import {ActionType} from './action';
 
 const initialState = {
@@ -12,6 +12,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeCityItem: action.payload,
+      };
+
+    case ActionType.UPDATE_OFFERS:
+      return {
+        ...state,
+        availableOffers: getOffersForCity(action.payload, options),
       };
 
     default: return state;

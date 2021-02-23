@@ -57,7 +57,7 @@ const shuffle = (arr) => {
 export const options = [
   {
     name: `Paris`,
-    availableOffers: shuffle(offers),
+    availableOffers: offers,
   },
   {
     name: `Cologne`,

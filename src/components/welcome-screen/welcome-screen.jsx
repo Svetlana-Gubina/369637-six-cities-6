@@ -5,10 +5,9 @@ import Map from '../map/map';
 import {cityNameType, lengthType, optionsType, cityType, placesInfoType, authorizedType} from '../../prop-types';
 import CitiesList from '../cities-list/cities-list';
 import {connect} from 'react-redux';
-import {options, getOffersForCity} from '../../mocks/offers';
 
 const WelcomeScreen = (props) => {
-  const {activeCityItem, availableOffers, city, placesInfo, authorized} = props;
+  const {activeCityItem, availableOffers, options, city, placesInfo, authorized} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -105,7 +104,7 @@ const WelcomeScreen = (props) => {
 
 const mapStateToProps = (state) => ({
   activeCityItem: state.activeCityItem,
-  availableOffers: getOffersForCity(state.activeCityItem, options),
+  availableOffers: state.availableOffers
 });
 
 
