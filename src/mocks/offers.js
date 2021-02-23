@@ -44,29 +44,50 @@ export const offers = [
   },
 ];
 
+const shuffle = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * arr.length);
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr;
+};
+
 export const options = [
   {
     name: `Paris`,
-    availableOffers: offers,
+    availableOffers: shuffle(offers),
   },
   {
     name: `Cologne`,
-    availableOffers: offers,
+    availableOffers: shuffle(offers),
   },
   {
     name: `Brussels`,
-    availableOffers: offers,
+    availableOffers: shuffle(offers),
   },
   {
     name: `Amsterdam`,
-    availableOffers: offers,
+    availableOffers: shuffle(offers),
   },
   {
     name: `Hamburg`,
-    availableOffers: offers,
+    availableOffers: shuffle(offers),
   },
   {
     name: `Dusseldorf`,
-    availableOffers: offers,
+    availableOffers: shuffle(offers),
   }
 ];
+
+export const getOffersForCity = (cityName, opts) => {
+  const optionsItem = opts.find((item) => {
+    return item.name === cityName;
+  });
+  return optionsItem.availableOffers;
+};
+
+export const getSomePlacesInfo = (placesInfo, fromIndex, toIndex) => {
+  return placesInfo.slice(fromIndex, toIndex);
+};

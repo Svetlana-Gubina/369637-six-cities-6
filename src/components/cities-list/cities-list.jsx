@@ -1,27 +1,35 @@
-import React, {useState} from 'react';
-import {optionsType} from '../../prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import {cityNameType, optionsType, setActiveElementType} from '../../prop-types';
 import CityItem from '../city-item/city-item';
 import {v4 as uuidv4} from "uuid";
+import {ActionCreator} from '../../store/action';
 
 const CitiesList = (props) => {
-  const {cities} = props;
-  const [activeElementId, setActiveElement] = useState(`Paris`);
+  const {options, activeCityItem, setActiveCityItem} = props;
 
-  return <ul className="locations__list tabs__list">
-    <div style={{
-      display: `none`
-    }}>{activeElementId}</div>
-    {cities.map((city) => {
-      <CityItem
+  return (
+    <ul className="locations__list tabs__list">
+      {options.map((option) => <CityItem
         key={uuidv4()}
-        city={city}
-        setActiveElement={setActiveElement} />;
-    })}
-  </ul>;
+        cityName={option.name}
+        activeCityItem={activeCityItem}
+        setActiveCityItem={setActiveCityItem}
+      />)}
+    </ul>);
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  setActiveCityItem(cityName) {
+    dispatch(ActionCreator.choseCity(cityName));
+  },
+});
 
 CitiesList.propTypes = {
-  cities: optionsType
+  options: optionsType,
+  activeCityItem: cityNameType,
+  setActiveCityItem: setActiveElementType
 };
 
-export default CitiesList;
+export {CitiesList};
+export default connect(null, mapDispatchToProps)(CitiesList);

@@ -1,20 +1,23 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {cityItemType, setActiveElementType} from '../../prop-types';
+import {cityNameType, setActiveElementType} from '../../prop-types';
 
 const CityItem = (props) => {
-  const {city, setActiveElement} = props;
+  const {cityName, activeCityItem, setActiveCityItem} = props;
 
   return <li className="locations__item">
-    <Link className="locations__item-link tabs__item" href="#" onClick={() => setActiveElement(city.name)}>
-      <span>{city.name}</span>
+    <Link className={`locations__item-link tabs__item ${cityName === activeCityItem ? `tabs__item--active` : ``}`}
+      to="/"
+      onClick={() => setActiveCityItem(cityName)}>
+      <span>{cityName}</span>
     </Link>
   </li>;
 };
 
 CityItem.propTypes = {
-  city: cityItemType,
-  setActiveElement: setActiveElementType
+  cityName: cityNameType,
+  activeCityItem: cityNameType,
+  setActiveCityItem: setActiveElementType
 };
 
 export default CityItem;

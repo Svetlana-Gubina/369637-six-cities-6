@@ -1,4 +1,12 @@
 export const ActionType = {
-  CHOOSE_CITY: ``,
-  FILL_OFFERS_LIST: ``,
+  CHOOSE_CITY: `welcomeScreen/chooseCity`,
+};
+
+// actionCreator()
+
+export const ActionCreator = {
+  choseCity: (cityName) => ({
+    type: ActionType.CHOOSE_CITY,
+    payload: cityName,
+  }),
 };

@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import FavoritesList from '../favorites-list/favorites-list';
 import {placesInfoType} from '../../prop-types';
+import {getSomePlacesInfo} from '../../mocks/offers';
 
 const Favorites = (props) => {
   const {placesInfo} = props;
@@ -45,7 +46,7 @@ const Favorites = (props) => {
                     </a>
                   </div>
                 </div>
-                <FavoritesList placesInfo={placesInfo.slice(2, 4)} />
+                <FavoritesList placesInfo={getSomePlacesInfo(placesInfo, 2, 4)} />
               </li>
 
               <li className="favorites__locations-items">
@@ -56,7 +57,7 @@ const Favorites = (props) => {
                     </a>
                   </div>
                 </div>
-                <FavoritesList placesInfo={placesInfo.slice(0, 1)} />
+                <FavoritesList placesInfo={getSomePlacesInfo(placesInfo, 0, 1)} />
               </li>
             </ul>
           </section>

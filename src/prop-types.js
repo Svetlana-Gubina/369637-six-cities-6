@@ -91,3 +91,7 @@ export const optionsType = PropTypes.arrayOf(
       ),
     })
 );
+
+export const cityNameType = PropTypes.string;
+
+export const lengthType = PropTypes.number;
