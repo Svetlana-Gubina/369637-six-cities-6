@@ -1,4 +1,4 @@
-import {options, getOffersForCity, SortType} from '../mocks/offers';
+import {options, getOffersForCity, SortType, sortOffersBy} from '../mocks/offers';
 import {ActionType} from './action';
 
 const initialState = {
@@ -21,10 +21,16 @@ const reducer = (state = initialState, action) => {
         availableOffers: getOffersForCity(action.payload, options),
       };
 
-    case ActionType.SORT_OPTIONS:
+    case ActionType.SET_SORT_TYPE:
       return {
         ...state,
         activeSortType: action.payload,
+      };
+
+    case ActionType.SORT_OPTIONS:
+      return {
+        ...state,
+        availableOffers: sortOffersBy(action.payload, state.availableOffers),
       };
 
     default: return state;

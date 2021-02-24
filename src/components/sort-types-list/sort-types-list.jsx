@@ -2,18 +2,18 @@ import React from 'react';
 import {v4 as uuidv4} from "uuid";
 import {connect} from 'react-redux';
 import SortTypesItem from '../sort-types-item/sort-types-item';
-import {sortTypeNameType, setActiveElementType, sortTypesType} from '../../prop-types';
+import {popUpStateType, sortTypeNameType, setActiveElementType, sortTypesType} from '../../prop-types';
 import {ActionCreator} from '../../store/action';
 
 
 const SortTypesList = (props) => {
-  const {sortTypes, activeSortTypeName, choseSortType} = props;
+  const {popUpState, sortTypes, activeSortTypeName, choseSortType} = props;
 
   return (
-    <ul className="places__options places__options--custom places__options--opened">
-      {sortTypes.map((option) => <SortTypesItem
+    <ul className={`places__options places__options--custom ${popUpState ? `places__options--opened` : ``}`}>
+      {Object.values(sortTypes).map((sortType) => <SortTypesItem
         key={uuidv4()}
-        sortTypeName={option.name}
+        sortTypeName={sortType}
         activeSortTypeName={activeSortTypeName}
         choseSortType={choseSortType}
       />)}
@@ -24,12 +24,14 @@ SortTypesList.propTypes = {
   sortTypes: sortTypesType,
   sortTypeName: sortTypeNameType,
   activeSortTypeName: sortTypeNameType,
-  choseSortType: setActiveElementType
+  choseSortType: setActiveElementType,
+  popUpState: popUpStateType,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setActiveCityItem(cityName) {
-    dispatch(ActionCreator.choseCity(cityName));
+  choseSortType(type) {
+    dispatch(ActionCreator.setSortType(type));
+    dispatch(ActionCreator.sortOptions(type));
   },
 });
 

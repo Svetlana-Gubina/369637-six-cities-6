@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./components/app/app";
-import {offers, options} from './mocks/offers';
+import {offers, options, SortType} from './mocks/offers';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {reducer} from './store/reducer';
@@ -35,6 +35,7 @@ const store = createStore(
 ReactDOM.render(
     <Provider store={store}>
       <App
+        SortType={SortType}
         options={options}
         reviewItems={reviews}
         city={city}

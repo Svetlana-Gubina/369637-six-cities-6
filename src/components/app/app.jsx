@@ -5,15 +5,15 @@ import PageNotFound from '../page-not-found/page-not-found';
 import Room from '../room/room';
 import SignIn from '../sign-in/sign-in';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {optionsType, cityType, placesInfoType, authorizedType, reviewItemsType} from '../../prop-types';
+import {sortTypesType, optionsType, cityType, placesInfoType, authorizedType, reviewItemsType} from '../../prop-types';
 
 const App = (props) => {
-  const {options, reviewItems, city, placesInfo, authorized} = props;
+  const {SortType, options, reviewItems, city, placesInfo, authorized} = props;
 
   return <BrowserRouter>
     <Switch>
       <Route exact path="/">
-        <WelcomeScreen options={options} city={city} placesInfo={placesInfo} authorized={authorized}/>;
+        <WelcomeScreen SortType={SortType} options={options} city={city} placesInfo={placesInfo} authorized={authorized}/>;
       </Route>
       <Route exact path="/favorites">
         <Favorites placesInfo={placesInfo} />
@@ -37,6 +37,7 @@ App.propTypes = {
   city: cityType,
   placesInfo: placesInfoType,
   authorized: authorizedType,
+  SortType: sortTypesType
 };
 
 export default App;
