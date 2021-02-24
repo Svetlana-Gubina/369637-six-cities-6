@@ -95,3 +95,8 @@ export const optionsType = PropTypes.arrayOf(
 export const cityNameType = PropTypes.string;
 
 export const lengthType = PropTypes.number;
+
+export const sortTypeNameType = PropTypes.string;
+
+export const sortTypesType = PropTypes.oneOf([`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`]);
+

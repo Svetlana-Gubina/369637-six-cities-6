@@ -1,9 +1,10 @@
-import {options, getOffersForCity} from '../mocks/offers';
+import {options, getOffersForCity, SortType} from '../mocks/offers';
 import {ActionType} from './action';
 
 const initialState = {
   activeCityItem: options[0].name,
   availableOffers: options[0].availableOffers,
+  activeSortType: SortType.POPULAR,
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +19,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         availableOffers: getOffersForCity(action.payload, options),
+      };
+
+    case ActionType.SORT_OPTIONS:
+      return {
+        ...state,
+        activeSortType: action.payload,
       };
 
     default: return state;

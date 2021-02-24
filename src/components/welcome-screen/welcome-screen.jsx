@@ -104,7 +104,8 @@ const WelcomeScreen = (props) => {
 
 const mapStateToProps = (state) => ({
   activeCityItem: state.activeCityItem,
-  availableOffers: state.availableOffers
+  availableOffers: state.availableOffers,
+  activeSortType: state.activeSortType
 });
 
 

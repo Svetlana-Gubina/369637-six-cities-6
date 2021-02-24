@@ -82,3 +82,10 @@ export const getOffersForCity = (cityName, opts) => {
 export const getSomePlacesInfo = (placesInfo, fromIndex, toIndex) => {
   return placesInfo.slice(fromIndex, toIndex);
 };
+
+export const SortType = {
+  POPULAR: `Popular`,
+  PRICE_LOW_TO_HIGH: `Price: low to high`,
+  PRICE_HIGH_TO_LOW: `Price: high to low`,
+  TOP_RATED_FIRST: `Top rated first`,
+};

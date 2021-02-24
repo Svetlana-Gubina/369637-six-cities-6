@@ -1,6 +1,7 @@
 export const ActionType = {
   CHOOSE_CITY: `welcomeScreen/chooseCity`,
   UPDATE_OFFERS: `welcomeScreen/updateOffers`,
+  SORT_OPTIONS: `welcomeScreen/sortOptions`,
 };
 
 // actionCreator()
@@ -13,5 +14,9 @@ export const ActionCreator = {
   updateOffers: (name) => ({
     type: ActionType.UPDATE_OFFERS,
     payload: name,
+  }),
+  sortOptions: (type) => ({
+    type: ActionType.SORT_OPTIONS,
+    payload: type,
   }),
 };
