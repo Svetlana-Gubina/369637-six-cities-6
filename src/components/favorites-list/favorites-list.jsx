@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {v4 as uuidv4} from "uuid";
-import PlaceCard from './placeCard';
-import {placeCardInfoType} from '../propTypes';
+import PlaceCard from '../place-card/place-card';
+import {additionalClassType, placesInfoType} from '../../prop-types';
 
-const NearPlacesList = ({placesInfo}) => {
-  const className = `near-places`;
+const FavoritesList = ({placesInfo}) => {
+  const className = `favorites`;
   const specialCardClass = className + `__card`;
+  const additionalClass = `favorites__card-info`;
   const [activeElementId, setActiveElement] = useState(0);
 
-  return <div className={className + `__list places__list`}>
+  return <div className="favorites__places">
     <div style={{
       display: `none`
     }}>{activeElementId}</div>
@@ -22,10 +23,14 @@ const NearPlacesList = ({placesInfo}) => {
       setActiveElement={setActiveElement}
       className={className}
       specialCardClass={specialCardClass}
+      additionalClass={additionalClass}
     />)}
   </div>;
 };
 
-NearPlacesList.propTypes = placeCardInfoType;
+FavoritesList.propTypes = {
+  placesInfo: placesInfoType,
+  additionalClass: additionalClassType,
+};
 
-export default NearPlacesList;
+export default FavoritesList;

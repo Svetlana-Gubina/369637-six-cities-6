@@ -1,8 +1,8 @@
 import React from "react";
-import './Page404.scss';
+import './page-not-found.css';
 import {Link} from "react-router-dom";
 
-const Page404 = () => {
+const PageNotFound = () => {
   return (
     <div className="contain" id="animate">
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 320.9 277.3" style={{enableBackground: `new 0 0 320.9 277.3`}} xmlSpace="preserve">
@@ -60,4 +60,4 @@ const Page404 = () => {
   );
 };
 
-export default Page404;
+export default PageNotFound;

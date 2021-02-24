@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {v4 as uuidv4} from "uuid";
-import PlaceCard from './placeCard';
-import {placeCardInfoType} from '../propTypes';
+import PlaceCard from '../place-card/place-card';
+import {placeCardInfoType} from '../../prop-types';
 
 const PlacesList = (props) => {
   const {placesInfo} = props;

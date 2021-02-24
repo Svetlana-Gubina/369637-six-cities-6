@@ -1,19 +1,19 @@
 import React from "react";
-import WelcomeScreen from "./welcomeScreen";
-import Favorites from './favorites';
-import Page404 from './page404';
-import Room from './room';
-import SignIn from './signIn';
+import WelcomeScreen from "../welcome-screen/welcome-screen";
+import Favorites from '../favorites/favorites';
+import PageNotFound from '../page-not-found/page-not-found';
+import Room from '../room/room';
+import SignIn from '../sign-in/sign-in';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {cityType, placesInfoType, authorizedType, reviewItemsType} from '../propTypes';
+import {optionsType, cityType, placesInfoType, authorizedType, reviewItemsType} from '../../prop-types';
 
 const App = (props) => {
-  const {reviewItems, city, placesInfo, authorized} = props;
+  const {options, reviewItems, city, placesInfo, authorized} = props;
 
   return <BrowserRouter>
     <Switch>
       <Route exact path="/">
-        <WelcomeScreen city={city} placesInfo={placesInfo} authorized={authorized}/>;
+        <WelcomeScreen options={options} city={city} placesInfo={placesInfo} authorized={authorized}/>;
       </Route>
       <Route exact path="/favorites">
         <Favorites placesInfo={placesInfo} />
@@ -25,13 +25,14 @@ const App = (props) => {
         <SignIn />
       </Route>
       <Route>
-        <Page404 />
+        <PageNotFound />
       </Route>
     </Switch>
   </BrowserRouter>;
 };
 
 App.propTypes = {
+  options: optionsType,
   reviewItems: reviewItemsType,
   city: cityType,
   placesInfo: placesInfoType,

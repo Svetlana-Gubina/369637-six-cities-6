@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from "./components/App";
-import {offers} from './mocks/offers';
+import App from "./components/app/app";
+import {offers, options} from './mocks/offers';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import {reducer} from './store/reducer';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
 const authorized = true;
 
+const ZOOM = 12;
+
 const city = {
-  zoom: 12,
+  zoom: ZOOM,
   lat: 52.38333,
   lng: 4.9,
 };
@@ -21,12 +27,20 @@ const reviews = [
   },
 ];
 
+const store = createStore(
+    reducer,
+    composeWithDevTools()
+);
+
 ReactDOM.render(
-    <App
-      reviewItems={reviews}
-      city={city}
-      placesInfo={offers}
-      authorized={authorized}
-    />,
+    <Provider store={store}>
+      <App
+        options={options}
+        reviewItems={reviews}
+        city={city}
+        placesInfo={offers}
+        authorized={authorized}
+      />
+    </Provider>,
     document.querySelector(`#root`)
 );
