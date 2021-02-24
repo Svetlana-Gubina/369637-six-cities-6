@@ -10,7 +10,8 @@ export const ActionCreator = {
     type: ActionType.CHOOSE_CITY,
     payload: cityName,
   }),
-  updateOffers: (cityName) => ({
-
+  updateOffers: (name) => ({
+    type: ActionType.UPDATE_OFFERS,
+    payload: name,
   }),
 };

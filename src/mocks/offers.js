@@ -44,15 +44,6 @@ export const offers = [
   },
 ];
 
-const shuffle = (arr) => {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * arr.length);
-    const temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-  }
-  return arr;
-};
 
 export const options = [
   {
@@ -61,23 +52,23 @@ export const options = [
   },
   {
     name: `Cologne`,
-    availableOffers: shuffle(offers),
+    availableOffers: offers.slice(0, 2),
   },
   {
     name: `Brussels`,
-    availableOffers: shuffle(offers),
+    availableOffers: offers.slice(1, 3),
   },
   {
     name: `Amsterdam`,
-    availableOffers: shuffle(offers),
+    availableOffers: offers.slice(0, 3),
   },
   {
     name: `Hamburg`,
-    availableOffers: shuffle(offers),
+    availableOffers: offers.slice(1, 2),
   },
   {
     name: `Dusseldorf`,
-    availableOffers: shuffle(offers),
+    availableOffers: offers.slice(0, 1),
   }
 ];
 
