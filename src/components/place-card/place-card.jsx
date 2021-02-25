@@ -3,12 +3,12 @@ import {Link} from "react-router-dom";
 import {placeCardInfoType} from '../../prop-types';
 
 const PlaceCard = (props) => {
-  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActiveElement, className, specialCardClass, additionalClass = ``} = props;
+  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
 
   return (
     <article className={`${specialCardClass} place-card`}>
       <div className={`${className}__image-wrapper place-card__image-wrapper`}>
-        <Link to="/offer" onMouseEnter={() => setActiveElement(id)} onMouseLeave={() => setActiveElement(0)}>
+        <Link to="/offer" onMouseEnter={() => setActivePlaceCard(id)} onMouseLeave={() => setActivePlaceCard(0)}>
           <img
             className="place-card__image"
             src={`img/${imgSrc}.jpg`}

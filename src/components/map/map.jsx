@@ -1,9 +1,13 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {cityType, pointsType} from '../../prop-types';
+import {cityType, pointsType, placeCardInfoType} from '../../prop-types';
 
-const Map = ({city, points}) => {
+const getIcon = (poitId, activeId, icon, activeIcon) => {
+  return poitId === activeId ? activeIcon : icon;
+};
+
+const Map = ({activePlaceCardId, city, points}) => {
   const mapRef = useRef();
 
   useEffect(()=> {
@@ -22,10 +26,17 @@ const Map = ({city, points}) => {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
     })
     .addTo(mapRef.current);
+  }, []);
 
+  useEffect(() => {
     points.forEach((point) => {
       const customIcon = leaflet.icon({
         iconUrl: `img/pin.svg`,
+        iconSize: [30, 30]
+      });
+
+      const activeIcon = leaflet.icon({
+        iconUrl: `img/pin-active.svg`,
         iconSize: [30, 30]
       });
 
@@ -34,7 +45,7 @@ const Map = ({city, points}) => {
         lng: point.lng,
       },
       {
-        icon: customIcon
+        icon: getIcon(point.id, activePlaceCardId, customIcon, activeIcon)
       })
       .addTo(mapRef.current)
       .bindPopup(point.placeCardName);
@@ -43,7 +54,7 @@ const Map = ({city, points}) => {
         mapRef.current.remove();
       };
     });
-  }, []);
+  }, [activePlaceCardId]);
 
 
   return (
@@ -56,6 +67,7 @@ const Map = ({city, points}) => {
 Map.propTypes = {
   points: pointsType,
   city: cityType,
+  activePlaceCardId: placeCardInfoType.id,
 };
 
 export default Map;

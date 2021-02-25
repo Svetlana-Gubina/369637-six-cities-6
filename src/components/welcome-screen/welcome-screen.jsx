@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import PlacesList from '../places-list/places-list';
@@ -9,6 +9,7 @@ import {sortTypeNameType, sortTypesType, cityNameType, lengthType, optionsType, 
 
 const WelcomeScreen = (props) => {
   const {activeSortType, activeCityItem, availableOffers, SortType, options, city, placesInfo, authorized} = props;
+  const [activePlaceCardId, setActivePlaceCard] = useState(0);
 
   return (
     <div className="page page--gray page--main">
@@ -63,12 +64,12 @@ const WelcomeScreen = (props) => {
               <b className="places__found">{`${availableOffers.length} places to stay in ${activeCityItem}`}</b>
               <PlacesSortingForm sortTypes={SortType} activeSortTypeName={activeSortType} />
               <div className="cities__places-list places__list tabs__content">
-                <PlacesList placesInfo={availableOffers} />
+                <PlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={availableOffers} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} points={placesInfo} />
+                <Map activePlaceCardId={activePlaceCardId} city={city} points={placesInfo} />
               </section>
             </div>
           </div>
