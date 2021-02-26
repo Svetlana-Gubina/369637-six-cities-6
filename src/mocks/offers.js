@@ -12,6 +12,7 @@ export const offers = [
     placeCardType: PlaceType.APARTMENT,
     lat: 52.3909553943508,
     lng: 4.85309666406198,
+    rating: 5,
   },
   {
     id: 2,
@@ -21,6 +22,7 @@ export const offers = [
     placeCardType: PlaceType.APARTMENT,
     lat: 52.369553943508,
     lng: 4.85309666406198,
+    rating: 4,
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ export const offers = [
     placeCardType: PlaceType.APARTMENT,
     lat: 52.3909553943508,
     lng: 4.929309666406198,
+    rating: 3,
   },
   {
     id: 4,
@@ -41,6 +44,7 @@ export const offers = [
     placeCardType: PlaceType.PRIVATE_ROOM,
     lat: 52.3809553943508,
     lng: 4.939309666406198,
+    rating: 2,
   },
 ];
 
@@ -81,4 +85,32 @@ export const getOffersForCity = (cityName, opts) => {
 
 export const getSomePlacesInfo = (placesInfo, fromIndex, toIndex) => {
   return placesInfo.slice(fromIndex, toIndex);
+};
+
+export const SortType = {
+  POPULAR: `Popular`,
+  PRICE_LOW_TO_HIGH: `Price: low to high`,
+  PRICE_HIGH_TO_LOW: `Price: high to low`,
+  TOP_RATED_FIRST: `Top rated first`,
+};
+
+export const sortOffersBy = (sortType, opts) => {
+  switch (sortType) {
+    case SortType.PRICE_LOW_TO_HIGH:
+      return opts.slice().sort((a, b) => {
+        return a.placeCardPriceValue - b.placeCardPriceValue;
+      });
+
+    case SortType.PRICE_HIGH_TO_LOW:
+      return opts.slice().sort((a, b) => {
+        return b.placeCardPriceValue - a.placeCardPriceValue;
+      });
+
+    case SortType.TOP_RATED_FIRST:
+      return opts.slice().sort((a, b) => {
+        return a.rating - b.rating;
+      });
+
+    default: return opts;
+  }
 };

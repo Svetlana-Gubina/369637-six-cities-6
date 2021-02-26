@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
+import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
-import {cityNameType, lengthType, optionsType, cityType, placesInfoType, authorizedType} from '../../prop-types';
 import CitiesList from '../cities-list/cities-list';
-import {connect} from 'react-redux';
+import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
+import {sortTypeNameType, sortTypesType, cityNameType, lengthType, optionsType, cityType, placesInfoType, authorizedType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
-  const {activeCityItem, availableOffers, options, city, placesInfo, authorized} = props;
+  const {activeSortType, activeCityItem, availableOffers, SortType, options, city, placesInfo, authorized} = props;
+  const [activePlaceCardId, setActivePlaceCard] = useState(0);
 
   return (
     <div className="page page--gray page--main">
@@ -60,39 +62,14 @@ const WelcomeScreen = (props) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{`${availableOffers.length} places to stay in ${activeCityItem}`}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li
-                    className="places__option places__option--active"
-                    tabIndex="0"
-                  >
-                    Popular
-                  </li>
-                  <li className="places__option" tabIndex="0">
-                    Price: low to high
-                  </li>
-                  <li className="places__option" tabIndex="0">
-                    Price: high to low
-                  </li>
-                  <li className="places__option" tabIndex="0">
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
+              <PlacesSortingForm sortTypes={SortType} activeSortTypeName={activeSortType} />
               <div className="cities__places-list places__list tabs__content">
-                <PlacesList placesInfo={availableOffers} />
+                <PlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={availableOffers} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} points={placesInfo} />
+                <Map activePlaceCardId={activePlaceCardId} city={city} points={placesInfo} />
               </section>
             </div>
           </div>
@@ -104,7 +81,8 @@ const WelcomeScreen = (props) => {
 
 const mapStateToProps = (state) => ({
   activeCityItem: state.activeCityItem,
-  availableOffers: state.availableOffers
+  availableOffers: state.availableOffers,
+  activeSortType: state.activeSortType
 });
 
 
@@ -115,7 +93,9 @@ WelcomeScreen.propTypes = {
   authorized: authorizedType,
   length: lengthType,
   availableOffers: placesInfoType,
-  activeCityItem: cityNameType
+  activeCityItem: cityNameType,
+  SortType: sortTypesType,
+  activeSortType: sortTypeNameType,
 };
 
 export {WelcomeScreen};

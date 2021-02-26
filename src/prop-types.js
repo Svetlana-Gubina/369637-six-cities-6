@@ -21,7 +21,8 @@ export const placesInfoType = PropTypes.arrayOf(PropTypes.shape({
   placeCardName: PropTypes.string,
   placeCardType: PropTypes.string,
   lat: PropTypes.number,
-  long: PropTypes.number
+  long: PropTypes.number,
+  rating: PropTypes.number,
 }));
 
 export const placeCardInfoType = {
@@ -95,3 +96,14 @@ export const optionsType = PropTypes.arrayOf(
 export const cityNameType = PropTypes.string;
 
 export const lengthType = PropTypes.number;
+
+export const sortTypeNameType = PropTypes.string;
+
+export const sortTypesType = PropTypes.shape({
+  POPULAR: PropTypes.string,
+  PRICE_LOW_TO_HIGH: PropTypes.string,
+  PRICE_HIGH_TO_LOW: PropTypes.string,
+  TOP_RATED_FIRST: PropTypes.string,
+});
+
+export const popUpStateType = PropTypes.bool;
