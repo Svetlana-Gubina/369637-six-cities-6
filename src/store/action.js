@@ -3,6 +3,8 @@ export const ActionType = {
   UPDATE_OFFERS: `welcomeScreen/updateOffers`,
   SET_SORT_TYPE: `welcomeScreen/setSortType`,
   SORT_OPTIONS: `welcomeScreen/sortOptions`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  LOAD_HOTELS: `store/loadHotels`,
 };
 
 // actionCreator()
@@ -24,4 +26,8 @@ export const ActionCreator = {
     type: ActionType.SORT_OPTIONS,
     payload: type,
   }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  })
 };

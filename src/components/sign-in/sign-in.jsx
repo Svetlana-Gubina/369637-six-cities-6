@@ -1,7 +1,22 @@
-import React from "react";
+import React, {useRef} from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {login} from "../../store/api-actions";
+import {onSubmitType} from '../../prop-types';
 
-const SignIn = () => {
+const SignIn = ({onSubmit}) => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onSubmit({
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    });
+  };
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
@@ -31,14 +46,25 @@ const SignIn = () => {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required />
+                <input
+                  ref={emailRef}
+                  className="login__input form__input"
+                  type="email" name="email"
+                  placeHolder="Email"
+                  required />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required />
+                <input
+                  ref={passwordRef}
+                  className="login__input form__input"
+                  type="password"
+                  name="password"
+                  placeHolder="Password"
+                  required />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
@@ -56,4 +82,15 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(authData) {
+    dispatch(login(authData));
+  }
+});
+
+SignIn.propTypes = {
+  onSubmit: onSubmitType,
+};
+
+export {SignIn};
+export default connect(null, mapDispatchToProps)(SignIn);

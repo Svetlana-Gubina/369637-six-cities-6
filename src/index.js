@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import {thunk} from 'redux-thunk';
+import {applyMiddleware} from 'redux';
+import {createAPI} from './api';
 import App from "./components/app/app";
 import {offers, options, SortType} from './mocks/offers';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {reducer} from './store/reducer';
-import {composeWithDevTools} from 'redux-devtools-extension';
-
-const authorized = true;
-
-const ZOOM = 12;
+import {authorized, ZOOM} from './constants';
 
 const city = {
   zoom: ZOOM,
@@ -31,6 +31,12 @@ const store = createStore(
     reducer,
     composeWithDevTools()
 );
+
+const onUnauthorized = () => {
+  console.log(`User unauthorized!`);
+};
+
+const api = createAPI(onUnauthorized);
 
 ReactDOM.render(
     <Provider store={store}>
