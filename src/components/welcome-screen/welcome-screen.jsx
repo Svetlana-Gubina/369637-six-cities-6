@@ -5,11 +5,13 @@ import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import CitiesList from '../cities-list/cities-list';
 import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
-import {sortTypeNameType, sortTypesType, cityNameType, lengthType, optionsType, cityType, placesInfoType, authorizedType} from '../../prop-types';
+import {getHotelsList} from '../../store/api-actions';
+import {sortTypeNameType, sortTypesType, cityNameType, lengthType, optionsType, cityType, placesInfoType, authorizedType, onLoadType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
-  const {activeSortType, activeCityItem, availableOffers, SortType, options, city, placesInfo, authorized} = props;
+  const {onLoad, activeSortType, activeCityItem, availableOffers, SortType, options, city, placesInfo, authorized} = props;
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
+  onLoad();
 
   return (
     <div className="page page--gray page--main">
@@ -85,6 +87,11 @@ const mapStateToProps = (state) => ({
   activeSortType: state.activeSortType
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  onLoad() {
+    dispatch(getHotelsList());
+  }
+});
 
 WelcomeScreen.propTypes = {
   options: optionsType,
@@ -96,8 +103,9 @@ WelcomeScreen.propTypes = {
   activeCityItem: cityNameType,
   SortType: sortTypesType,
   activeSortType: sortTypeNameType,
+  onLoad: onLoadType,
 };
 
 export {WelcomeScreen};
-export default connect(mapStateToProps, null)(WelcomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeScreen);
 

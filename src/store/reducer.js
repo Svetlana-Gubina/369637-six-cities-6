@@ -42,6 +42,12 @@ const reducer = (state = initialState, action) => {
         authorizationStatus: action.payload,
       };
 
+    case ActionType.LOAD_HOTELS:
+      return {
+        ...state,
+        hotelsList: [...action.payload],
+      };
+
     default: return state;
   }
 };

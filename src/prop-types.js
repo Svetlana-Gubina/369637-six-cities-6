@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 
 export const onSubmitType = PropTypes.func.isRequired;
 
+export const onLoadType = PropTypes.func.isRequired;
+
 export const setActiveElementType = PropTypes.func;
 
 export const authorizedType = PropTypes.bool;

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import {thunk} from 'redux-thunk';
+import thunk from 'redux-thunk';
 import {applyMiddleware} from 'redux';
 import {createAPI} from './api';
 import App from "./components/app/app";
@@ -27,16 +27,16 @@ const reviews = [
   },
 ];
 
-const store = createStore(
-    reducer,
-    composeWithDevTools()
-);
-
 const onUnauthorized = () => {
   console.log(`User unauthorized!`);
 };
 
 const api = createAPI(onUnauthorized);
+
+const store = createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
+);
 
 ReactDOM.render(
     <Provider store={store}>
