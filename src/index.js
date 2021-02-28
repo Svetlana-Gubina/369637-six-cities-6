@@ -1,20 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from "./components/app/app";
-import {offers, options, SortType} from './mocks/offers';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+import {applyMiddleware} from 'redux';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {reducer} from './store/reducer';
-import {composeWithDevTools} from 'redux-devtools-extension';
-
-const authorized = true;
-
-const ZOOM = 12;
+import {createAPI} from './api';
+import {ActionCreator} from './store/action';
+import App from "./components/app/app";
+import {checkAuth} from './store/api-actions';
+import {ZOOM, AVAILABLE_CITIES, AuthorizationStatus, SortType} from './constants';
 
 const city = {
   zoom: ZOOM,
-  lat: 52.38333,
-  lng: 4.9,
+  latitude: 52.38333,
+  longitude: 4.9,
 };
 
 const reviews = [
@@ -27,20 +28,24 @@ const reviews = [
   },
 ];
 
+const api = createAPI(
+    () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
+);
+
 const store = createStore(
     reducer,
-    composeWithDevTools()
+    composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
 );
+
+store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
       <App
         SortType={SortType}
-        options={options}
+        cities={AVAILABLE_CITIES}
         reviewItems={reviews}
         city={city}
-        placesInfo={offers}
-        authorized={authorized}
       />
     </Provider>,
     document.querySelector(`#root`)

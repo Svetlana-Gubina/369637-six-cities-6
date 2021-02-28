@@ -5,21 +5,21 @@ import PageNotFound from '../page-not-found/page-not-found';
 import Room from '../room/room';
 import SignIn from '../sign-in/sign-in';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {sortTypesType, optionsType, cityType, placesInfoType, authorizedType, reviewItemsType} from '../../prop-types';
+import {locationType, citiesType, sortTypesType, reviewItemsType} from '../../prop-types';
 
 const App = (props) => {
-  const {SortType, options, reviewItems, city, placesInfo, authorized} = props;
+  const {SortType, cities, reviewItems, city} = props;
 
   return <BrowserRouter>
     <Switch>
       <Route exact path="/">
-        <WelcomeScreen SortType={SortType} options={options} city={city} placesInfo={placesInfo} authorized={authorized}/>;
+        <WelcomeScreen cities={cities} SortType={SortType} city={city} />;
       </Route>
       <Route exact path="/favorites">
-        <Favorites placesInfo={placesInfo} />
+        <Favorites />
       </Route>
       <Route exact path="/offer/:id?">
-        <Room city={city} placesInfo={placesInfo} reviewItems={reviewItems} authorized={authorized} />
+        <Room reviewItems={reviewItems} />
       </Route>
       <Route exact path="/login">
         <SignIn />
@@ -32,12 +32,10 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  options: optionsType,
+  cities: citiesType,
   reviewItems: reviewItemsType,
-  city: cityType,
-  placesInfo: placesInfoType,
-  authorized: authorizedType,
-  SortType: sortTypesType
+  city: locationType,
+  SortType: sortTypesType,
 };
 
 export default App;

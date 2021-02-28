@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {v4 as uuidv4} from "uuid";
 import PlaceCard from '../place-card/place-card';
-import {placeCardInfoType} from '../../prop-types';
+import {placesInfoType} from '../../prop-types';
 
 const NearPlacesList = ({placesInfo}) => {
   const className = `near-places`;
@@ -26,6 +26,8 @@ const NearPlacesList = ({placesInfo}) => {
   </div>;
 };
 
-NearPlacesList.propTypes = placeCardInfoType;
+NearPlacesList.propTypes = {
+  placesInfo: placesInfoType,
+};
 
 export default NearPlacesList;

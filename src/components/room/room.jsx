@@ -1,14 +1,16 @@
 import React from "react";
+import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import NearPlacesList from '../near-places-list/near-places-list';
 import Map from '../map/map';
-import {cityType, placesInfoType, authorizedType, reviewItemsType} from '../../prop-types';
+import {locationType, placesInfoType, authorizedType, reviewItemsType} from '../../prop-types';
+import {AuthorizationStatus} from '../../constants';
 import {getSomePlacesInfo} from '../../mocks/offers';
 
 const Room = (props) => {
-  const {city, placesInfo, reviewItems, authorized} = props;
+  const {city, isAuthorized, reviewItems, placesInfo} = props;
 
   return (
     <div className="page">
@@ -23,7 +25,7 @@ const Room = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  {authorized ?
+                  {isAuthorized === AuthorizationStatus.AUTH ?
                     <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                       <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                       <span className="header__user-name user__name">
@@ -183,11 +185,19 @@ const Room = (props) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  city: state.activeCityItem,
+  isAuthorized: state.authorizationStatus,
+  placesInfo: state.hotelsList,
+});
+
 Room.propTypes = {
-  city: cityType,
+  city: locationType,
   placesInfo: placesInfoType,
   reviewItems: reviewItemsType,
-  authorized: authorizedType,
+  isAuthorized: authorizedType,
 };
 
-export default Room;
+
+export {Room};
+export default connect(mapStateToProps, null)(Room);

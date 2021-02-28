@@ -1,15 +1,31 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import CitiesList from '../cities-list/cities-list';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {getHotelsList} from '../../store/api-actions';
 import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
-import {sortTypeNameType, sortTypesType, cityNameType, lengthType, optionsType, cityType, placesInfoType, authorizedType} from '../../prop-types';
+import {AuthorizationStatus, getOffersForCity} from '../../constants';
+import {isDataLoadedType, onLoadType, cityNameType, locationType, citiesType, sortTypeNameType, sortTypesType, lengthType, placesInfoType, authorizedType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
-  const {activeSortType, activeCityItem, availableOffers, SortType, options, city, placesInfo, authorized} = props;
+  const {SortType, placesInfo, onLoad, isDataLoaded, activeSortType, cities, activeCityItem, isAuthorized} = props;
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
+  const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoad();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -30,7 +46,7 @@ const WelcomeScreen = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  {authorized ?
+                  {isAuthorized === AuthorizationStatus.AUTH ?
                     <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                       <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                       <span className="header__user-name user__name">
@@ -54,22 +70,22 @@ const WelcomeScreen = (props) => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList options={options} activeCityItem={activeCityItem} />
+            <CitiesList cities={cities} activeCityItem={activeCityItem} />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{`${availableOffers.length} places to stay in ${activeCityItem}`}</b>
+              <b className="places__found">{`${activeCityOffers.length} places to stay in ${activeCityItem}`}</b>
               <PlacesSortingForm sortTypes={SortType} activeSortTypeName={activeSortType} />
               <div className="cities__places-list places__list tabs__content">
-                <PlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={availableOffers} />
+                <PlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={activeCityOffers} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map activePlaceCardId={activePlaceCardId} city={city} points={placesInfo} />
+                <Map activePlaceCardId={activePlaceCardId} />
               </section>
             </div>
           </div>
@@ -81,23 +97,31 @@ const WelcomeScreen = (props) => {
 
 const mapStateToProps = (state) => ({
   activeCityItem: state.activeCityItem,
-  availableOffers: state.availableOffers,
-  activeSortType: state.activeSortType
+  activeSortType: state.activeSortType,
+  isAuthorized: state.authorizationStatus,
+  isDataLoaded: state.isDataLoaded,
+  placesInfo: state.hotelsList,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  onLoad() {
+    dispatch(getHotelsList());
+  }
+});
 
 WelcomeScreen.propTypes = {
-  options: optionsType,
-  city: cityType,
+  cities: citiesType,
+  city: locationType,
   placesInfo: placesInfoType,
-  authorized: authorizedType,
+  isAuthorized: authorizedType,
   length: lengthType,
-  availableOffers: placesInfoType,
+  activeCityOffers: placesInfoType,
   activeCityItem: cityNameType,
   SortType: sortTypesType,
   activeSortType: sortTypeNameType,
+  onLoad: onLoadType,
+  isDataLoaded: isDataLoadedType,
 };
 
 export {WelcomeScreen};
-export default connect(mapStateToProps, null)(WelcomeScreen);
-
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeScreen);

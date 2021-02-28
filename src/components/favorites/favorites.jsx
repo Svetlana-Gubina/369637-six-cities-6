@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import FavoritesList from '../favorites-list/favorites-list';
 import {placesInfoType} from '../../prop-types';
@@ -76,4 +77,9 @@ Favorites.propTypes = {
   placesInfo: placesInfoType,
 };
 
-export default Favorites;
+const mapStateToProps = (state) => ({
+  placesInfo: state.hotelsList,
+});
+
+export {Favorites};
+export default connect(mapStateToProps, null)(Favorites);
