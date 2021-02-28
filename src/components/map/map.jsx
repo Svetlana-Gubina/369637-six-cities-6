@@ -1,20 +1,24 @@
 import React, {useEffect, useRef} from 'react';
+import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {cityType, pointsType, placeCardInfoType} from '../../prop-types';
+import {getOffersForCity} from '../../constants';
+import {placesInfoType, cityNameType, idType} from '../../prop-types';
 
 const getIcon = (poitId, activeId, icon, activeIcon) => {
   return poitId === activeId ? activeIcon : icon;
 };
 
-const Map = ({activePlaceCardId, city, points}) => {
+const Map = ({activePlaceCardId, activeCityItem, placesInfo}) => {
+  const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
   const mapRef = useRef();
 
   useEffect(()=> {
+    const city = activeCityOffers[0].city.location;
     mapRef.current = leaflet.map(`map`, {
       center: {
-        lat: city.lat,
-        lng: city.lng,
+        lat: city.latitude,
+        lng: city.longitude,
       },
       zoom: city.zoom,
       zoomControl: false,
@@ -29,7 +33,7 @@ const Map = ({activePlaceCardId, city, points}) => {
   }, []);
 
   useEffect(() => {
-    points.forEach((point) => {
+    activeCityOffers.forEach((point) => {
       const customIcon = leaflet.icon({
         iconUrl: `img/pin.svg`,
         iconSize: [30, 30]
@@ -41,14 +45,14 @@ const Map = ({activePlaceCardId, city, points}) => {
       });
 
       leaflet.marker({
-        lat: point.lat,
-        lng: point.lng,
+        lat: point.location.latitude,
+        lng: point.location.longitude,
       },
       {
         icon: getIcon(point.id, activePlaceCardId, customIcon, activeIcon)
       })
       .addTo(mapRef.current)
-      .bindPopup(point.placeCardName);
+      .bindPopup(point.title);
 
       return () => {
         mapRef.current.remove();
@@ -64,10 +68,16 @@ const Map = ({activePlaceCardId, city, points}) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  activeCityItem: state.activeCityItem,
+  placesInfo: state.hotelsList,
+});
+
 Map.propTypes = {
-  points: pointsType,
-  city: cityType,
-  activePlaceCardId: placeCardInfoType.id,
+  placesInfo: placesInfoType,
+  activeCityItem: cityNameType,
+  activePlaceCardId: idType,
 };
 
-export default Map;
+export {Map};
+export default connect(mapStateToProps, null)(Map);

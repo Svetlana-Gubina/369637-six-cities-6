@@ -1,27 +1,27 @@
-import {options, getOffersForCity, SortType, sortOffersBy} from '../mocks/offers';
 import {ActionType} from './action';
-import {AuthorizationStatus} from '../constants';
+import {DEFAULT_CITY, AuthorizationStatus, SortType, sortOffersBy} from '../constants';
 
 const initialState = {
-  activeCityItem: options[0].name,
-  availableOffers: options[0].availableOffers,
+  activeCityItem: DEFAULT_CITY,
   activeSortType: SortType.POPULAR,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   hotelsList: [],
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.LOAD_HOTELS:
+      return {
+        ...state,
+        hotelsList: action.payload,
+        isDataLoaded: true
+      };
+
     case ActionType.CHOOSE_CITY:
       return {
         ...state,
         activeCityItem: action.payload,
-      };
-
-    case ActionType.UPDATE_OFFERS:
-      return {
-        ...state,
-        availableOffers: getOffersForCity(action.payload, options),
       };
 
     case ActionType.SET_SORT_TYPE:
@@ -33,19 +33,13 @@ const reducer = (state = initialState, action) => {
     case ActionType.SORT_OPTIONS:
       return {
         ...state,
-        availableOffers: sortOffersBy(action.payload, state.availableOffers),
+        activeCityOffers: sortOffersBy(action.payload, state.activeCityOffers),
       };
 
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload,
-      };
-
-    case ActionType.LOAD_HOTELS:
-      return {
-        ...state,
-        hotelsList: [...action.payload],
       };
 
     default: return state;

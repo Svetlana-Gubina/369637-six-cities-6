@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {placeCardInfoType} from '../../prop-types';
+import {priceType, classNameType, placeType, imgSrcType, idType, setActiveElementType} from '../../prop-types';
 
 const PlaceCard = (props) => {
   const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
@@ -11,7 +11,7 @@ const PlaceCard = (props) => {
         <Link to="/offer" onMouseEnter={() => setActivePlaceCard(id)} onMouseLeave={() => setActivePlaceCard(0)}>
           <img
             className="place-card__image"
-            src={`img/${imgSrc}.jpg`}
+            src={imgSrc}
             width="260"
             height="200"
             alt="Place image"
@@ -55,7 +55,17 @@ const PlaceCard = (props) => {
   );
 };
 
-PlaceCard.propTypes = placeCardInfoType;
+PlaceCard.propTypes = {
+  id: idType,
+  imgSrc: imgSrcType,
+  placeCardPriceValue: priceType,
+  placeCardName: classNameType,
+  placeCardType: placeType,
+  setActivePlaceCard: setActiveElementType,
+  className: classNameType,
+  specialCardClass: classNameType,
+  additionalClass: classNameType
+};
 
 
 export default PlaceCard;

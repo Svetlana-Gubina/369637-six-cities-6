@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {v4 as uuidv4} from "uuid";
 import PlaceCard from '../place-card/place-card';
-import {additionalClassType, placesInfoType} from '../../prop-types';
+import {classNameType, placesInfoType} from '../../prop-types';
 
 const FavoritesList = ({placesInfo}) => {
   const className = `favorites`;
@@ -30,7 +30,7 @@ const FavoritesList = ({placesInfo}) => {
 
 FavoritesList.propTypes = {
   placesInfo: placesInfoType,
-  additionalClass: additionalClassType,
+  additionalClass: classNameType,
 };
 
 export default FavoritesList;

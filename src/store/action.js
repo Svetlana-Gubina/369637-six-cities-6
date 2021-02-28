@@ -14,10 +14,6 @@ export const ActionCreator = {
     type: ActionType.CHOOSE_CITY,
     payload: cityName,
   }),
-  updateOffers: (name) => ({
-    type: ActionType.UPDATE_OFFERS,
-    payload: name,
-  }),
   setSortType: (sortType) => ({
     type: ActionType.SET_SORT_TYPE,
     payload: sortType,
