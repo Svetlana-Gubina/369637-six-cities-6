@@ -4,7 +4,7 @@ import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import CitiesList from '../cities-list/cities-list';
 import LoadingScreen from '../loading-screen/loading-screen';
-import PrivateRoute from '../private-route/private-route';
+import UserNav from '../user-nav/user-nav';
 import {getHotelsList} from '../../store/api-actions';
 import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
 import {getOffersForCity} from '../../utils';
@@ -46,7 +46,7 @@ const WelcomeScreen = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <PrivateRoute isAuthorized={isAuthorized} />
+                  <UserNav isAuthorized={isAuthorized} />
                 </li>
               </ul>
             </nav>

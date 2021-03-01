@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {AuthorizationStatus} from '../../constants';
 import {authorizedPropType} from '../../prop-types';
 
-const PrivateRoute = (props) => {
+const UserNav = (props) => {
   const {isAuthorized} = props;
 
   return isAuthorized === AuthorizationStatus.AUTH ?
@@ -25,10 +25,10 @@ const mapStateToProps = (state) => ({
   isAuthorized: state.authorizationStatus,
 });
 
-PrivateRoute.propTypes = {
+UserNav.propTypes = {
   isAuthorized: authorizedPropType,
 };
 
 
-export {PrivateRoute};
-export default connect(mapStateToProps, null)(PrivateRoute);
+export {UserNav};
+export default connect(mapStateToProps, null)(UserNav);

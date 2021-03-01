@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import NearPlacesList from '../near-places-list/near-places-list';
-import PrivateRoute from '../private-route/private-route';
+import UserNav from '../user-nav/user-nav';
 import {cityNamePropType, placesInfoPropType, authorizedPropType, reviewItemsPropType} from '../../prop-types';
 import {getSomePlacesInfo} from '../../utils';
 
@@ -24,7 +24,7 @@ const Room = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <PrivateRoute isAuthorized={isAuthorized} />
+                  <UserNav isAuthorized={isAuthorized} />
                 </li>
               </ul>
             </nav>
