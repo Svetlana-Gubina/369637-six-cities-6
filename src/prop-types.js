@@ -1,31 +1,31 @@
 import PropTypes from 'prop-types';
-import {PlaceType} from './constants';
+import {TypeOfPlace} from './constants';
 
-export const idType = PropTypes.number.isRequired;
+export const idPropType = PropTypes.number.isRequired;
 
-export const placeType = PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.HOUSE, PlaceType.ROOM, PlaceType.HOTEL]);
+export const placePropType = PropTypes.oneOf([TypeOfPlace.APARTMENT, TypeOfPlace.HOUSE, TypeOfPlace.ROOM, TypeOfPlace.HOTEL]);
 
-export const priceType = PropTypes.number.isRequired;
+export const pricePropType = PropTypes.number;
 
-export const imgSrcType = PropTypes.string;
+export const imgSrcPropType = PropTypes.string;
 
-export const isDataLoadedType = PropTypes.bool.isRequired;
+export const isDataLoadedPropType = PropTypes.bool.isRequired;
 
-export const cityNameType = PropTypes.string.isRequired;
+export const cityNamePropType = PropTypes.string;
 
-export const citiesType = PropTypes.arrayOf(PropTypes.string);
+export const citiesPropType = PropTypes.arrayOf(PropTypes.string);
 
-export const onSubmitType = PropTypes.func.isRequired;
+export const onSubmitPropType = PropTypes.func;
 
-export const onLoadType = PropTypes.func.isRequired;
+export const onLoadPropType = PropTypes.func;
 
-export const setActiveElementType = PropTypes.func;
+export const setActiveElementPropType = PropTypes.func;
 
-export const classNameType = PropTypes.string;
+export const classNamePropType = PropTypes.string;
 
-export const authorizedType = PropTypes.string.isRequired;
+export const authorizedPropType = PropTypes.string.isRequired;
 
-export const commentGetType = PropTypes.shape({
+export const commentGetPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
@@ -38,12 +38,12 @@ export const commentGetType = PropTypes.shape({
   }),
 });
 
-export const usertype = PropTypes.shape({
+export const userPropType = PropTypes.shape({
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
 });
 
-export const authInfoType = PropTypes.shape({
+export const authInfoPropType = PropTypes.shape({
   avatarUrl: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   isPro: PropTypes.bool.isRequired,
@@ -51,7 +51,7 @@ export const authInfoType = PropTypes.shape({
   email: PropTypes.string.isRequired,
 });
 
-export const placeInfoType = PropTypes.shape({
+export const placeInfoPropType = PropTypes.shape({
   city: PropTypes.shape({
     location: PropTypes.shape({
       latitude: PropTypes.number.isRequired,
@@ -66,7 +66,7 @@ export const placeInfoType = PropTypes.shape({
   isFavorite: PropTypes.bool,
   isPremium: PropTypes.bool,
   maxAdults: PropTypes.number,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.number,
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   goods: PropTypes.arrayOf(PropTypes.string),
@@ -83,24 +83,24 @@ export const placeInfoType = PropTypes.shape({
     zoom: PropTypes.number,
   }),
   previewImage: PropTypes.string,
-  type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.HOUSE, PlaceType.ROOM, PlaceType.HOTEL]),
+  type: PropTypes.oneOf([TypeOfPlace.APARTMENT, TypeOfPlace.HOUSE, TypeOfPlace.ROOM, TypeOfPlace.HOTEL]),
 });
 
-export const locationType = PropTypes.shape({
+export const locationPropType = PropTypes.shape({
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
   zoom: PropTypes.number,
 });
 
-export const pointsType = PropTypes.arrayOf(PropTypes.shape({
+export const pointsPropType = PropTypes.arrayOf(PropTypes.shape({
   latitude: PropTypes.number,
   longitude: PropTypes.number,
   zoom: PropTypes.number,
 }));
 
-export const placesInfoType = PropTypes.arrayOf(placeInfoType);
+export const placesInfoPropType = PropTypes.arrayOf(placeInfoPropType);
 
-export const reviewItemsType = PropTypes.arrayOf(
+export const reviewItemsPropType = PropTypes.arrayOf(
     PropTypes.shape({
       userAvatar: PropTypes.string,
       userName: PropTypes.string,
@@ -110,7 +110,7 @@ export const reviewItemsType = PropTypes.arrayOf(
     })
 );
 
-export const reviewsItemType = {
+export const reviewItemPropType = {
   userAvatar: PropTypes.string,
   userName: PropTypes.string,
   userRate: PropTypes.string,
@@ -118,15 +118,15 @@ export const reviewsItemType = {
   reviewTime: PropTypes.string,
 };
 
-export const lengthType = PropTypes.number;
+export const lengthPropType = PropTypes.number;
 
-export const sortTypeNameType = PropTypes.string;
+export const sortTypeNamePropType = PropTypes.string;
 
-export const sortTypesType = PropTypes.shape({
+export const sortTypesPropType = PropTypes.shape({
   POPULAR: PropTypes.string,
   PRICE_LOW_TO_HIGH: PropTypes.string,
   PRICE_HIGH_TO_LOW: PropTypes.string,
   TOP_RATED_FIRST: PropTypes.string,
 });
 
-export const popUpStateType = PropTypes.bool;
+export const popUpStatePropType = PropTypes.bool;

@@ -2,8 +2,8 @@ import React from "react";
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import FavoritesList from '../favorites-list/favorites-list';
-import {placesInfoType} from '../../prop-types';
-import {getSomePlacesInfo} from '../../mocks/offers';
+import {placesInfoPropType} from '../../prop-types';
+import {getSomePlacesInfo} from '../../utils';
 
 const Favorites = (props) => {
   const {placesInfo} = props;
@@ -74,7 +74,7 @@ const Favorites = (props) => {
 };
 
 Favorites.propTypes = {
-  placesInfo: placesInfoType,
+  placesInfo: placesInfoPropType,
 };
 
 const mapStateToProps = (state) => ({

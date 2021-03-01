@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {cityNameType, setActiveElementType} from '../../prop-types';
+import {cityNamePropType, setActiveElementPropType} from '../../prop-types';
 
 const CityItem = (props) => {
   const {cityName, activeCityItem, setActiveCityItem} = props;
@@ -15,9 +15,9 @@ const CityItem = (props) => {
 };
 
 CityItem.propTypes = {
-  cityName: cityNameType,
-  activeCityItem: cityNameType,
-  setActiveCityItem: setActiveElementType
+  cityName: cityNamePropType,
+  activeCityItem: cityNamePropType,
+  setActiveCityItem: setActiveElementPropType
 };
 
 export default CityItem;

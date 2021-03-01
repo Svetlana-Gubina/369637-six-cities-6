@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import SortTypesList from '../sort-types-list/sort-types-list';
-import {sortTypeNameType, sortTypesType} from '../../prop-types';
+import {sortTypeNamePropType, sortTypesPropType} from '../../prop-types';
 
 const PlacesSortingForm = (props) => {
-  const {sortTypes, activeSortTypeName} = props;
+  const {typesOfSort, activeSortTypeName} = props;
   const [popUpState, togglePopUp] = useState(false);
 
   return (
@@ -15,14 +15,14 @@ const PlacesSortingForm = (props) => {
           <use xlinkHref="#icon-arrow-select" />
         </svg>
       </span>
-      <SortTypesList popUpState={popUpState} sortTypes={sortTypes} activeSortTypeName={activeSortTypeName} />
+      <SortTypesList popUpState={popUpState} typesOfSort={typesOfSort} activeSortTypeName={activeSortTypeName} />
     </form>
   );
 };
 
 PlacesSortingForm.propTypes = {
-  sortTypes: sortTypesType,
-  activeSortTypeName: sortTypeNameType,
+  typesOfSort: sortTypesPropType,
+  activeSortTypeName: sortTypeNamePropType,
 };
 
 export default PlacesSortingForm;
