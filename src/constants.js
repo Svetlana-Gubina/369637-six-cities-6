@@ -1,4 +1,20 @@
-export const ZOOM = 12;
+const ZOOM = 12;
+
+export const CITY = {
+  zoom: ZOOM,
+  latitude: 52.38333,
+  longitude: 4.9,
+};
+
+export const REVIEWS = [
+  {
+    userAvatar: `avatar-max`,
+    userName: `Max`,
+    userRate: `80%`,
+    reviewText: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+    reviewTime: `2019-04-24`,
+  },
+];
 
 export const authorized = true;
 
@@ -7,7 +23,7 @@ export const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
-export const PlaceType = {
+export const TypeOfPlace = {
   APARTMENT: `apartment`,
   ROOM: `room`,
   HOUSE: `house`,
@@ -18,10 +34,6 @@ export const AVAILABLE_CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `H
 
 export const DEFAULT_CITY = `Paris`;
 
-export const getOffersForCity = (cityName, opts) => {
-  return opts.filter((opt) => opt.city.name === cityName);
-};
-
 export const SortType = {
   POPULAR: `Popular`,
   PRICE_LOW_TO_HIGH: `Price: low to high`,
@@ -29,23 +41,9 @@ export const SortType = {
   TOP_RATED_FIRST: `Top rated first`,
 };
 
-export const sortOffersBy = (sortType, opts) => {
-  switch (sortType) {
-    case SortType.PRICE_LOW_TO_HIGH:
-      return opts.slice().sort((a, b) => {
-        return a.placeCardPriceValue - b.placeCardPriceValue;
-      });
-
-    case SortType.PRICE_HIGH_TO_LOW:
-      return opts.slice().sort((a, b) => {
-        return b.placeCardPriceValue - a.placeCardPriceValue;
-      });
-
-    case SortType.TOP_RATED_FIRST:
-      return opts.slice().sort((a, b) => {
-        return a.rating - b.rating;
-      });
-
-    default: return opts;
-  }
+export const AppRoute = {
+  LOGIN: `/login`,
+  ROOT: `/`,
+  FAVORITES: `/favorites`,
+  OFFER: `/offer/:id?`,
 };

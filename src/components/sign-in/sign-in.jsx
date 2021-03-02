@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {login} from "../../store/api-actions";
-import {onSubmitType} from '../../prop-types';
+import {onSubmitPropType} from '../../prop-types';
 
 const SignIn = ({onSubmit}) => {
   const emailRef = useRef();
@@ -53,7 +53,7 @@ const SignIn = ({onSubmit}) => {
                   ref={emailRef}
                   className="login__input form__input"
                   type="email" name="email"
-                  placeHolder="Email"
+                  placeholder="Email"
                   required />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -63,7 +63,7 @@ const SignIn = ({onSubmit}) => {
                   className="login__input form__input"
                   type="password"
                   name="password"
-                  placeHolder="Password"
+                  placeholder="Password"
                   required />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
@@ -89,7 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 SignIn.propTypes = {
-  onSubmit: onSubmitType,
+  onSubmit: onSubmitPropType,
 };
 
 export {SignIn};

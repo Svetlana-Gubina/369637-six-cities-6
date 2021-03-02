@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {priceType, classNameType, placeType, imgSrcType, idType, setActiveElementType} from '../../prop-types';
+import {pricePropType, classNamePropType, placePropType, imgSrcPropType, idPropType, setActiveElementPropType} from '../../prop-types';
 
 const PlaceCard = (props) => {
   const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
@@ -56,15 +56,15 @@ const PlaceCard = (props) => {
 };
 
 PlaceCard.propTypes = {
-  id: idType,
-  imgSrc: imgSrcType,
-  placeCardPriceValue: priceType,
-  placeCardName: classNameType,
-  placeCardType: placeType,
-  setActivePlaceCard: setActiveElementType,
-  className: classNameType,
-  specialCardClass: classNameType,
-  additionalClass: classNameType
+  id: idPropType,
+  imgSrc: imgSrcPropType,
+  placeCardPriceValue: pricePropType,
+  placeCardName: classNamePropType,
+  placeCardType: placePropType,
+  setActivePlaceCard: setActiveElementPropType,
+  className: classNamePropType,
+  specialCardClass: classNamePropType,
+  additionalClass: classNamePropType
 };
 
 

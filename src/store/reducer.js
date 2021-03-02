@@ -1,5 +1,7 @@
 import {ActionType} from './action';
-import {DEFAULT_CITY, AuthorizationStatus, SortType, sortOffersBy} from '../constants';
+import {sortOffersBy} from '../utils';
+import {DEFAULT_CITY, AuthorizationStatus, SortType} from '../constants';
+import Model from '../models/model';
 
 const initialState = {
   activeCityItem: DEFAULT_CITY,
@@ -14,7 +16,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_HOTELS:
       return {
         ...state,
-        hotelsList: action.payload,
+        hotelsList: Model.parseHotelsData(action.payload),
         isDataLoaded: true
       };
 

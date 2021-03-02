@@ -5,6 +5,7 @@ export const ActionType = {
   SORT_OPTIONS: `welcomeScreen/sortOptions`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_HOTELS: `store/loadHotels`,
+  REDIRECT_TO_ROUTE: `signIn/redirectToRoute`
 };
 
 // actionCreator()
@@ -29,5 +30,9 @@ export const ActionCreator = {
   loadHotels: (hotelsList) => ({
     type: ActionType.LOAD_HOTELS,
     payload: hotelsList,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url
   }),
 };

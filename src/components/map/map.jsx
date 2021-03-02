@@ -2,11 +2,11 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {getOffersForCity} from '../../constants';
-import {placesInfoType, cityNameType, idType} from '../../prop-types';
+import {getOffersForCity} from '../../utils';
+import {placesInfoPropType, cityNamePropType, idPropType} from '../../prop-types';
 
-const getIcon = (poitId, activeId, icon, activeIcon) => {
-  return poitId === activeId ? activeIcon : icon;
+const getIcon = (pointId, activeId, icon, activeIcon) => {
+  return pointId === activeId ? activeIcon : icon;
 };
 
 const Map = ({activePlaceCardId, activeCityItem, placesInfo}) => {
@@ -30,7 +30,11 @@ const Map = ({activePlaceCardId, activeCityItem, placesInfo}) => {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
     })
     .addTo(mapRef.current);
-  }, []);
+
+    return () => {
+      mapRef.current.remove();
+    };
+  }, [activeCityItem]);
 
   useEffect(() => {
     activeCityOffers.forEach((point) => {
@@ -53,10 +57,6 @@ const Map = ({activePlaceCardId, activeCityItem, placesInfo}) => {
       })
       .addTo(mapRef.current)
       .bindPopup(point.title);
-
-      return () => {
-        mapRef.current.remove();
-      };
     });
   }, [activePlaceCardId]);
 
@@ -74,9 +74,9 @@ const mapStateToProps = (state) => ({
 });
 
 Map.propTypes = {
-  placesInfo: placesInfoType,
-  activeCityItem: cityNameType,
-  activePlaceCardId: idType,
+  placesInfo: placesInfoPropType,
+  activeCityItem: cityNamePropType,
+  activePlaceCardId: idPropType,
 };
 
 export {Map};

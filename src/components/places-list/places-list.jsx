@@ -1,7 +1,7 @@
 import React from 'react';
 import {v4 as uuidv4} from "uuid";
 import PlaceCard from '../place-card/place-card';
-import {idType, placesInfoType, setActiveElementType} from '../../prop-types';
+import {idPropType, placesInfoPropType, setActiveElementPropType} from '../../prop-types';
 
 const PlacesList = (props) => {
   const {placesInfo, activePlaceCardId, setActivePlaceCard} = props;
@@ -16,7 +16,7 @@ const PlacesList = (props) => {
       {placesInfo.map((placeInfo) => <PlaceCard
         key={uuidv4()}
         id={placeInfo.id}
-        imgSrc={placeInfo[`preview_image`]}
+        imgSrc={placeInfo.previewImage}
         placeCardPriceValue={placeInfo.price}
         placeCardName={placeInfo.title}
         placeCardType={placeInfo.type}
@@ -29,9 +29,9 @@ const PlacesList = (props) => {
 };
 
 PlacesList.propTypes = {
-  activePlaceCardId: idType,
-  placesInfo: placesInfoType,
-  setActivePlaceCard: setActiveElementType,
+  activePlaceCardId: idPropType,
+  placesInfo: placesInfoPropType,
+  setActivePlaceCard: setActiveElementPropType,
 };
 
 export default PlacesList;

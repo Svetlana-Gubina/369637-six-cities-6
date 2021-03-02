@@ -1,5 +1,5 @@
 import React from 'react';
-import {sortTypeNameType, setActiveElementType} from '../../prop-types';
+import {sortTypeNamePropType, setActiveElementPropType} from '../../prop-types';
 
 const SortTypesItem = (props) => {
   const {sortTypeName, activeSortTypeName, choseSortType} = props;
@@ -12,9 +12,9 @@ const SortTypesItem = (props) => {
 };
 
 SortTypesItem.propTypes = {
-  sortTypeName: sortTypeNameType,
-  activeSortTypeName: sortTypeNameType,
-  choseSortType: setActiveElementType
+  sortTypeName: sortTypeNamePropType,
+  activeSortTypeName: sortTypeNamePropType,
+  choseSortType: setActiveElementPropType
 };
 
 export default SortTypesItem;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {cityNameType, citiesType, setActiveElementType} from '../../prop-types';
+import {cityNamePropType, citiesPropType, setActiveElementPropType} from '../../prop-types';
 import CityItem from '../city-item/city-item';
 import {v4 as uuidv4} from "uuid";
 import {ActionCreator} from '../../store/action';
@@ -26,9 +26,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 CitiesList.propTypes = {
-  cities: citiesType,
-  activeCityItem: cityNameType,
-  setActiveCityItem: setActiveElementType
+  cities: citiesPropType,
+  activeCityItem: cityNamePropType,
+  setActiveCityItem: setActiveElementPropType
 };
 
 export {CitiesList};

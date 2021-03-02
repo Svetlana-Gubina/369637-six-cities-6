@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from "react";
 import {connect} from 'react-redux';
-import {Link} from "react-router-dom";
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import CitiesList from '../cities-list/cities-list';
 import LoadingScreen from '../loading-screen/loading-screen';
+import UserNav from '../user-nav/user-nav';
 import {getHotelsList} from '../../store/api-actions';
 import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
-import {AuthorizationStatus, getOffersForCity} from '../../constants';
-import {isDataLoadedType, onLoadType, cityNameType, locationType, citiesType, sortTypeNameType, sortTypesType, lengthType, placesInfoType, authorizedType} from '../../prop-types';
+import {getOffersForCity} from '../../utils';
+import {onLoadPropType, isDataLoadedPropType, cityNamePropType, locationPropType, citiesPropType, sortTypeNamePropType, sortTypesPropType, lengthPropType, placesInfoPropType, authorizedPropType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
-  const {SortType, placesInfo, onLoad, isDataLoaded, activeSortType, cities, activeCityItem, isAuthorized} = props;
+  const {typesOfSort, placesInfo, onLoad, isDataLoaded, activeSortType, cities, activeCityItem, isAuthorized} = props;
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
 
@@ -46,19 +46,7 @@ const WelcomeScreen = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  {isAuthorized === AuthorizationStatus.AUTH ?
-                    <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                      <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                      </span>
-                    </Link> :
-                    <Link className="header__nav-link header__nav-link--profile" to="/login">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__login">Sign in</span>
-                    </Link>
-                  }
+                  <UserNav isAuthorized={isAuthorized} />
                 </li>
               </ul>
             </nav>
@@ -78,7 +66,7 @@ const WelcomeScreen = (props) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{`${activeCityOffers.length} places to stay in ${activeCityItem}`}</b>
-              <PlacesSortingForm sortTypes={SortType} activeSortTypeName={activeSortType} />
+              <PlacesSortingForm typesOfSort={typesOfSort} activeSortTypeName={activeSortType} />
               <div className="cities__places-list places__list tabs__content">
                 <PlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={activeCityOffers} />
               </div>
@@ -110,17 +98,17 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 WelcomeScreen.propTypes = {
-  cities: citiesType,
-  city: locationType,
-  placesInfo: placesInfoType,
-  isAuthorized: authorizedType,
-  length: lengthType,
-  activeCityOffers: placesInfoType,
-  activeCityItem: cityNameType,
-  SortType: sortTypesType,
-  activeSortType: sortTypeNameType,
-  onLoad: onLoadType,
-  isDataLoaded: isDataLoadedType,
+  cities: citiesPropType,
+  city: locationPropType,
+  placesInfo: placesInfoPropType,
+  isAuthorized: authorizedPropType,
+  length: lengthPropType,
+  activeCityOffers: placesInfoPropType,
+  activeCityItem: cityNamePropType,
+  typesOfSort: sortTypesPropType,
+  activeSortType: sortTypeNamePropType,
+  onLoad: onLoadPropType,
+  isDataLoaded: isDataLoadedPropType,
 };
 
 export {WelcomeScreen};
