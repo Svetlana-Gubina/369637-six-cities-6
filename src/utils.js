@@ -28,3 +28,7 @@ export const sortOffersBy = (sortType, opts) => {
 export const getSomePlacesInfo = (placesInfo, fromIndex, toIndex) => {
   return placesInfo.slice(fromIndex, toIndex);
 };
+
+export const getOfferInfoById = (placesInfo, offerId) => {
+  return placesInfo.find((element) => element.id === offerId);
+};

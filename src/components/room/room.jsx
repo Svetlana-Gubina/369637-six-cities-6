@@ -1,15 +1,20 @@
 import React from "react";
 import {connect} from 'react-redux';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {v4 as uuidv4} from "uuid";
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
-import NearPlacesList from '../near-places-list/near-places-list';
+import GalleryImage from '../gallery-image/gallery-image';
+import PropertyInside from '../property-inside-list/property-inside';
 import UserNav from '../user-nav/user-nav';
+import {AuthorizationStatus} from '../../constants';
 import {cityNamePropType, placesInfoPropType, authorizedPropType, reviewItemsPropType} from '../../prop-types';
-import {getSomePlacesInfo} from '../../utils';
+import {getOfferInfoById} from '../../utils';
 
 const Room = (props) => {
-  const {isAuthorized, reviewItems, placesInfo} = props;
+  let {id} = useParams();
+  const {isAuthorized, placesInfo} = props;
+  const offerInfo = getOfferInfoById(placesInfo, parseInt(id, 10));
 
   return (
     <div className="page">
@@ -36,24 +41,11 @@ const Room = (props) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
+              {/* {offerInfo.images.map((img) =>
+                <GalleryImage
+                  key={uuidv4()}
+                  img={img} />
+              )} */}
             </div>
           </div>
           <div className="property__container container">
@@ -98,38 +90,7 @@ const Room = (props) => {
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
-                </ul>
+                {/* <PropertyInside goods={offerInfo.goods} /> */}
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
@@ -151,9 +112,11 @@ const Room = (props) => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewItems.length}</span></h2>
-                <ReviewsList reviewItems={reviewItems} />
-                <ReviewForm />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
+                {/* <ReviewsList /> */}
+                {isAuthorized === AuthorizationStatus.AUTH ?
+                  <ReviewForm /> : ``
+                }
               </section>
             </div>
           </div>
@@ -164,7 +127,7 @@ const Room = (props) => {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearPlacesList placesInfo={getSomePlacesInfo(placesInfo, 1, 4)} />
+            {/* <NearPlacesList placesInfo={getSomePlacesInfo(placesInfo, 1, 4)} /> */}
           </section>
         </div>
       </main>
@@ -175,6 +138,13 @@ const Room = (props) => {
 const mapStateToProps = (state) => ({
   isAuthorized: state.authorizationStatus,
   placesInfo: state.hotelsList,
+  comments: state.comments,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadComments(id) {
+    dispatch(getComents(id));
+  }
 });
 
 Room.propTypes = {
@@ -186,4 +156,4 @@ Room.propTypes = {
 
 
 export {Room};
-export default connect(mapStateToProps, null)(Room);
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

@@ -45,7 +45,7 @@ const PlaceCard = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="/offer">
+          <Link to={`/offer/${id}`}>
             {placeCardName}
           </Link>
         </h2>

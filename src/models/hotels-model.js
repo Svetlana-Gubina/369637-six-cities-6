@@ -1,4 +1,4 @@
-export default class Model {
+export default class HotelsModel {
   constructor(hotel) {
     this.bedrooms = hotel[`bedrooms`];
     this.id = hotel[`id`];
@@ -36,11 +36,11 @@ export default class Model {
   }
 
   static parseHotelData(hotels) {
-    return new Model(hotels);
+    return new HotelsModel(hotels);
   }
 
   static parseHotelsData(hotels) {
-    return hotels.map(Model.parseHotelData);
+    return hotels.map(HotelsModel.parseHotelData);
   }
 
   toRAW() {

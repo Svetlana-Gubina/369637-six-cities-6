@@ -20,7 +20,7 @@ const App = (props) => {
         <Favorites />
       </Route>
       <Route exact path={AppRoute.OFFER}>
-        <Room reviewItems={reviewItems} />
+        <Room />
       </Route>
       <Route exact path={AppRoute.LOGIN}>
         <SignIn />
