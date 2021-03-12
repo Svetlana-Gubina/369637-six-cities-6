@@ -1,5 +1,4 @@
 import {ActionType} from './action';
-import {sortOffersBy} from '../utils';
 import {DEFAULT_CITY, AuthorizationStatus, SortType} from '../constants';
 import HotelsModel from '../models/hotels-model';
 
@@ -30,12 +29,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeSortType: action.payload,
-      };
-
-    case ActionType.SORT_OPTIONS:
-      return {
-        ...state,
-        activeCityOffers: sortOffersBy(action.payload, state.activeCityOffers),
       };
 
     case ActionType.REQUIRED_AUTHORIZATION:

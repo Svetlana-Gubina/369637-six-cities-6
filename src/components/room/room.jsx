@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from 'react-redux';
 import {Link, useParams} from "react-router-dom";
 import {v4 as uuidv4} from "uuid";
@@ -9,12 +9,21 @@ import PropertyInside from '../property-inside-list/property-inside';
 import UserNav from '../user-nav/user-nav';
 import {AuthorizationStatus} from '../../constants';
 import {cityNamePropType, placesInfoPropType, authorizedPropType, reviewItemsPropType} from '../../prop-types';
-import {getOfferInfoById} from '../../utils';
+
 
 const Room = (props) => {
   let {id} = useParams();
-  const {isAuthorized, placesInfo} = props;
-  const offerInfo = getOfferInfoById(placesInfo, parseInt(id, 10));
+  const {isAuthorized} = props;
+
+  fetch(`https://6.react.pages.academy/six-cities/hotels/:${id}`, {
+    method: `GET`,
+    headers: {
+      'Content-Type': `application/json`,
+    }
+  })
+  .then((response) => response.json())
+  .then((data) => console.log(data));
+
 
   return (
     <div className="page">
@@ -50,12 +59,12 @@ const Room = (props) => {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
+              {/* offerInfo.isPremium ? <div className="property__mark">
                 <span>Premium</span>
-              </div>
+              </div> : `` */}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {/* offerInfo.title */}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -75,17 +84,17 @@ const Room = (props) => {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {/* offerInfo.type..capitalize() */}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {/* offerInfo.bedrooms */} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {/* offerInfo.maxAdults */} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{/* offerInfo.price */}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
@@ -96,10 +105,10 @@ const Room = (props) => {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={{/* offerInfo.host.avatarUrl */}} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {/* offerInfo.host.name */}
                   </span>
                 </div>
                 <div className="property__description">
@@ -137,15 +146,8 @@ const Room = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthorized: state.authorizationStatus,
-  placesInfo: state.hotelsList,
-  comments: state.comments,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onLoadComments(id) {
-    dispatch(getComents(id));
-  }
-});
 
 Room.propTypes = {
   city: cityNamePropType,
@@ -156,4 +158,4 @@ Room.propTypes = {
 
 
 export {Room};
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default connect(mapStateToProps, null)(Room);

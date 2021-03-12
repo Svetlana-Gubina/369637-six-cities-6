@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {api} from '../../index';
 
 const ReviewForm = () => {
   const [review, setReview] = useState({
@@ -13,8 +14,13 @@ const ReviewForm = () => {
     });
   };
 
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+   {/*  api.post(`/comments/: hotel_id`); */}
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <div>{review.comment}</div>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">

@@ -6,35 +6,26 @@ import PageNotFound from '../page-not-found/page-not-found';
 import Room from '../room/room';
 import SignIn from '../sign-in/sign-in';
 import {AppRoute} from '../../constants';
-import {locationPropType, citiesPropType, sortTypesPropType, reviewItemsPropType} from '../../prop-types';
+import {locationPropType, citiesPropType, sortTypesPropType} from '../../prop-types';
 
 const App = (props) => {
-  const {typesOfSort, cities, reviewItems, city} = props;
+  const {typesOfSort, cities, city} = props;
 
   return <BrowserRouter>
     <Switch>
       <Route exact path={AppRoute.ROOT}>
         <WelcomeScreen cities={cities} typesOfSort={typesOfSort} city={city} />;
       </Route>
-      <Route exact path={AppRoute.FAVORITES}>
-        <Favorites />
-      </Route>
-      <Route exact path={AppRoute.OFFER}>
-        <Room />
-      </Route>
-      <Route exact path={AppRoute.LOGIN}>
-        <SignIn />
-      </Route>
-      <Route>
-        <PageNotFound />
-      </Route>
+      <Route exact path={AppRoute.FAVORITES} component={Favorites} />
+      <Route exact path={AppRoute.OFFER} component={Room} />
+      <Route exact path={AppRoute.LOGIN} component={SignIn} />
+      <Route component={PageNotFound} />
     </Switch>
   </BrowserRouter>;
 };
 
 App.propTypes = {
   cities: citiesPropType,
-  reviewItems: reviewItemsPropType,
   city: locationPropType,
   typesOfSort: sortTypesPropType,
 };
