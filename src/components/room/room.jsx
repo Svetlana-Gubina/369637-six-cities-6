@@ -12,6 +12,7 @@ import GalleryImage from '../gallery-image/gallery-image';
 import PropertyInside from '../property-inside-list/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
 import UserNav from '../user-nav/user-nav';
+import Map from '../map/map';
 import {AuthorizationStatus} from '../../constants';
 import {authorizedPropType} from '../../prop-types';
 
@@ -50,7 +51,6 @@ const Room = (props) => {
   useEffect(() => {
     api.get(`/hotels/${id}/nearby`)
     .then((res) => {
-      console.log(HotelsModel.parseHotelsData(res.data));
       setNearby(HotelsModel.parseHotelsData(res.data));
     });
   }, []);
@@ -176,7 +176,7 @@ const Room = (props) => {
             </div>
           </div>
           <section className="property__map map">
-            {/* <Map activePlaceCardId={activePlaceCardId} /> */}
+            <Map activePlaceCardId={activePlaceCardId} points={nearby} />
           </section>
         </section>
         <div className="container">

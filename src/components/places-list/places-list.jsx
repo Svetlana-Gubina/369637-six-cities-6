@@ -1,5 +1,4 @@
 import React from 'react';
-import {v4 as uuidv4} from "uuid";
 import PlaceCard from '../place-card/place-card';
 import {idPropType, placesInfoPropType, setActiveElementPropType} from '../../prop-types';
 
@@ -14,7 +13,7 @@ const PlacesList = (props) => {
         display: `none`
       }}>{activePlaceCardId}</div>
       {placesInfo.map((placeInfo) => <PlaceCard
-        key={uuidv4()}
+        key={placeInfo.id}
         id={placeInfo.id}
         imgSrc={placeInfo.previewImage}
         placeCardPriceValue={placeInfo.price}
