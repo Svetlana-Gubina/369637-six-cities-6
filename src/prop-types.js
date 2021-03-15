@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import {TypeOfPlace} from './constants';
 
-export const idPropType = PropTypes.number.isRequired;
+export const goodsPropType = PropTypes.arrayOf(PropTypes.string);
+
+export const idPropType = PropTypes.number;
 
 export const placePropType = PropTypes.oneOf([TypeOfPlace.APARTMENT, TypeOfPlace.HOUSE, TypeOfPlace.ROOM, TypeOfPlace.HOTEL]);
 
@@ -113,7 +115,7 @@ export const reviewItemsPropType = PropTypes.arrayOf(
 export const reviewItemPropType = {
   userAvatar: PropTypes.string,
   userName: PropTypes.string,
-  userRate: PropTypes.string,
+  userRate: PropTypes.number,
   reviewText: PropTypes.string,
   reviewTime: PropTypes.string,
 };

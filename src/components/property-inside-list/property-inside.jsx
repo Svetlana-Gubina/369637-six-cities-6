@@ -1,6 +1,6 @@
 import React from 'react';
 import {v4 as uuidv4} from "uuid";
-import {placeInfoPropType} from '../../prop-types';
+import {goodsPropType} from '../../prop-types';
 
 const PropertyInside = (props) => {
   const {goods} = props;
@@ -18,7 +18,7 @@ const PropertyInside = (props) => {
 };
 
 PropertyInside.propTypes = {
-  goods: {placeInfoPropType}
+  goods: goodsPropType
 };
 
 export default PropertyInside;

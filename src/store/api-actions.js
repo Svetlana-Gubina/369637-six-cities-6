@@ -24,19 +24,3 @@ export const logOut = () => (dispatch, _getState, api) => (
   api.get(`/logout`)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );
-
-export const getHotelInfo = (id) => (dispatch, _getState, api) => (
-  api.get(`/hotels/:${id}`)
-    .then((data) => dispatch(ActionCreator.loadHotelInfo()))
-);
-
-export const getComments = (id) => (dispatch, _getState, api) => (
-  api.get(`/comments/:${id}`)
-    .then(() => dispatch({/* action */}))
-);
-
-export const getHotelNearbyList = (id) => (dispatch, _getState, api) => (
-  api.get(`/hotels/:${id}/nearby`)
-    .then(() => dispatch({/* action */}))
-);
-

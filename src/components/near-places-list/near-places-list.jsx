@@ -1,25 +1,24 @@
-import React, {useState} from 'react';
-import {v4 as uuidv4} from "uuid";
+import React from 'react';
 import PlaceCard from '../place-card/place-card';
-import {placesInfoPropType} from '../../prop-types';
+import {placesInfoPropType, idPropType, setActiveElementPropType} from '../../prop-types';
 
-const NearPlacesList = ({placesInfo}) => {
+const NearPlacesList = (props) => {
+  const {placesInfo, activePlaceCardId, setActivePlaceCard} = props;
   const className = `near-places`;
   const specialCardClass = className + `__card`;
-  const [activeElementId, setActiveElement] = useState(0);
 
   return <div className={className + `__list places__list`}>
     <div style={{
       display: `none`
-    }}>{activeElementId}</div>
+    }}>{activePlaceCardId}</div>
     {placesInfo.map((placeInfo) => <PlaceCard
-      key={uuidv4()}
+      key={placeInfo.id}
       id={placeInfo.id}
-      imgSrc={placeInfo.imgSrc}
-      placeCardPriceValue={placeInfo.placeCardPriceValue}
-      placeCardName={placeInfo.placeCardName}
-      placeCardType={placeInfo.placeCardType}
-      setActiveElement={setActiveElement}
+      imgSrc={placeInfo.previewImage}
+      placeCardPriceValue={placeInfo.price}
+      placeCardName={placeInfo.title}
+      placeCardType={placeInfo.type}
+      setActivePlaceCard={setActivePlaceCard}
       className={className}
       specialCardClass={specialCardClass}
     />)}
@@ -28,6 +27,8 @@ const NearPlacesList = ({placesInfo}) => {
 
 NearPlacesList.propTypes = {
   placesInfo: placesInfoPropType,
+  activePlaceCardId: idPropType,
+  setActivePlaceCard: setActiveElementPropType
 };
 
 export default NearPlacesList;

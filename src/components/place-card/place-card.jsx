@@ -8,7 +8,7 @@ const PlaceCard = (props) => {
   return (
     <article className={`${specialCardClass} place-card`}>
       <div className={`${className}__image-wrapper place-card__image-wrapper`}>
-        <Link to="/offer" onMouseEnter={() => setActivePlaceCard(id)} onMouseLeave={() => setActivePlaceCard(0)}>
+        <Link to={`/offer/${id}`} onMouseEnter={() => setActivePlaceCard(id)} onMouseLeave={() => setActivePlaceCard(0)}>
           <img
             className="place-card__image"
             src={imgSrc}
