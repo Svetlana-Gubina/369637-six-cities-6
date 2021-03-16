@@ -12,7 +12,7 @@ import App from "./components/app/app";
 import {checkAuth} from './store/api-actions';
 import {REVIEWS, CITY, AVAILABLE_CITIES, AuthorizationStatus, SortType} from './constants';
 
-const api = createAPI(
+export const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 

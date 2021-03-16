@@ -4,6 +4,11 @@ export const getOffersForCity = (cityName, opts) => {
   return opts.filter((opt) => opt.city.name === cityName);
 };
 
+export const getActiveCityLocation = (cityName, opts) => {
+  const option = opts.find((opt) => opt.city.name === cityName);
+  return option.city.location;
+};
+
 export const sortOffersBy = (sortType, opts) => {
   switch (sortType) {
     case SortType.PRICE_LOW_TO_HIGH:

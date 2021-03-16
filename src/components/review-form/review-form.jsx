@@ -1,9 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
+import {api} from '../../index';
+import {idPropType} from '../../prop-types';
 
-const ReviewForm = () => {
+const ReviewForm = (props) => {
+  const {id} = props;
   const [review, setReview] = useState({
     stars: 0,
     comment: ``});
+  const [result, setResult] = useState([]);
+
+  const formRef = useRef();
 
   const handleCommentChange = (evt) => {
     const {value} = evt.target;
@@ -13,8 +19,21 @@ const ReviewForm = () => {
     });
   };
 
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    api.post(`/comments/${id}`)
+    .then((response) => setResult(response.status))
+    .catch(() => {
+      formRef.current.style.display = `block`;
+    });
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+      <div id={result} style={{
+        display: `none`,
+        color: `red`
+      }} ref={formRef}>Sorry! Something went wrong! Please try again</div>
       <div>{review.comment}</div>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -73,6 +92,10 @@ const ReviewForm = () => {
       </div>
     </form>
   );
+};
+
+ReviewForm.propTypes = {
+  id: idPropType,
 };
 
 export default ReviewForm;

@@ -1,15 +1,66 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from 'react-redux';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {v4 as uuidv4} from "uuid";
+import {api} from '../../index';
+import HotelsModel from '../../models/hotels-model';
+import CommentModel from '../../models/comment-model';
+import LoadingScreen from './../loading-screen/loading-screen';
 import ReviewForm from '../review-form/review-form';
-import ReviewsList from '../reviews-list/reviews-list';
+import ReviewsItem from '../reviews-item/reviews-item';
+import GalleryImage from '../gallery-image/gallery-image';
+import PropertyInside from '../property-inside-list/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
 import UserNav from '../user-nav/user-nav';
-import {cityNamePropType, placesInfoPropType, authorizedPropType, reviewItemsPropType} from '../../prop-types';
-import {getSomePlacesInfo} from '../../utils';
+import Map from '../map/map';
+import {AuthorizationStatus} from '../../constants';
+import {authorizedPropType} from '../../prop-types';
+
 
 const Room = (props) => {
-  const {isAuthorized, reviewItems, placesInfo} = props;
+  let {id} = useParams();
+  const {isAuthorized} = props;
+  const [activePlaceCardId, setActivePlaceCard] = useState(0);
+
+  const [hotel, setHotel] = useState([]);
+  const [host, setHost] = useState([]);
+  const [images, setImages] = useState([]);
+  const [goods, setGoods] = useState([]);
+
+  useEffect(() => {
+    api.get(`/hotels/${id}`)
+    .then((res) => {
+      setHotel(HotelsModel.parseHotelData(res.data));
+      setHost(HotelsModel.parseHotelData(res.data).host);
+      setImages(HotelsModel.parseHotelData(res.data).images);
+      setGoods(HotelsModel.parseHotelData(res.data).goods);
+    });
+  }, []);
+
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    api.get(`/comments/${id}`)
+    .then((res) => {
+      setComments(CommentModel.parseCommentsData(res.data));
+    });
+  }, []);
+
+  const [nearby, setNearby] = useState([]);
+
+  useEffect(() => {
+    api.get(`/hotels/${id}/nearby`)
+    .then((res) => {
+      setNearby(HotelsModel.parseHotelsData(res.data));
+    });
+  }, []);
+
+  if (!hotel) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
 
   return (
     <div className="page">
@@ -36,34 +87,21 @@ const Room = (props) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
+              {images.map((img) =>
+                <GalleryImage
+                  key={uuidv4()}
+                  imageUrl={img} />
+              )}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
+              {hotel.isPremium ? <div className="property__mark">
                 <span>Premium</span>
-              </div>
+              </div> : ``}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {hotel.title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -83,62 +121,31 @@ const Room = (props) => {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {hotel.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {hotel.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {hotel.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{hotel.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
-                </ul>
+                <PropertyInside goods={goods} />
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {host.name}
                   </span>
                 </div>
                 <div className="property__description">
@@ -151,20 +158,31 @@ const Room = (props) => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewItems.length}</span></h2>
-                <ReviewsList reviewItems={reviewItems} />
-                <ReviewForm />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
+                <ul className="reviews__list">
+                  {comments.map((commentItem) => <ReviewsItem
+                    key={commentItem.id}
+                    userAvatar={commentItem.user.avatarUrl}
+                    reviewText={commentItem.comment}
+                    userRate={commentItem.rating}
+                    reviewTime={commentItem.date}
+                    userName={commentItem.user.name}
+                  />)}
+                </ul>
+                {isAuthorized === AuthorizationStatus.AUTH ?
+                  <ReviewForm id={id} /> : ``
+                }
               </section>
             </div>
           </div>
           <section className="property__map map">
-            {/* <Map activePlaceCardId={activePlaceCardId} /> */}
+            <Map activePlaceCardId={activePlaceCardId} points={nearby} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearPlacesList placesInfo={getSomePlacesInfo(placesInfo, 1, 4)} />
+            <NearPlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={nearby} />
           </section>
         </div>
       </main>
@@ -172,18 +190,15 @@ const Room = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthorized: state.authorizationStatus,
-  placesInfo: state.hotelsList,
+const maphotelToProps = (hotel) => ({
+  isAuthorized: hotel.authorizationStatus,
 });
 
+
 Room.propTypes = {
-  city: cityNamePropType,
-  placesInfo: placesInfoPropType,
-  reviewItems: reviewItemsPropType,
   isAuthorized: authorizedPropType,
 };
 
 
 export {Room};
-export default connect(mapStateToProps, null)(Room);
+export default connect(maphotelToProps, null)(Room);

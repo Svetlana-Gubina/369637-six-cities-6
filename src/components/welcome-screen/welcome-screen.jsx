@@ -7,13 +7,14 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import UserNav from '../user-nav/user-nav';
 import {getHotelsList} from '../../store/api-actions';
 import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
-import {getOffersForCity} from '../../utils';
+import {getOffersForCity, sortOffersBy} from '../../utils';
 import {onLoadPropType, isDataLoadedPropType, cityNamePropType, locationPropType, citiesPropType, sortTypeNamePropType, sortTypesPropType, lengthPropType, placesInfoPropType, authorizedPropType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
   const {typesOfSort, placesInfo, onLoad, isDataLoaded, activeSortType, cities, activeCityItem, isAuthorized} = props;
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
+  const offersToRender = sortOffersBy(activeSortType, activeCityOffers);
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -68,12 +69,12 @@ const WelcomeScreen = (props) => {
               <b className="places__found">{`${activeCityOffers.length} places to stay in ${activeCityItem}`}</b>
               <PlacesSortingForm typesOfSort={typesOfSort} activeSortTypeName={activeSortType} />
               <div className="cities__places-list places__list tabs__content">
-                <PlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={activeCityOffers} />
+                <PlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={offersToRender} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map activePlaceCardId={activePlaceCardId} />
+                <Map activePlaceCardId={activePlaceCardId} points={null} />
               </section>
             </div>
           </div>
@@ -109,6 +110,7 @@ WelcomeScreen.propTypes = {
   activeSortType: sortTypeNamePropType,
   onLoad: onLoadPropType,
   isDataLoaded: isDataLoadedPropType,
+  sortOffersBy: onLoadPropType
 };
 
 export {WelcomeScreen};

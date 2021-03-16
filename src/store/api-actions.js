@@ -22,5 +22,5 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 
 export const logOut = () => (dispatch, _getState, api) => (
   api.get(`/logout`)
-    .then(() => dispatch({/* logout action */}))
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );

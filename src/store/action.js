@@ -5,7 +5,7 @@ export const ActionType = {
   SORT_OPTIONS: `welcomeScreen/sortOptions`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_HOTELS: `store/loadHotels`,
-  REDIRECT_TO_ROUTE: `signIn/redirectToRoute`
+  REDIRECT_TO_ROUTE: `signIn/redirectToRoute`,
 };
 
 // actionCreator()

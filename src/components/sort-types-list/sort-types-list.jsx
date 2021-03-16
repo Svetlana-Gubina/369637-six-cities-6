@@ -31,7 +31,6 @@ SortTypesList.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   choseSortType(type) {
     dispatch(ActionCreator.setSortType(type));
-    dispatch(ActionCreator.sortOptions(type));
   },
 });
 
