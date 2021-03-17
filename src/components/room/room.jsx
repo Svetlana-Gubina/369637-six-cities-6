@@ -4,11 +4,10 @@ import {Link, useParams} from "react-router-dom";
 import {v4 as uuidv4} from "uuid";
 import {api} from '../../index';
 import HotelsModel from '../../models/hotels-model';
-import CommentModel from '../../models/comment-model';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PageNotFound from '../page-not-found/page-not-found';
 import ReviewForm from '../review-form/review-form';
-import ReviewsItem from '../reviews-item/reviews-item';
+import ReviewsList from '../reviews-list/reviews-list';
 import GalleryImage from '../gallery-image/gallery-image';
 import PropertyInside from '../property-inside-list/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
@@ -25,19 +24,12 @@ const Room = (props) => {
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [hotel, setHotel] = useState([]);
-  const [host, setHost] = useState(null);
-  const [images, setImages] = useState([]);
-  const [goods, setGoods] = useState([]);
-
+  const [hotel, setHotel] = useState(null);
 
   useEffect(() => {
     api.get(`/hotels/${id}`)
     .then((res) => {
       setHotel(HotelsModel.parseHotelData(res.data));
-      setHost(HotelsModel.parseHotelData(res.data).host);
-      setImages(HotelsModel.parseHotelData(res.data).images);
-      setGoods(HotelsModel.parseHotelData(res.data).goods);
       setIsLoading(false);
     })
     .catch(() => {
@@ -46,14 +38,6 @@ const Room = (props) => {
     });
   }, [id]);
 
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    api.get(`/comments/${id}`)
-    .then((res) => {
-      setComments(CommentModel.parseCommentsData(res.data));
-    });
-  }, [id]);
 
   const [nearby, setNearby] = useState([]);
 
@@ -97,7 +81,7 @@ const Room = (props) => {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {images.map((img) =>
+                {hotel.images.map((img) =>
                   <GalleryImage
                     key={uuidv4()}
                     imageUrl={img} />
@@ -146,16 +130,16 @@ const Room = (props) => {
                 </div>
                 <div className="property__inside">
                   <h2 className="property__inside-title">What&apos;s inside</h2>
-                  <PropertyInside goods={goods} />
+                  <PropertyInside goods={hotel.goods} />
                 </div>
                 <div className="property__host">
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
                     <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                      <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                      <img className="property__avatar user__avatar" src={hotel.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                     </div>
                     <span className="property__user-name">
-                      {host.name}
+                      {hotel.host.name}
                     </span>
                   </div>
                   <div className="property__description">
@@ -169,16 +153,7 @@ const Room = (props) => {
                 </div>
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
-                  <ul className="reviews__list">
-                    {comments.map((commentItem) => <ReviewsItem
-                      key={commentItem.id}
-                      userAvatar={commentItem.user.avatarUrl}
-                      reviewText={commentItem.comment}
-                      userRate={commentItem.rating}
-                      reviewTime={commentItem.date}
-                      userName={commentItem.user.name}
-                    />)}
-                  </ul>
+                  <ReviewsList id={parseInt(id, 10)} />
                   {isAuthorized === AuthorizationStatus.AUTH ?
                     <ReviewForm id={id} /> : ``
                   }
