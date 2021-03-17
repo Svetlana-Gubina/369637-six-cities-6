@@ -14,7 +14,6 @@ const Map = ({activePlaceCardId, points, activeCityItem, placesInfo, isDataLoade
   const activeCityOffers = points || getOffersForCity(activeCityItem, placesInfo);
   const mapRef = useRef();
 
-
   if (!isDataLoaded) {
     return (
       <LoadingScreen />
@@ -75,14 +74,14 @@ const Map = ({activePlaceCardId, points, activeCityItem, placesInfo, isDataLoade
   return (
     <div id="map" style={{
       height: `600px`
-    }} ref={mapRef}></div>
+    }}></div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  activeCityItem: state.activeCityItem,
-  placesInfo: state.hotelsList,
-  isDataLoaded: state.isDataLoaded,
+const mapStateToProps = ({DATA, CITY}) => ({
+  activeCityItem: CITY.activeCityItem,
+  isDataLoaded: DATA.isDataLoaded,
+  placesInfo: DATA.hotelsList,
 });
 
 Map.propTypes = {

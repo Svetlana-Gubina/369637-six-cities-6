@@ -84,12 +84,12 @@ const WelcomeScreen = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  activeCityItem: state.activeCityItem,
-  activeSortType: state.activeSortType,
-  isAuthorized: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
-  placesInfo: state.hotelsList,
+const mapStateToProps = ({DATA, AUTH, SORT_TYPE, CITY}) => ({
+  activeCityItem: CITY.activeCityItem,
+  activeSortType: SORT_TYPE.activeSortType,
+  isAuthorized: AUTH.authorizationStatus,
+  isDataLoaded: DATA.isDataLoaded,
+  placesInfo: DATA.hotelsList,
 });
 
 const mapDispatchToProps = (dispatch) => ({

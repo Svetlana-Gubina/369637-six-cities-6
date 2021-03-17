@@ -77,8 +77,8 @@ Favorites.propTypes = {
   placesInfo: placesInfoPropType,
 };
 
-const mapStateToProps = (state) => ({
-  placesInfo: state.hotelsList,
+const mapStateToProps = ({DATA}) => ({
+  placesInfo: DATA.hotelsList,
 });
 
 export {Favorites};

@@ -6,6 +6,7 @@ import {applyMiddleware} from 'redux';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {reducer} from './store/reducer';
+import rootReducer from './store/root-reducer/root-reducer';
 import {createAPI} from './api';
 import {ActionCreator} from './store/action';
 import App from "./components/app/app";
@@ -17,8 +18,10 @@ export const api = createAPI(
 );
 
 const store = createStore(
-    reducer,
-    composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
+    rootReducer,
+    composeWithDevTools(applyMiddleware(
+        thunk.withExtraArgument(api))
+    ),
 );
 
 store.dispatch(checkAuth());

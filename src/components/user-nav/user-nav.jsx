@@ -21,8 +21,8 @@ const UserNav = (props) => {
     </Link>;
 };
 
-const mapStateToProps = (state) => ({
-  isAuthorized: state.authorizationStatus,
+const mapStateToProps = ({AUTH}) => ({
+  isAuthorized: AUTH.authorizationStatus,
 });
 
 UserNav.propTypes = {
