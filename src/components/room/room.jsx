@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Link, useParams} from "react-router-dom";
 import {v4 as uuidv4} from "uuid";
 import {api} from '../../index';
@@ -13,14 +13,11 @@ import PropertyInside from '../property-inside-list/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
 import UserNav from '../user-nav/user-nav';
 import Map from '../map/map';
-import {getAuthorizationStatus} from '../../selectors';
 import {AuthorizationStatus} from '../../constants';
-import {authorizedPropType} from '../../prop-types';
 
-
-const Room = (props) => {
+const Room = () => {
   let {id} = useParams();
-  const {isAuthorized} = props;
+  const {isAuthorized} = useSelector((state) => state.AUTH);
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -178,14 +175,4 @@ const Room = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthorized: getAuthorizationStatus(state),
-});
-
-Room.propTypes = {
-  isAuthorized: authorizedPropType,
-};
-
-
-export {Room};
-export default connect(mapStateToProps, null)(Room);
+export default Room;
