@@ -1,13 +1,19 @@
 import React from 'react';
 import {v4 as uuidv4} from "uuid";
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import SortTypesItem from '../sort-types-item/sort-types-item';
-import {popUpStatePropType, sortTypeNamePropType, setActiveElementPropType, sortTypesPropType} from '../../prop-types';
-import {ActionCreator} from '../../store/action';
+import {popUpStatePropType, sortTypeNamePropType, sortTypesPropType} from '../../prop-types';
+import {setSortType} from '../../store/action';
 
 
 const SortTypesList = (props) => {
-  const {popUpState, typesOfSort, activeSortTypeName, choseSortType} = props;
+  const {popUpState, typesOfSort, activeSortTypeName} = props;
+
+  const dispatch = useDispatch();
+
+  const choseSortType = (type) => {
+    dispatch(setSortType(type));
+  };
 
   return (
     <ul className={`places__options places__options--custom ${popUpState ? `places__options--opened` : ``}`}>
@@ -24,16 +30,7 @@ SortTypesList.propTypes = {
   typesOfSort: sortTypesPropType,
   sortTypeName: sortTypeNamePropType,
   activeSortTypeName: sortTypeNamePropType,
-  choseSortType: setActiveElementPropType,
   popUpState: popUpStatePropType,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  choseSortType(type) {
-    dispatch(ActionCreator.setSortType(type));
-  },
-});
-
-
-export {SortTypesList};
-export default connect(null, mapDispatchToProps)(SortTypesList);
+export default SortTypesList;

@@ -1,19 +1,20 @@
 import React, {useEffect, useRef} from 'react';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getOffersForCity, getActiveCityLocation} from '../../utils';
-import {isDataLoadedPropType, placesInfoPropType, cityNamePropType, idPropType} from '../../prop-types';
+import {getParsedHotelsData, getIsDataLoaded} from '../../selectors';
+import {isDataLoadedPropType, placesInfoPropType, idPropType} from '../../prop-types';
 
 const getIcon = (pointId, activeId, icon, activeIcon) => {
   return pointId === activeId ? activeIcon : icon;
 };
 
-const Map = ({activePlaceCardId, points, activeCityItem, placesInfo, isDataLoaded}) => {
+const Map = ({activePlaceCardId, points, placesInfo, isDataLoaded}) => {
+  const {activeCityItem} = useSelector((state) => state.CITY);
   const activeCityOffers = points || getOffersForCity(activeCityItem, placesInfo);
   const mapRef = useRef();
-
 
   if (!isDataLoaded) {
     return (
@@ -75,20 +76,18 @@ const Map = ({activePlaceCardId, points, activeCityItem, placesInfo, isDataLoade
   return (
     <div id="map" style={{
       height: `600px`
-    }} ref={mapRef}></div>
+    }}></div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  activeCityItem: state.activeCityItem,
-  placesInfo: state.hotelsList,
-  isDataLoaded: state.isDataLoaded,
+  isDataLoaded: getIsDataLoaded(state),
+  placesInfo: getParsedHotelsData(state),
 });
 
 Map.propTypes = {
   points: placesInfoPropType,
   placesInfo: placesInfoPropType,
-  activeCityItem: cityNamePropType,
   activePlaceCardId: idPropType,
   isDataLoaded: isDataLoadedPropType,
 };

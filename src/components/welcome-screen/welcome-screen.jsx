@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import CitiesList from '../cities-list/cities-list';
@@ -8,10 +8,14 @@ import UserNav from '../user-nav/user-nav';
 import {getHotelsList} from '../../store/api-actions';
 import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
 import {getOffersForCity, sortOffersBy} from '../../utils';
-import {onLoadPropType, isDataLoadedPropType, cityNamePropType, locationPropType, citiesPropType, sortTypeNamePropType, sortTypesPropType, lengthPropType, placesInfoPropType, authorizedPropType} from '../../prop-types';
+import {getParsedHotelsData, getIsDataLoaded} from '../../selectors';
+import {onLoadPropType, isDataLoadedPropType, locationPropType, citiesPropType, sortTypesPropType, lengthPropType, placesInfoPropType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
-  const {typesOfSort, placesInfo, onLoad, isDataLoaded, activeSortType, cities, activeCityItem, isAuthorized} = props;
+  const {typesOfSort, placesInfo, onLoad, isDataLoaded, cities} = props;
+  const {activeCityItem} = useSelector((state) => state.CITY);
+  const {isAuthorized} = useSelector((state) => state.AUTH);
+  const {activeSortType} = useSelector((state) => state.SORT_TYPE);
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
   const offersToRender = sortOffersBy(activeSortType, activeCityOffers);
@@ -85,11 +89,8 @@ const WelcomeScreen = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  activeCityItem: state.activeCityItem,
-  activeSortType: state.activeSortType,
-  isAuthorized: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
-  placesInfo: state.hotelsList,
+  isDataLoaded: getIsDataLoaded(state),
+  placesInfo: getParsedHotelsData(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -102,12 +103,9 @@ WelcomeScreen.propTypes = {
   cities: citiesPropType,
   city: locationPropType,
   placesInfo: placesInfoPropType,
-  isAuthorized: authorizedPropType,
   length: lengthPropType,
   activeCityOffers: placesInfoPropType,
-  activeCityItem: cityNamePropType,
   typesOfSort: sortTypesPropType,
-  activeSortType: sortTypeNamePropType,
   onLoad: onLoadPropType,
   isDataLoaded: isDataLoadedPropType,
   sortOffersBy: onLoadPropType

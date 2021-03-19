@@ -1,11 +1,10 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {AuthorizationStatus} from '../../constants';
-import {authorizedPropType} from '../../prop-types';
 
-const UserNav = (props) => {
-  const {isAuthorized} = props;
+const UserNav = () => {
+  const {isAuthorized} = useSelector((state) => state.AUTH);
 
   return isAuthorized === AuthorizationStatus.AUTH ?
     <Link className="header__nav-link header__nav-link--profile" to="/favorites">
@@ -21,14 +20,4 @@ const UserNav = (props) => {
     </Link>;
 };
 
-const mapStateToProps = (state) => ({
-  isAuthorized: state.authorizationStatus,
-});
-
-UserNav.propTypes = {
-  isAuthorized: authorizedPropType,
-};
-
-
-export {UserNav};
-export default connect(mapStateToProps, null)(UserNav);
+export default UserNav;

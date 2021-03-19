@@ -25,7 +25,7 @@ export const setActiveElementPropType = PropTypes.func;
 
 export const classNamePropType = PropTypes.string;
 
-export const authorizedPropType = PropTypes.string.isRequired;
+export const authorizedPropType = PropTypes.string;
 
 export const commentGetPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
