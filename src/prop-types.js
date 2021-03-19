@@ -3,6 +3,8 @@ import {TypeOfPlace} from './constants';
 
 export const goodsPropType = PropTypes.arrayOf(PropTypes.string);
 
+export const isFavoritePropType = PropTypes.bool;
+
 export const idPropType = PropTypes.number;
 
 export const placePropType = PropTypes.oneOf([TypeOfPlace.APARTMENT, TypeOfPlace.HOUSE, TypeOfPlace.ROOM, TypeOfPlace.HOTEL]);

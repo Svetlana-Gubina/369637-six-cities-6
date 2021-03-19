@@ -1,9 +1,17 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {pricePropType, classNamePropType, placePropType, imgSrcPropType, idPropType, setActiveElementPropType} from '../../prop-types';
+import {api} from '../../index';
+import {isFavoritePropType, pricePropType, classNamePropType, placePropType, imgSrcPropType, idPropType, setActiveElementPropType} from '../../prop-types';
 
 const PlaceCard = (props) => {
-  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
+  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, isFavorite, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
+
+  const handleBookmarkButtonClick = () => {
+    api.post(`/favorite/${id}/${isFavorite}`)
+    .catch(() => {
+      throw new Error(`Something went wrong! Please try again`);
+    });
+  };
 
   return (
     <article className={`${specialCardClass} place-card`}>
@@ -27,8 +35,9 @@ const PlaceCard = (props) => {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
+            className={`${isFavorite === 1 ? `place-card__bookmark-button--active` : ``} place-card__bookmark-button button`}
             type="button"
+            onClick={() => handleBookmarkButtonClick()}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -64,7 +73,8 @@ PlaceCard.propTypes = {
   setActivePlaceCard: setActiveElementPropType,
   className: classNamePropType,
   specialCardClass: classNamePropType,
-  additionalClass: classNamePropType
+  additionalClass: classNamePropType,
+  isFavorite: isFavoritePropType
 };
 
 

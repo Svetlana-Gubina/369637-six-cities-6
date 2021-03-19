@@ -1,28 +1,34 @@
 import React, {useState, useEffect} from "react";
-import {connect, useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import CitiesList from '../cities-list/cities-list';
 import LoadingScreen from '../loading-screen/loading-screen';
+import MainEmptyScreen from '../main-empty/main-empty';
 import UserNav from '../user-nav/user-nav';
-import {getHotelsList} from '../../store/api-actions';
 import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
+import {getHotelsList} from '../../store/api-actions';
 import {getOffersForCity, sortOffersBy} from '../../utils';
-import {getParsedHotelsData, getIsDataLoaded} from '../../selectors';
-import {onLoadPropType, isDataLoadedPropType, locationPropType, citiesPropType, sortTypesPropType, lengthPropType, placesInfoPropType} from '../../prop-types';
+import {getParsedHotelsData} from '../../selectors';
+import {onLoadPropType, locationPropType, citiesPropType, sortTypesPropType, lengthPropType, placesInfoPropType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
-  const {typesOfSort, placesInfo, onLoad, isDataLoaded, cities} = props;
+  const {typesOfSort, cities} = props;
+  const placesInfo = useSelector(getParsedHotelsData);
+  const {isDataLoaded} = useSelector((state) => state.DATA);
   const {activeCityItem} = useSelector((state) => state.CITY);
   const {isAuthorized} = useSelector((state) => state.AUTH);
   const {activeSortType} = useSelector((state) => state.SORT_TYPE);
+  const fetchErrorStatus = useSelector((state) => state.SET_ERROR);
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
   const offersToRender = sortOffersBy(activeSortType, activeCityOffers);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!isDataLoaded) {
-      onLoad();
+      dispatch(getHotelsList());
     }
   }, [isDataLoaded]);
 
@@ -31,6 +37,13 @@ const WelcomeScreen = (props) => {
       <LoadingScreen />
     );
   }
+
+  if (fetchErrorStatus) {
+    return (
+      <MainEmptyScreen cities={cities} />
+    );
+  }
+
 
   return (
     <div className="page page--gray page--main">
@@ -88,28 +101,13 @@ const WelcomeScreen = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isDataLoaded: getIsDataLoaded(state),
-  placesInfo: getParsedHotelsData(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoad() {
-    dispatch(getHotelsList());
-  }
-});
-
 WelcomeScreen.propTypes = {
   cities: citiesPropType,
   city: locationPropType,
-  placesInfo: placesInfoPropType,
   length: lengthPropType,
   activeCityOffers: placesInfoPropType,
   typesOfSort: sortTypesPropType,
-  onLoad: onLoadPropType,
-  isDataLoaded: isDataLoadedPropType,
   sortOffersBy: onLoadPropType
 };
 
-export {WelcomeScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(WelcomeScreen);
+export default WelcomeScreen;

@@ -36,6 +36,13 @@ const Room = () => {
     });
   }, [id]);
 
+  const handleBookmarkButtonClick = () => {
+    api.post(`/favorite/${id}/${hotel.isFavorite}`)
+    .catch(() => {
+      throw new Error(`Something went wrong! Please try again`);
+    });
+  };
+
 
   const [nearby, setNearby] = useState([]);
 
@@ -95,7 +102,8 @@ const Room = () => {
                   <h1 className="property__name">
                     {hotel.title}
                   </h1>
-                  <button className="property__bookmark-button button" type="button">
+                  <button className={`${hotel.isFavorite === 1 ? `property__bookmark-button--active` : ``} property__bookmark-button button`} type="button"
+                    onClick={() => handleBookmarkButtonClick()}>
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>

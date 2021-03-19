@@ -19,6 +19,7 @@ const PlacesList = (props) => {
         placeCardPriceValue={placeInfo.price}
         placeCardName={placeInfo.title}
         placeCardType={placeInfo.type}
+        isFavorite={placeInfo.isFavorite}
         setActivePlaceCard={setActivePlaceCard}
         className={className}
         specialCardClass={specialCardClass}

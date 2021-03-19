@@ -1,9 +1,10 @@
-import {loadHotels, requireAuthorization, redirectToRoute} from "./action";
+import {setFetchError, loadHotels, requireAuthorization, redirectToRoute} from "./action";
 import {AuthorizationStatus, AppRoute} from "../constants";
 
 export const getHotelsList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
     .then(({data}) => dispatch(loadHotels(data)))
+    .catch(() => dispatch(setFetchError(true)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
