@@ -3,7 +3,7 @@ import {v4 as uuidv4} from "uuid";
 import {connect} from 'react-redux';
 import SortTypesItem from '../sort-types-item/sort-types-item';
 import {popUpStatePropType, sortTypeNamePropType, setActiveElementPropType, sortTypesPropType} from '../../prop-types';
-import {ActionCreator} from '../../store/action';
+import {setSortType} from '../../store/action';
 
 
 const SortTypesList = (props) => {
@@ -30,7 +30,7 @@ SortTypesList.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   choseSortType(type) {
-    dispatch(ActionCreator.setSortType(type));
+    dispatch(setSortType(type));
   },
 });
 

@@ -13,6 +13,7 @@ import PropertyInside from '../property-inside-list/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
 import UserNav from '../user-nav/user-nav';
 import Map from '../map/map';
+import {getAuthorizationStatus} from '../../selectors';
 import {AuthorizationStatus} from '../../constants';
 import {authorizedPropType} from '../../prop-types';
 
@@ -177,8 +178,8 @@ const Room = (props) => {
   );
 };
 
-const mapStateToProps = ({AUTH}) => ({
-  isAuthorized: AUTH.authorizationStatus,
+const mapStateToProps = (state) => ({
+  isAuthorized: getAuthorizationStatus(state),
 });
 
 Room.propTypes = {

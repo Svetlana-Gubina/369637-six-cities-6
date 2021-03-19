@@ -4,6 +4,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getOffersForCity, getActiveCityLocation} from '../../utils';
+import {getParsedHotelsData, getIsDataLoaded, getActiveCityItem} from '../../selectors';
 import {isDataLoadedPropType, placesInfoPropType, cityNamePropType, idPropType} from '../../prop-types';
 
 const getIcon = (pointId, activeId, icon, activeIcon) => {
@@ -78,10 +79,10 @@ const Map = ({activePlaceCardId, points, activeCityItem, placesInfo, isDataLoade
   );
 };
 
-const mapStateToProps = ({DATA, CITY}) => ({
-  activeCityItem: CITY.activeCityItem,
-  isDataLoaded: DATA.isDataLoaded,
-  placesInfo: DATA.hotelsList,
+const mapStateToProps = (state) => ({
+  activeCityItem: getActiveCityItem(state),
+  isDataLoaded: getIsDataLoaded(state),
+  placesInfo: getParsedHotelsData(state),
 });
 
 Map.propTypes = {

@@ -1,3 +1,4 @@
+import {createReducer} from '@reduxjs/toolkit';
 import {ActionType} from '../action';
 import {DEFAULT_CITY} from '../../constants';
 
@@ -5,16 +6,10 @@ const initialState = {
   activeCityItem: DEFAULT_CITY,
 };
 
-const chooseCity = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.CHOOSE_CITY:
-      return {
-        ...state,
-        activeCityItem: action.payload,
-      };
-
-    default: return state;
-  }
-};
+const chooseCity = createReducer(initialState, (builder) => {
+  builder.addCase(ActionType.CHOOSE_CITY, (state, action) => {
+    state.activeCityItem = action.payload;
+  });
+});
 
 export {chooseCity};

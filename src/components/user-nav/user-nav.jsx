@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import {AuthorizationStatus} from '../../constants';
+import {getAuthorizationStatus} from '../../selectors';
 import {authorizedPropType} from '../../prop-types';
 
 const UserNav = (props) => {
@@ -21,8 +22,8 @@ const UserNav = (props) => {
     </Link>;
 };
 
-const mapStateToProps = ({AUTH}) => ({
-  isAuthorized: AUTH.authorizationStatus,
+const mapStateToProps = (state) => ({
+  isAuthorized: getAuthorizationStatus(state),
 });
 
 UserNav.propTypes = {

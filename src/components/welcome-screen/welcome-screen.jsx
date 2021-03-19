@@ -8,6 +8,7 @@ import UserNav from '../user-nav/user-nav';
 import {getHotelsList} from '../../store/api-actions';
 import PlacesSortingForm from '../places-sorting-form/places-sorting-form';
 import {getOffersForCity, sortOffersBy} from '../../utils';
+import {getParsedHotelsData, getSortType, getAuthorizationStatus, getIsDataLoaded, getActiveCityItem} from '../../selectors';
 import {onLoadPropType, isDataLoadedPropType, cityNamePropType, locationPropType, citiesPropType, sortTypeNamePropType, sortTypesPropType, lengthPropType, placesInfoPropType, authorizedPropType} from '../../prop-types';
 
 const WelcomeScreen = (props) => {
@@ -84,12 +85,12 @@ const WelcomeScreen = (props) => {
   );
 };
 
-const mapStateToProps = ({DATA, AUTH, SORT_TYPE, CITY}) => ({
-  activeCityItem: CITY.activeCityItem,
-  activeSortType: SORT_TYPE.activeSortType,
-  isAuthorized: AUTH.authorizationStatus,
-  isDataLoaded: DATA.isDataLoaded,
-  placesInfo: DATA.hotelsList,
+const mapStateToProps = (state) => ({
+  activeCityItem: getActiveCityItem(state),
+  activeSortType: getSortType(state),
+  isAuthorized: getAuthorizationStatus(state),
+  isDataLoaded: getIsDataLoaded(state),
+  placesInfo: getParsedHotelsData(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
