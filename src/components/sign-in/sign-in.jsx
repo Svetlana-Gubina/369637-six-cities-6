@@ -3,23 +3,20 @@ import {useDispatch} from 'react-redux';
 import {Link} from "react-router-dom";
 import {login} from "../../store/api-actions";
 
+
 const SignIn = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
   const dispatch = useDispatch();
 
-  const onSubmit = (authData) => {
-    dispatch(login(authData));
-  };
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
-      email: emailRef.current.value,
+    dispatch(login({
+      login: emailRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
   };
 
   return (

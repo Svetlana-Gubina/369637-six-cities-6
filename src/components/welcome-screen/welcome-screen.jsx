@@ -19,10 +19,10 @@ const WelcomeScreen = (props) => {
   const {activeCityItem} = useSelector((state) => state.CITY);
   const {isAuthorized} = useSelector((state) => state.AUTH);
   const {activeSortType} = useSelector((state) => state.SORT_TYPE);
-  const fetchErrorStatus = useSelector((state) => state.SET_ERROR);
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
   const offersToRender = sortOffersBy(activeSortType, activeCityOffers);
+
 
   const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ const WelcomeScreen = (props) => {
     );
   }
 
-  if (fetchErrorStatus) {
+  if (!isDataLoaded && placesInfo.length === 0) {
     return (
       <MainEmptyScreen cities={cities} />
     );
