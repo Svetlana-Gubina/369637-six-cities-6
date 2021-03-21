@@ -17,7 +17,7 @@ import {AuthorizationStatus} from '../../constants';
 
 const Room = () => {
   let {id} = useParams();
-  const {isAuthorized} = useSelector((state) => state.AUTH);
+  const {authorizationStatus} = useSelector((state) => state.AUTH);
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,7 +74,7 @@ const Room = () => {
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <UserNav isAuthorized={isAuthorized} />
+                    <UserNav />
                   </li>
                 </ul>
               </nav>
@@ -160,8 +160,8 @@ const Room = () => {
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
                   <ReviewsList id={parseInt(id, 10)} />
-                  {isAuthorized === AuthorizationStatus.AUTH ?
-                    <ReviewForm id={id} /> : ``
+                  {authorizationStatus === AuthorizationStatus.AUTH ?
+                    <ReviewForm id={parseInt(id, 10)} /> : ``
                   }
                 </section>
               </div>

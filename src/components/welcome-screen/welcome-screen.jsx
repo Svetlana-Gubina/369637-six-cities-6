@@ -17,7 +17,6 @@ const WelcomeScreen = (props) => {
   const placesInfo = useSelector(getParsedHotelsData);
   const {isDataLoaded} = useSelector((state) => state.DATA);
   const {activeCityItem} = useSelector((state) => state.CITY);
-  const {isAuthorized} = useSelector((state) => state.AUTH);
   const {activeSortType} = useSelector((state) => state.SORT_TYPE);
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
