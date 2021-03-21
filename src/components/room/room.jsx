@@ -37,7 +37,7 @@ const Room = () => {
   }, [id]);
 
   const handleBookmarkButtonClick = () => {
-    api.post(`/favorite/${id}/${hotel.isFavorite}`)
+    api.post(`/favorite/${id}/${Number(hotel.isFavorite)}`)
     .catch(() => {
       throw new Error(`Something went wrong! Please try again`);
     });

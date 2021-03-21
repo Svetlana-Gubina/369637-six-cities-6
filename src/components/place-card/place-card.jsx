@@ -7,11 +7,12 @@ const PlaceCard = (props) => {
   const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, isFavorite, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
 
   const handleBookmarkButtonClick = () => {
-    api.post(`/favorite/${id}/${isFavorite}`)
+    api.post(`/favorite/${id}/${Number(isFavorite)}`)
     .catch(() => {
       throw new Error(`Something went wrong! Please try again`);
     });
   };
+
 
   return (
     <article className={`${specialCardClass} place-card`}>
