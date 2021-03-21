@@ -9,7 +9,6 @@ export const getHotelsList = () => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-    .then((res) => console.log(res))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {
       throw new Error(`User is not authorized!`);
