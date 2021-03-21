@@ -1,13 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import {api} from '../../index';
 import {isFavoritePropType, pricePropType, classNamePropType, placePropType, imgSrcPropType, idPropType, setActiveElementPropType} from '../../prop-types';
 
 const PlaceCard = (props) => {
   const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, isFavorite, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
+  const [cardIsFavorite, setCardIsFavorite] = useState(Number(isFavorite));
 
   const handleBookmarkButtonClick = () => {
-    api.post(`/favorite/${id}/${Number(isFavorite)}`)
+    api.post(`/favorite/${id}/${cardIsFavorite}`)
+    .then((res) => {
+      setCardIsFavorite(Number(res.data.isFavorite));
+    })
     .catch(() => {
       throw new Error(`Something went wrong! Please try again`);
     });
@@ -36,7 +40,7 @@ const PlaceCard = (props) => {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`${isFavorite === 1 ? `place-card__bookmark-button--active` : ``} place-card__bookmark-button button`}
+            className={`${cardIsFavorite === 1 ? `place-card__bookmark-button--active` : ``} place-card__bookmark-button button`}
             type="button"
             onClick={() => handleBookmarkButtonClick()}
           >
