@@ -10,7 +10,7 @@ const PlaceCard = (props) => {
   const dispatch = useDispatch();
 
   const handleBookmarkButtonClick = () => {
-    api.post(`/favorite/${id}/${Number(isFavorite)}`)
+    api.post(`/favorite/${id}/${Number(!isFavorite)}`)
     .then(() => {
       dispatch(getHotelsList());
     })

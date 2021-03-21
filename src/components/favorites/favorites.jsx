@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {api} from '../../index';
 import FavoritesList from '../favorites-list/favorites-list';
+import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PageNotFound from '../page-not-found/page-not-found';
 import HotelsModel from '../../models/hotels-model';
-import {getOffersForCity} from '../../utils';
-import {AVAILABLE_CITIES} from '../../constants';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
@@ -31,9 +30,15 @@ const Favorites = () => {
     );
   }
 
+  if (hasError) {
+    return (
+      <PageNotFound />
+    );
+  }
+
   return (
     <>
-      {hasError ? <PageNotFound /> : <div className="page">
+      {<div className="page">
         <header className="header">
           <div className="container">
             <div className="header__wrapper">
@@ -60,32 +65,11 @@ const Favorites = () => {
 
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
-            <section className="favorites">
-              <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
-                <li className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{AVAILABLE_CITIES[3]}</span>
-                      </a>
-                    </div>
-                  </div>
-                  <FavoritesList placesInfo={getOffersForCity(AVAILABLE_CITIES[3], favorites)} />
-                </li>
-
-                <li className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{AVAILABLE_CITIES[2]}</span>
-                      </a>
-                    </div>
-                  </div>
-                  <FavoritesList placesInfo={getOffersForCity(AVAILABLE_CITIES[2], favorites)} />
-                </li>
-              </ul>
-            </section>
+            {favorites.length === 0 ? <FavoritesEmpty /> :
+              <section className="favorites">
+                <h1 className="favorites__title">Saved listing</h1>
+                <FavoritesList placesInfo={favorites} />
+              </section>}
           </div>
         </main>
         <footer className="footer container">

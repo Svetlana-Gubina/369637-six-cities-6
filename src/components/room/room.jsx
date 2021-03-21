@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {Link, useParams} from "react-router-dom";
+import {getHotelsList} from '../../store/api-actions';
 import {v4 as uuidv4} from "uuid";
 import {api} from '../../index';
 import HotelsModel from '../../models/hotels-model';
@@ -36,8 +37,12 @@ const Room = () => {
     });
   }, [id]);
 
+  const dispatch = useDispatch();
   const handleBookmarkButtonClick = () => {
-    api.post(`/favorite/${id}/${Number(hotel.isFavorite)}`)
+    api.post(`/favorite/${id}/${Number(!hotel.isFavorite)}`)
+    .then(() => {
+      dispatch(getHotelsList());
+    })
     .catch(() => {
       throw new Error(`Something went wrong! Please try again`);
     });
@@ -102,7 +107,7 @@ const Room = () => {
                   <h1 className="property__name">
                     {hotel.title}
                   </h1>
-                  <button className={`${hotel.isFavorite === 1 ? `property__bookmark-button--active` : ``} property__bookmark-button button`} type="button"
+                  <button className={`${hotel.isFavorite ? `property__bookmark-button--active` : ``} property__bookmark-button button`} type="button"
                     onClick={() => handleBookmarkButtonClick()}>
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>

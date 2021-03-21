@@ -1,5 +1,8 @@
 import React, {useState, useRef} from 'react';
+import {useDispatch} from 'react-redux';
+import {getHotelsList} from '../../store/api-actions';
 import {api} from '../../index';
+import {REVIEW_MIN_LENGTH} from '../../constants';
 import {idPropType} from '../../prop-types';
 
 const ReviewForm = (props) => {
@@ -19,10 +22,15 @@ const ReviewForm = (props) => {
     });
   };
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     api.post(`/comments/${id}`)
-    .then((response) => setResult(response.status))
+    .then((response) => {
+      dispatch(getHotelsList());
+      setResult(response.status);
+    })
     .catch(() => {
       formRef.current.style.display = `block`;
     });
@@ -88,7 +96,7 @@ const ReviewForm = (props) => {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < REVIEW_MIN_LENGTH && review.stars > 0} >Submit</button>
       </div>
     </form>
   );
