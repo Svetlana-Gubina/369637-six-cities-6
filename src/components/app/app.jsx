@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import WelcomeScreen from "../welcome-screen/welcome-screen";
 import Favorites from '../favorites/favorites';
 import PageNotFound from '../page-not-found/page-not-found';
@@ -11,7 +11,7 @@ import {locationPropType, citiesPropType, sortTypesPropType} from '../../prop-ty
 const App = (props) => {
   const {typesOfSort, cities, city} = props;
 
-  return <BrowserRouter>
+  return (
     <Switch>
       <Route exact path={AppRoute.ROOT}>
         <WelcomeScreen cities={cities} typesOfSort={typesOfSort} city={city} />;
@@ -21,7 +21,7 @@ const App = (props) => {
       <Route exact path={AppRoute.LOGIN} component={SignIn} />
       <Route component={PageNotFound} />
     </Switch>
-  </BrowserRouter>;
+  );
 };
 
 App.propTypes = {

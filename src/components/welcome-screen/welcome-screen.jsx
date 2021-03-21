@@ -64,7 +64,7 @@ const WelcomeScreen = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <UserNav isAuthorized={isAuthorized} />
+                  <UserNav />
                 </li>
               </ul>
             </nav>
