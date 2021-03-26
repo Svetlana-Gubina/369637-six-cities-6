@@ -1,12 +1,10 @@
 import React, {useState, useRef} from 'react';
-import {useDispatch} from 'react-redux';
-import {getHotelsList} from '../../store/api-actions';
 import {api} from '../../index';
 import {REVIEW_MIN_LENGTH} from '../../constants';
-import {idPropType} from '../../prop-types';
+import {idPropType, isFavoritePropType, setActiveElementPropType} from '../../prop-types';
 
 const ReviewForm = (props) => {
-  const {id} = props;
+  const {id, isChangedComments, setisChangedComments} = props;
   const [review, setReview] = useState({
     comment: ``,
     rating: 0
@@ -31,8 +29,6 @@ const ReviewForm = (props) => {
     });
   };
 
-  const dispatch = useDispatch();
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setIsLoading(true);
@@ -44,7 +40,7 @@ const ReviewForm = (props) => {
     .then(() => {
       setIsLoading(false);
       handleReset();
-      dispatch(getHotelsList());
+      setisChangedComments(!isChangedComments);
     })
     .catch(() => {
       setIsLoading(false);
@@ -119,6 +115,8 @@ const ReviewForm = (props) => {
 
 ReviewForm.propTypes = {
   id: idPropType,
+  isChangedComments: isFavoritePropType,
+  setisChangedComments: setActiveElementPropType
 };
 
 export default ReviewForm;

@@ -5,6 +5,7 @@ import {getHotelsList} from '../../store/api-actions';
 import {v4 as uuidv4} from "uuid";
 import {api} from '../../index';
 import HotelsModel from '../../models/hotels-model';
+import CommentModel from '../../models/comment-model';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PageNotFound from '../page-not-found/page-not-found';
 import ReviewForm from '../review-form/review-form';
@@ -48,9 +49,23 @@ const Room = () => {
     });
   };
 
+  const [comments, setComments] = useState([]);
+  const [hasCommentsError, setHasCommentsError] = useState(false);
+  const [isCommentsLoading, setIsCommentsLoading] = useState(true);
+  const [isChangedComments, setisChangedComments] = useState(false);
+  useEffect(() => {
+    api.get(`/comments/${id}`)
+    .then((res) => {
+      setComments(CommentModel.parseCommentsData(res.data));
+      setIsCommentsLoading(false);
+    })
+    .catch(() => {
+      setHasCommentsError(true);
+      setIsCommentsLoading(false);
+    });
+  }, [id, isChangedComments]);
 
   const [nearby, setNearby] = useState([]);
-
   useEffect(() => {
     api.get(`/hotels/${id}/nearby`)
     .then((res) => {
@@ -164,9 +179,9 @@ const Room = () => {
                 </div>
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
-                  <ReviewsList id={parseInt(id, 10)} />
+                  <ReviewsList comments={comments} hasCommentsError={hasCommentsError} isCommentsLoading={isCommentsLoading} />
                   {authorizationStatus === AuthorizationStatus.AUTH ?
-                    <ReviewForm id={parseInt(id, 10)} /> : ``
+                    <ReviewForm id={parseInt(id, 10)} isChangedComments={isChangedComments} setisChangedComments={setisChangedComments} /> : ``
                   }
                 </section>
               </div>
