@@ -9,7 +9,8 @@ const ReviewForm = (props) => {
   const {id} = props;
   const [review, setReview] = useState({
     comment: ``,
-    rating: 0});
+    rating: 0
+  });
 
   const error = useRef();
 
@@ -23,15 +24,12 @@ const ReviewForm = (props) => {
 
   const dispatch = useDispatch();
 
-  const form = useRef();
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const formData = new FormData(form.current);
-    formData.set(`comment`, review.comment);
 
     api.post(`/comments/${id}`, {
-      ContentType: `form/multipart`,
-      body: formData
+      "comment": review.comment,
+      "rating": review.rating
     })
     .then(() => {
       dispatch(getHotelsList());
@@ -42,12 +40,11 @@ const ReviewForm = (props) => {
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit} ref={form}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <div style={{
         display: `none`,
         color: `red`
       }} ref={error}>Sorry! Something went wrong! Please try again</div>
-      <div>{review.comment}</div>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input className="form__rating-input visually-hidden" name="rating" defaultValue={5} id="5-stars" type="radio" onChange={() => setReview({

@@ -7,6 +7,7 @@ export const ActionType = {
   LOAD_HOTELS: `store/loadHotels`,
   REDIRECT_TO_ROUTE: `signIn/redirectToRoute`,
   SET_ERROR: `welcomeScreen/setFetchError`,
+  SET_LOGIN: `signIn/setLogin`,
 };
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
@@ -40,6 +41,12 @@ export const setSortType = createAction(ActionType.SET_SORT_TYPE, (sortType) => 
 });
 
 export const setFetchError = createAction(ActionType.SET_ERROR, () => {
+  return {
+    payload: true
+  };
+});
+
+export const setLogin = createAction(ActionType.SET_LOGIN, () => {
   return {
     payload: true
   };
