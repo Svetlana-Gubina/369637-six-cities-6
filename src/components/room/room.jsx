@@ -187,7 +187,7 @@ const Room = () => {
               </div>
             </div>
             <section className="property__map map">
-              {/*  <Map activePlaceCardId={activePlaceCardId} points={nearby} /> */}
+              <Map activePlaceCardId={activePlaceCardId} points={nearby} />
             </section>
           </section>
           <div className="container">
