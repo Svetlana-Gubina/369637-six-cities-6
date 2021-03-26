@@ -11,8 +11,17 @@ const ReviewForm = (props) => {
     comment: ``,
     rating: 0
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const error = useRef();
+
+  const handleReset = () => {
+    document.getElementById(`userReviewForm`).reset();
+    setReview({
+      comment: ``,
+      rating: 0
+    });
+  };
 
   const handleCommentChange = (evt) => {
     const {value} = evt.target;
@@ -26,21 +35,25 @@ const ReviewForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setIsLoading(true);
 
     api.post(`/comments/${id}`, {
       "comment": review.comment,
       "rating": review.rating
     })
     .then(() => {
+      setIsLoading(false);
+      handleReset();
       dispatch(getHotelsList());
     })
     .catch(() => {
+      setIsLoading(false);
       error.current.style.display = `block`;
     });
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+    <form id="userReviewForm" className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <div style={{
         display: `none`,
         color: `red`
@@ -98,7 +111,7 @@ const ReviewForm = (props) => {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{REVIEW_MIN_LENGTH} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < REVIEW_MIN_LENGTH || review.rating === 0} >Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < REVIEW_MIN_LENGTH || review.rating === 0 || isLoading} >{isLoading ? `...` : `Submit`}</button>
       </div>
     </form>
   );
