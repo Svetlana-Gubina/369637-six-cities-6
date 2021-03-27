@@ -1,4 +1,4 @@
-import {setLogin, setFetchError, loadHotels, requireAuthorization, redirectToRoute} from "./action";
+import {setFetchError, loadHotels, requireAuthorization, redirectToRoute} from "./action";
 import {AuthorizationStatus, AppRoute} from "../constants";
 
 export const getHotelsList = () => (dispatch, _getState, api) => (
@@ -19,7 +19,6 @@ export const login = ({login: email, password: password}) => (dispatch, _getStat
   api.post(`/login`, {email, password})
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
-    .then(() => dispatch(setLogin(email)))
 );
 
 export const logOut = () => (dispatch, _getState, api) => (

@@ -46,8 +46,8 @@ export const setFetchError = createAction(ActionType.SET_ERROR, () => {
   };
 });
 
-export const setLogin = createAction(ActionType.SET_LOGIN, () => {
+export const setLogin = createAction(ActionType.SET_LOGIN, (login) => {
   return {
-    payload: true
+    payload: login
   };
 });
