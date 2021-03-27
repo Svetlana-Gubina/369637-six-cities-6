@@ -1,13 +1,12 @@
-import {ActionType, requireAuthorization, redirectToRoute, loadHotels, choseCity, setSortType, setFetchError, setLogin} from './action';
-import {AuthorizationStatus} from '../constants';
+import {ActionType, choseCity} from './action';
 
 describe(`Action creators work correctly`, () => {
-  it(`Action creator for requireAuthorization returns action with authorization status`, () => {
+
+  it(`Action creator for reset game returns action with undefined payload`, () => {
     const expectedAction = {
-      type: ActionType.REQUIRED_AUTHORIZATION,
-      payload: AuthorizationStatus.AUTH || AuthorizationStatus.NO_AUTH,
+      type: ActionType.CHOOSE_CITY,
     };
 
-    expect(requireAuthorization()).toEqual(expectedAction);
+    expect(choseCity()).toEqual(expectedAction);
   });
 });
