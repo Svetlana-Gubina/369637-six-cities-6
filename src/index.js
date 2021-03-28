@@ -10,7 +10,7 @@ import {createAPI} from './api';
 import {requireAuthorization} from './store/action';
 import App from "./components/app/app";
 import {checkAuth} from './store/api-actions';
-import {REVIEWS, CITY, AVAILABLE_CITIES, AuthorizationStatus, SortType} from './constants';
+import {AuthorizationStatus} from './constants';
 
 export const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
@@ -32,12 +32,7 @@ store.dispatch(checkAuth());
 ReactDOM.render(
     <Provider store={store}>
       <Router history={browserHistory}>
-        <App
-          typesOfSort={SortType}
-          cities={AVAILABLE_CITIES}
-          reviewItems={REVIEWS}
-          city={CITY}
-        />
+        <App />
       </Router>
     </Provider>,
     document.querySelector(`#root`)

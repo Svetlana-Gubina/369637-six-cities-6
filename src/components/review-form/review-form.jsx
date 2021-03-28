@@ -4,7 +4,7 @@ import {REVIEW_MIN_LENGTH} from '../../constants';
 import {idPropType, isFavoritePropType, setActiveElementPropType} from '../../prop-types';
 
 const ReviewForm = (props) => {
-  const {id, isChangedComments, setisChangedComments} = props;
+  const {id, isChangedComments, setIsChangedComments} = props;
   const [review, setReview] = useState({
     comment: ``,
     rating: 0
@@ -40,7 +40,7 @@ const ReviewForm = (props) => {
     .then(() => {
       setIsLoading(false);
       handleReset();
-      setisChangedComments(!isChangedComments);
+      setIsChangedComments(!isChangedComments);
     })
     .catch(() => {
       setIsLoading(false);
@@ -116,7 +116,7 @@ const ReviewForm = (props) => {
 ReviewForm.propTypes = {
   id: idPropType,
   isChangedComments: isFavoritePropType,
-  setisChangedComments: setActiveElementPropType
+  setIsChangedComments: setActiveElementPropType
 };
 
 export default ReviewForm;
