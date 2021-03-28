@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {configureStore} from '@reduxjs/toolkit';
 import {redirect} from "./store/middlewares/redirect";
 import {Provider} from 'react-redux';
+import {Router} from 'react-router-dom';
+import browserHistory from './browser-history';
 import rootReducer from './store/root-reducer/root-reducer';
 import {createAPI} from './api';
 import {requireAuthorization} from './store/action';
@@ -29,12 +31,15 @@ store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App
-        typesOfSort={SortType}
-        cities={AVAILABLE_CITIES}
-        reviewItems={REVIEWS}
-        city={CITY}
-      />
+      <Router history={browserHistory}>
+        <App
+          typesOfSort={SortType}
+          cities={AVAILABLE_CITIES}
+          reviewItems={REVIEWS}
+          city={CITY}
+        />
+      </Router>
     </Provider>,
     document.querySelector(`#root`)
 );
+

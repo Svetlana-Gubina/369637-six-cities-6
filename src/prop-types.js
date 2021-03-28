@@ -3,6 +3,8 @@ import {TypeOfPlace} from './constants';
 
 export const goodsPropType = PropTypes.arrayOf(PropTypes.string);
 
+export const isFavoritePropType = PropTypes.bool;
+
 export const idPropType = PropTypes.number;
 
 export const placePropType = PropTypes.oneOf([TypeOfPlace.APARTMENT, TypeOfPlace.HOUSE, TypeOfPlace.ROOM, TypeOfPlace.HOTEL]);
@@ -39,6 +41,19 @@ export const commentGetPropType = PropTypes.shape({
     date: PropTypes.string.isRequired,
   }),
 });
+
+export const commentsPropType = PropTypes.arrayOf(PropTypes.shape({
+  id: PropTypes.number,
+  comment: PropTypes.string,
+  rating: PropTypes.number,
+  user: PropTypes.shape({
+    avatarUrl: PropTypes.string,
+    id: PropTypes.number,
+    isPro: PropTypes.bool,
+    name: PropTypes.string,
+    date: PropTypes.string,
+  }),
+}));
 
 export const userPropType = PropTypes.shape({
   email: PropTypes.string.isRequired,

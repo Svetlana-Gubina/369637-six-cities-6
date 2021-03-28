@@ -1,25 +1,30 @@
-import React, {useRef} from "react";
+import React, {useState} from "react";
 import {useDispatch} from 'react-redux';
 import {Link} from "react-router-dom";
 import {login} from "../../store/api-actions";
 
+
 const SignIn = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [userEmail, setUserEmail] = useState(``);
+  const [userPassword, setUserPassword] = useState(``);
+
+  const handleEmailChange = (evt) => {
+    setUserEmail(evt.target.value);
+  };
+
+  const handlePasswordChange = (evt) => {
+    setUserPassword(evt.target.value);
+  };
 
   const dispatch = useDispatch();
-
-  const onSubmit = (authData) => {
-    dispatch(login(authData));
-  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    });
+    dispatch(login({
+      login: userEmail,
+      password: userPassword,
+    }));
   };
 
   return (
@@ -55,7 +60,7 @@ const SignIn = () => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
-                  ref={emailRef}
+                  onChange={handleEmailChange}
                   className="login__input form__input"
                   type="email" name="email"
                   placeholder="Email"
@@ -64,7 +69,7 @@ const SignIn = () => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
-                  ref={passwordRef}
+                  onChange={handlePasswordChange}
                   className="login__input form__input"
                   type="password"
                   name="password"

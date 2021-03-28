@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {Link, useParams} from "react-router-dom";
+import {getHotelsList} from '../../store/api-actions';
 import {v4 as uuidv4} from "uuid";
 import {api} from '../../index';
 import HotelsModel from '../../models/hotels-model';
+import CommentModel from '../../models/comment-model';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PageNotFound from '../page-not-found/page-not-found';
 import ReviewForm from '../review-form/review-form';
@@ -17,7 +19,7 @@ import {AuthorizationStatus} from '../../constants';
 
 const Room = () => {
   let {id} = useParams();
-  const {isAuthorized} = useSelector((state) => state.AUTH);
+  const {authorizationStatus} = useSelector((state) => state.AUTH);
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,9 +38,34 @@ const Room = () => {
     });
   }, [id]);
 
+  const dispatch = useDispatch();
+  const handleBookmarkButtonClick = () => {
+    api.post(`/favorite/${id}/${Number(!hotel.isFavorite)}`)
+    .then(() => {
+      dispatch(getHotelsList());
+    })
+    .catch(() => {
+      throw new Error(`Something went wrong! Please try again`);
+    });
+  };
+
+  const [comments, setComments] = useState([]);
+  const [hasCommentsError, setHasCommentsError] = useState(false);
+  const [isCommentsLoading, setIsCommentsLoading] = useState(true);
+  const [isChangedComments, setisChangedComments] = useState(false);
+  useEffect(() => {
+    api.get(`/comments/${id}`)
+    .then((res) => {
+      setComments(CommentModel.parseCommentsData(res.data));
+      setIsCommentsLoading(false);
+    })
+    .catch(() => {
+      setHasCommentsError(true);
+      setIsCommentsLoading(false);
+    });
+  }, [id, isChangedComments]);
 
   const [nearby, setNearby] = useState([]);
-
   useEffect(() => {
     api.get(`/hotels/${id}/nearby`)
     .then((res) => {
@@ -67,7 +94,7 @@ const Room = () => {
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <UserNav isAuthorized={isAuthorized} />
+                    <UserNav />
                   </li>
                 </ul>
               </nav>
@@ -95,7 +122,8 @@ const Room = () => {
                   <h1 className="property__name">
                     {hotel.title}
                   </h1>
-                  <button className="property__bookmark-button button" type="button">
+                  <button className={`${hotel.isFavorite ? `property__bookmark-button--active` : ``} property__bookmark-button button`} type="button"
+                    onClick={() => handleBookmarkButtonClick()}>
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>
@@ -151,9 +179,9 @@ const Room = () => {
                 </div>
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
-                  <ReviewsList id={parseInt(id, 10)} />
-                  {isAuthorized === AuthorizationStatus.AUTH ?
-                    <ReviewForm id={id} /> : ``
+                  <ReviewsList comments={comments} hasCommentsError={hasCommentsError} isCommentsLoading={isCommentsLoading} />
+                  {authorizationStatus === AuthorizationStatus.AUTH ?
+                    <ReviewForm id={parseInt(id, 10)} isChangedComments={isChangedComments} setisChangedComments={setisChangedComments} /> : ``
                   }
                 </section>
               </div>

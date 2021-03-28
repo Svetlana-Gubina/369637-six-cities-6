@@ -1,18 +1,20 @@
 import React, {useEffect, useRef} from 'react';
-import {connect, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getOffersForCity, getActiveCityLocation} from '../../utils';
-import {getParsedHotelsData, getIsDataLoaded} from '../../selectors';
-import {isDataLoadedPropType, placesInfoPropType, idPropType} from '../../prop-types';
+import {getParsedHotelsData} from '../../selectors';
+import {placesInfoPropType, idPropType} from '../../prop-types';
 
 const getIcon = (pointId, activeId, icon, activeIcon) => {
   return pointId === activeId ? activeIcon : icon;
 };
 
-const Map = ({activePlaceCardId, points, placesInfo, isDataLoaded}) => {
+const Map = ({activePlaceCardId, points}) => {
   const {activeCityItem} = useSelector((state) => state.CITY);
+  const placesInfo = useSelector(getParsedHotelsData);
+  const {isDataLoaded} = useSelector((state) => state.DATA);
   const activeCityOffers = points || getOffersForCity(activeCityItem, placesInfo);
   const mapRef = useRef();
 
@@ -80,17 +82,9 @@ const Map = ({activePlaceCardId, points, placesInfo, isDataLoaded}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isDataLoaded: getIsDataLoaded(state),
-  placesInfo: getParsedHotelsData(state),
-});
-
 Map.propTypes = {
   points: placesInfoPropType,
-  placesInfo: placesInfoPropType,
   activePlaceCardId: idPropType,
-  isDataLoaded: isDataLoadedPropType,
 };
 
-export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default React.memo(Map);

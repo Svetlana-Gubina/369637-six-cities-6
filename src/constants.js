@@ -1,5 +1,9 @@
 const ZOOM = 12;
 
+export const DEBOUNCE_INTERVAL = 600;
+
+export const REVIEW_MIN_LENGTH = 50;
+
 export const CITY = {
   zoom: ZOOM,
   latitude: 52.38333,
