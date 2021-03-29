@@ -64,6 +64,7 @@ const SignIn = () => {
                   className="login__input form__input"
                   type="email" name="email"
                   placeholder="Email"
+                  data-testid="userEmail"
                   required />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -74,9 +75,10 @@ const SignIn = () => {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  data-testid="userPassword"
                   required />
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button className="login__submit form__submit button" type="submit" data-testid="formSubmit">Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
