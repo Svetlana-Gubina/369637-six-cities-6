@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Link, useParams} from "react-router-dom";
 import {getHotelsList} from '../../store/api-actions';
 import {v4 as uuidv4} from "uuid";
-import {api} from '../../index';
+import {api} from '../../store';
 import HotelsModel from '../../models/hotels-model';
 import CommentModel from '../../models/comment-model';
 import LoadingScreen from '../loading-screen/loading-screen';

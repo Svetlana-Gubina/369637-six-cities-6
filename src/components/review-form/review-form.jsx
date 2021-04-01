@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {api} from '../../index';
+import {api} from '../../store';
 import {REVIEW_MIN_LENGTH} from '../../constants';
 import {idPropType, isFavoritePropType, setActiveElementPropType} from '../../prop-types';
 
@@ -54,13 +54,13 @@ const ReviewForm = (props) => {
         display: `none`,
         color: `red`
       }} ref={error}>Sorry! Something went wrong! Please try again</div>
-      <label className="reviews__label form__label" htmlFor="review" data-testid="radio5Label">Your review</label>
+      <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input className="form__rating-input visually-hidden" name="rating" defaultValue={5} id="5-stars" type="radio" onChange={() => setReview({
           ...review,
           rating: 5,
         })} data-testid="radio5" />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
+        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect" data-testid="radio5Label">
           <svg className="form__star-image" width={37} height={33}>
             <use xlinkHref="#icon-star" />
           </svg>
@@ -69,7 +69,7 @@ const ReviewForm = (props) => {
           ...review,
           rating: 4,
         })} />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good" data-testid="radio3Label">
+        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width={37} height={33}>
             <use xlinkHref="#icon-star" />
           </svg>
@@ -78,7 +78,7 @@ const ReviewForm = (props) => {
           ...review,
           rating: 3,
         })} data-testid="radio3" />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
+        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad" data-testid="radio3Label">
           <svg className="form__star-image" width={37} height={33}>
             <use xlinkHref="#icon-star" />
           </svg>

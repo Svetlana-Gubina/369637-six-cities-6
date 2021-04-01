@@ -9,6 +9,9 @@ import FavoritesList from './favorites-list';
 const data = [
   {
     id: 1,
+    city: {
+      name: `Amsterdam`
+    },
     previewImage: `img/1.png`,
     price: 120,
     title: `Beautiful & luxurious studio at great location`,

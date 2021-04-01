@@ -39,7 +39,7 @@ describe(`Test ReviewForm`, () => {
     userEvent.click(screen.getByTestId(`radio5Label`));
     expect(screen.getByTestId(`radio5`)).toBeChecked();
     userEvent.click(screen.getByTestId(`radio3Label`));
-    expect(screen.getByTestId(`radio5`)).toBeChecked();
+    expect(screen.getByTestId(`radio3`)).toBeChecked();
     expect(screen.getByTestId(`radio5`)).not.toBeChecked();
   });
 });

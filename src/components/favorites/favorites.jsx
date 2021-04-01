@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {api} from '../../index';
+import {api} from '../../store';
 import FavoritesList from '../favorites-list/favorites-list';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -85,4 +85,3 @@ const Favorites = () => {
 
 
 export default Favorites;
-

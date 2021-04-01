@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {useDispatch} from 'react-redux';
 import {getHotelsList} from '../../store/api-actions';
-import {api} from '../../index';
+import {api} from '../../store';
 import {isFavoritePropType, pricePropType, classNamePropType, placePropType, imgSrcPropType, idPropType, setActiveElementPropType} from '../../prop-types';
 
 const PlaceCard = (props) => {
