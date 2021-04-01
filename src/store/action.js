@@ -39,8 +39,8 @@ export const setSortType = createAction(ActionType.SET_SORT_TYPE, (sortType) => 
   };
 });
 
-export const setLogin = createAction(ActionType.SET_LOGIN, (login) => {
+export const setLogin = createAction(ActionType.SET_LOGIN, (userData) => {
   return {
-    payload: login
+    payload: userData
   };
 });

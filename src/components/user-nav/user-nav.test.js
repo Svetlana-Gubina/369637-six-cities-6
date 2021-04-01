@@ -21,7 +21,12 @@ describe(`Test UserNav`, () => {
   });
 
   it(`UserNav should render correctly for unauthorized user`, () => {
-    useSelectorMock.mockReturnValue({authorizationStatus: AuthorizationStatus.AUTH});
+    const login = `johnDoe@gmail.com`;
+
+    useSelectorMock.mockReturnValue({
+      authorizationStatus: AuthorizationStatus.AUTH,
+      userLogin: login
+    });
     render(
         <reactRedux.Provider store={store}>
           <Router history={history}>
@@ -30,7 +35,7 @@ describe(`Test UserNav`, () => {
         </reactRedux.Provider>
     );
 
-    expect(screen.getByText(/Oliver.conner@gmail.com/i)).toBeInTheDocument();
+    expect(screen.getByText(/johnDoe@gmail.com/i)).toBeInTheDocument();
   });
 
   it(`UserNav should render correctly for authorized user`, () => {
