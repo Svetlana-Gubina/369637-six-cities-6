@@ -26,7 +26,7 @@ describe(`Reducer work correctly`, () => {
 });
 
 describe(`Async operation work correctly`, () => {
-  it(`Should make a correct API call to /login`, () => {
+  it(`Should make a correct API call GET to /login`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const checkAuthLoader = checkAuth();
@@ -37,15 +37,15 @@ describe(`Async operation work correctly`, () => {
 
     return checkAuthLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.REQUIRED_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
         });
       });
   });
 
-  it(`Should make a correct API call to /login`, () => {
+  it(`Should make a correct API call POST to /login`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const fakeUser = {email: `johnDoe@gmail.com`, password: `123456`};

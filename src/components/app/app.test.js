@@ -1,13 +1,19 @@
 import React from 'react';
+import MockAdapter from 'axios-mock-adapter';
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
+import {getHotelsList} from '../../store/api-actions';
+import {ActionType} from '../../store/action';
+import {createAPI} from '../../api';
 import App from './app';
 import LoadingScreen from '../loading-screen/loading-screen';
 import MainEmptyScreen from '../main-empty/main-empty';
-import {AppRoute, AVAILABLE_CITIES, DEFAULT_CITY, SortType} from '../../constants';
+import {AppRoute, AVAILABLE_CITIES} from '../../constants';
+
+const api = createAPI(() => {});
 
 const notParsedData = [
   {
@@ -49,7 +55,6 @@ const notParsedData = [
 const mockStore = configureStore({});
 describe(`Test routing`, () => {
   const useSelectorMock = jest.spyOn(redux, `useSelector`);
-  const useDispatchMock = jest.spyOn(redux, `useDispatch`);
   it(`Render 'LoadingScreen' when user navigate to '/' url, before data is loaded`, () => {
     useSelectorMock.mockReturnValue({
       isDataLoaded: false,
@@ -86,29 +91,23 @@ describe(`Test routing`, () => {
     expect(screen.getByText(/No places to stay available/i)).toBeInTheDocument();
   });
 
-  it(`Render 'WelcomeScreen' when user navigate to '/' url, and data was fetched`, () => {
-    useSelectorMock.mockReturnValue({
-      hotelsList: notParsedData,
-      isDataLoaded: true,
-      activeCityItem: DEFAULT_CITY,
-      activeSortType: SortType.POPULAR,
-    });
-
+  it(`Should make a correct API call to /hotels`, () => {
+    const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    useDispatchMock.mockReturnValue(dispatch);
+    const getHotelsListLoader = getHotelsList();
 
-    const history = createMemoryHistory();
+    apiMock
+      .onGet(AppRoute.HOTELS)
+      .reply(200, notParsedData);
 
-    render(
-        <redux.Provider store={mockStore({})}>
-          <Router history={history}>
-            <App />
-          </Router>
-        </redux.Provider>
-    );
-
-    expect(dispatch).toHaveReturned();
-    expect(screen.getByText(/Beautiful & luxurious studio at great location/i)).toBeInTheDocument();
+    return getHotelsListLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.LOAD_HOTELS,
+          payload: notParsedData,
+        });
+      });
   });
 
   it(`Render 'SignIn' when user navigate to '/login' url`, () => {

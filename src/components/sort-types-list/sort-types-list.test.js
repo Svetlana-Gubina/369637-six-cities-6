@@ -20,7 +20,7 @@ describe(`Test SortTypesList`, () => {
   it(`SortTypesList should render correctly`, () => {
     const popUpState = true;
     const typesOfSort = SortType;
-    const activeSortTypeName = jest.fn();
+    const activeSortTypeName = SortType.POPULAR;
 
     render(
         <Provider store={store}>
