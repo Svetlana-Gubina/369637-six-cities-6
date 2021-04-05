@@ -1,22 +1,30 @@
 import React from "react";
+import {useSelector} from 'react-redux';
 import {Link} from "react-router-dom";
 import {useDispatch} from 'react-redux';
 import {getHotelsList} from '../../store/api-actions';
 import {api} from '../../store';
+import {AuthorizationStatus, AppRoute} from '../../constants';
+import {redirectToRoute} from '../../store/action';
 import {isFavoritePropType, pricePropType, classNamePropType, placePropType, imgSrcPropType, idPropType, setActiveElementPropType} from '../../prop-types';
 
 const PlaceCard = (props) => {
   const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, isFavorite, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
+  const {authorizationStatus} = useSelector((state) => state.AUTH);
   const dispatch = useDispatch();
 
   const handleBookmarkButtonClick = () => {
-    api.post(`/favorite/${id}/${Number(!isFavorite)}`)
-    .then(() => {
-      dispatch(getHotelsList());
-    })
-    .catch(() => {
-      throw new Error(`Something went wrong! Please try again`);
-    });
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      dispatch(redirectToRoute(AppRoute.LOGIN));
+    } else {
+      api.post(`/favorite/${id}/${Number(!isFavorite)}`)
+      .then(() => {
+        dispatch(getHotelsList());
+      })
+      .catch(() => {
+        throw new Error(`Something went wrong! Please try again`);
+      });
+    }
   };
 
 
