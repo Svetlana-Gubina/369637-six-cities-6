@@ -5,11 +5,12 @@ import {useDispatch} from 'react-redux';
 import {getHotelsList} from '../../store/api-actions';
 import {api} from '../../store';
 import {AuthorizationStatus, AppRoute} from '../../constants';
+import {ratingStarsToPercent} from '../../utils';
 import {redirectToRoute} from '../../store/action';
 import {isFavoritePropType, pricePropType, classNamePropType, placePropType, imgSrcPropType, idPropType, setActiveElementPropType} from '../../prop-types';
 
 const PlaceCard = (props) => {
-  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, isFavorite, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
+  const {id, imgSrc, placeCardPriceValue, placeCardName, placeCardType, placeCardRating, isFavorite, setActivePlaceCard, className, specialCardClass, additionalClass = ``} = props;
   const {authorizationStatus} = useSelector((state) => state.AUTH);
   const dispatch = useDispatch();
 
@@ -63,7 +64,7 @@ const PlaceCard = (props) => {
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{
-              width: ` 80%`
+              width: ` ${ratingStarsToPercent(placeCardRating)}`
             }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
@@ -89,7 +90,8 @@ PlaceCard.propTypes = {
   className: classNamePropType,
   specialCardClass: classNamePropType,
   additionalClass: classNamePropType,
-  isFavorite: isFavoritePropType
+  isFavorite: isFavoritePropType,
+  placeCardRating: idPropType
 };
 
 

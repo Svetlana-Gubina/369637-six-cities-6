@@ -11,7 +11,7 @@ import PageNotFound from '../page-not-found/page-not-found';
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import GalleryImage from '../gallery-image/gallery-image';
-import PropertyInside from '../property-inside-list/property-inside';
+import PropertyInside from '../property-inside/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
 import UserNav from '../user-nav/user-nav';
 import Map from '../map/map';
