@@ -1,5 +1,6 @@
 import React from "react";
 import dayjs from 'dayjs';
+import {ratingStarsToPercent} from '../../utils';
 import {reviewItemPropType} from '../../prop-types';
 
 const ReviewsItem = (props) => {
@@ -21,10 +22,7 @@ const ReviewsItem = (props) => {
     <div className="reviews__info">
       <div className="reviews__rating rating">
         <div className="reviews__stars rating__stars">
-          <div style={{
-            display: `none`
-          }}>{userRate}</div>
-          <span style={{width: `80%`}} />
+          <span style={{width: ` ${ratingStarsToPercent(userRate)}`}} />
           <span className="visually-hidden">Rating</span>
         </div>
       </div>

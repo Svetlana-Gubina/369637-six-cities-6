@@ -1,4 +1,5 @@
 import React from 'react';
+import * as redux from 'react-redux';
 import MockAdapter from 'axios-mock-adapter';
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
@@ -56,9 +57,15 @@ let history;
 let store;
 
 describe(`Test Favorites`, () => {
+  const useSelectorMock = jest.spyOn(redux, `useSelector`);
   beforeEach(() => {
     history = createMemoryHistory();
     store = mockStore({});
+    useSelectorMock.mockClear();
+  });
+
+  useSelectorMock.mockReturnValue({
+    hotelsList: notParsedData,
   });
 
   const fetchData = () => {

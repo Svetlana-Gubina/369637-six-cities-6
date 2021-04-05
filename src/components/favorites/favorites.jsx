@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
+import {useSelector} from 'react-redux';
 import {Link} from "react-router-dom";
 import {api} from '../../store';
 import FavoritesList from '../favorites-list/favorites-list';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import LoadingScreen from '../loading-screen/loading-screen';
+import UserNav from '../user-nav/user-nav';
 import PageNotFound from '../page-not-found/page-not-found';
 import HotelsModel from '../../models/hotels-model';
 
@@ -11,6 +13,7 @@ const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const {hotelsList} = useSelector((state) => state.DATA);
 
   useEffect(() => {
     api.get(`/favorite`)
@@ -22,7 +25,7 @@ const Favorites = () => {
       setHasError(true);
       setIsLoading(false);
     });
-  }, []);
+  }, [hotelsList]);
 
   if (isLoading) {
     return (
@@ -50,12 +53,7 @@ const Favorites = () => {
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <Link className="header__nav-link header__nav-link--profile" to="/">
-                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                      <span className="header__user-name user__name">
-                        Oliver.conner@gmail.com
-                      </span>
-                    </Link>
+                    <UserNav />
                   </li>
                 </ul>
               </nav>

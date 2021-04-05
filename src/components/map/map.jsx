@@ -5,20 +5,19 @@ import 'leaflet/dist/leaflet.css';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getOffersForCity, getActiveCityLocation} from '../../utils';
 import {getParsedHotelsData} from '../../selectors';
-import {placesInfoPropType, idPropType} from '../../prop-types';
+import {placesInfoPropType, idPropType, cityNamePropType} from '../../prop-types';
 
 const getIcon = (pointId, activeId, icon, activeIcon) => {
   return pointId === activeId ? activeIcon : icon;
 };
 
-const Map = ({activePlaceCardId, points}) => {
-  const {activeCityItem} = useSelector((state) => state.CITY);
+const Map = ({cityName, activePlaceCardId, points}) => {
   const placesInfo = useSelector(getParsedHotelsData);
   const {isDataLoaded} = useSelector((state) => state.DATA);
-  const activeCityOffers = points || getOffersForCity(activeCityItem, placesInfo);
+  const activeCityOffers = points || getOffersForCity(cityName, placesInfo);
   const mapRef = useRef();
 
-  if (!isDataLoaded) {
+  if (!activeCityOffers) {
     return (
       <LoadingScreen />
     );
@@ -26,14 +25,14 @@ const Map = ({activePlaceCardId, points}) => {
 
   useEffect(()=> {
     if (isDataLoaded) {
-      const city = getActiveCityLocation(activeCityItem, placesInfo);
+      const city = getActiveCityLocation(cityName, placesInfo);
       mapRef.current = leaflet.map(`map`, {
         center: {
           lat: city.latitude,
           lng: city.longitude,
         },
         zoom: city.zoom,
-        zoomControl: false,
+        zoomControl: true,
         marker: true
       });
 
@@ -48,7 +47,7 @@ const Map = ({activePlaceCardId, points}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [activeCityItem, isDataLoaded]);
+  }, [cityName, activeCityOffers]);
 
   useEffect(() => {
     activeCityOffers.forEach((point) => {
@@ -72,17 +71,18 @@ const Map = ({activePlaceCardId, points}) => {
       .addTo(mapRef.current)
       .bindPopup(point.title);
     });
-  }, [activeCityItem, activePlaceCardId]);
+  }, [cityName, activePlaceCardId]);
 
 
   return (
     <div id="map" style={{
-      height: `600px`
+      height: `100%`
     }}></div>
   );
 };
 
 Map.propTypes = {
+  cityName: cityNamePropType,
   points: placesInfoPropType,
   activePlaceCardId: idPropType,
 };

@@ -90,7 +90,7 @@ const WelcomeScreen = (props) => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map activePlaceCardId={activePlaceCardId} points={null} />
+                <Map cityName={activeCityItem} activePlaceCardId={activePlaceCardId} points={null} />
               </section>
             </div>
           </div>

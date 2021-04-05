@@ -1,9 +1,11 @@
 import React from 'react';
+import * as redux from 'react-redux';
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {Router} from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import * as reactRedux from 'react-redux';
+import {AuthorizationStatus} from '../../constants';
 import FavoritesList from './favorites-list';
 
 const data = [
@@ -25,9 +27,15 @@ let history;
 let store;
 
 describe(`Test FavoritesList`, () => {
+  const useSelectorMock = jest.spyOn(redux, `useSelector`);
   beforeEach(() => {
     history = createMemoryHistory();
     store = mockStore({});
+    useSelectorMock.mockClear();
+  });
+
+  useSelectorMock.mockReturnValue({
+    authorizationStatus: AuthorizationStatus.AUTH,
   });
 
   it(`FavoritesList should render correctly`, () => {

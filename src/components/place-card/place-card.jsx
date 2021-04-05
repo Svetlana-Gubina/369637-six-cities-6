@@ -33,13 +33,13 @@ const PlaceCard = (props) => {
     <article className={`${specialCardClass} place-card`}>
       <div className={`${className}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${id}`} onMouseEnter={() => setActivePlaceCard(id)} onMouseLeave={() => setActivePlaceCard(0)}>
-          <img
+          {className !== `favorites` ? <img
             className="place-card__image"
             src={imgSrc}
             width="260"
             height="200"
             alt="Place image"
-          />
+          /> : <img className="place-card__image" src={imgSrc} width="150" height="110" alt="Place image" />}
         </Link>
       </div>
       <div className={`${additionalClass} place-card__info`}>
