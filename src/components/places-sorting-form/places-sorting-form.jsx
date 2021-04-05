@@ -7,7 +7,7 @@ const PlacesSortingForm = (props) => {
   const [popUpState, togglePopUp] = useState(false);
 
   return (
-    <form className="places__sorting" action="#" method="get" onClick={() => togglePopUp(!popUpState)}>
+    <form className="places__sorting" action="#" method="get" onClick={() => togglePopUp(!popUpState)} data-testid="sortForm">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
         {activeSortTypeName}

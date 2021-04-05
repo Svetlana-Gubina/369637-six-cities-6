@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should PropertyInside render correctly 1`] = `
+<div>
+  <ul
+    class="property__inside-list"
+  >
+    <li
+      class="property__inside-item"
+    >
+      Heating
+    </li>
+    <li
+      class="property__inside-item"
+    >
+      Kitchen
+    </li>
+    <li
+      class="property__inside-item"
+    >
+      Cable TV
+    </li>
+  </ul>
+</div>
+`;

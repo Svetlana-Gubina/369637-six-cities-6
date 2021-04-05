@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Link, useParams} from "react-router-dom";
 import {getHotelsList} from '../../store/api-actions';
 import {v4 as uuidv4} from "uuid";
-import {api} from '../../index';
+import {api} from '../../store';
 import HotelsModel from '../../models/hotels-model';
 import CommentModel from '../../models/comment-model';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -52,7 +52,7 @@ const Room = () => {
   const [comments, setComments] = useState([]);
   const [hasCommentsError, setHasCommentsError] = useState(false);
   const [isCommentsLoading, setIsCommentsLoading] = useState(true);
-  const [isChangedComments, setisChangedComments] = useState(false);
+  const [isChangedComments, setIsChangedComments] = useState(false);
   useEffect(() => {
     api.get(`/comments/${id}`)
     .then((res) => {
@@ -181,7 +181,7 @@ const Room = () => {
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
                   <ReviewsList comments={comments} hasCommentsError={hasCommentsError} isCommentsLoading={isCommentsLoading} />
                   {authorizationStatus === AuthorizationStatus.AUTH ?
-                    <ReviewForm id={parseInt(id, 10)} isChangedComments={isChangedComments} setisChangedComments={setisChangedComments} /> : ``
+                    <ReviewForm id={parseInt(id, 10)} isChangedComments={isChangedComments} setIsChangedComments={setIsChangedComments} /> : ``
                   }
                 </section>
               </div>

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should LoadingScreen render correctly 1`] = `
+<div>
+  <div
+    style="display: flex; justify-content: center; align-items: center;"
+  >
+    <p
+      style="margin-top: 20%; font-size: 18px; letter-spacing: 2px;"
+    >
+      Loading...
+    </p>
+  </div>
+</div>
+`;

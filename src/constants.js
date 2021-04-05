@@ -1,24 +1,6 @@
-const ZOOM = 12;
-
 export const DEBOUNCE_INTERVAL = 600;
 
 export const REVIEW_MIN_LENGTH = 50;
-
-export const CITY = {
-  zoom: ZOOM,
-  latitude: 52.38333,
-  longitude: 4.9,
-};
-
-export const REVIEWS = [
-  {
-    userAvatar: `avatar-max`,
-    userName: `Max`,
-    userRate: `80%`,
-    reviewText: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
-    reviewTime: `2019-04-24`,
-  },
-];
 
 export const authorized = true;
 
@@ -47,7 +29,9 @@ export const SortType = {
 
 export const AppRoute = {
   LOGIN: `/login`,
+  LOGOUT: `/logout`,
   ROOT: `/`,
   FAVORITES: `/favorites`,
   OFFER: `/offer/:id`,
+  HOTELS: `/hotels`,
 };

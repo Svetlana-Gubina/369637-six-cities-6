@@ -1,10 +1,10 @@
 import React, {useState, useRef} from 'react';
-import {api} from '../../index';
+import {api} from '../../store';
 import {REVIEW_MIN_LENGTH} from '../../constants';
 import {idPropType, isFavoritePropType, setActiveElementPropType} from '../../prop-types';
 
 const ReviewForm = (props) => {
-  const {id, isChangedComments, setisChangedComments} = props;
+  const {id, isChangedComments, setIsChangedComments} = props;
   const [review, setReview] = useState({
     comment: ``,
     rating: 0
@@ -40,7 +40,7 @@ const ReviewForm = (props) => {
     .then(() => {
       setIsLoading(false);
       handleReset();
-      setisChangedComments(!isChangedComments);
+      setIsChangedComments(!isChangedComments);
     })
     .catch(() => {
       setIsLoading(false);
@@ -59,8 +59,8 @@ const ReviewForm = (props) => {
         <input className="form__rating-input visually-hidden" name="rating" defaultValue={5} id="5-stars" type="radio" onChange={() => setReview({
           ...review,
           rating: 5,
-        })} />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
+        })} data-testid="radio5" />
+        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect" data-testid="radio5Label">
           <svg className="form__star-image" width={37} height={33}>
             <use xlinkHref="#icon-star" />
           </svg>
@@ -77,8 +77,8 @@ const ReviewForm = (props) => {
         <input className="form__rating-input visually-hidden" name="rating" defaultValue={3} id="3-stars" type="radio" onChange={() => setReview({
           ...review,
           rating: 3,
-        })} />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
+        })} data-testid="radio3" />
+        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad" data-testid="radio3Label">
           <svg className="form__star-image" width={37} height={33}>
             <use xlinkHref="#icon-star" />
           </svg>
@@ -116,7 +116,7 @@ const ReviewForm = (props) => {
 ReviewForm.propTypes = {
   id: idPropType,
   isChangedComments: isFavoritePropType,
-  setisChangedComments: setActiveElementPropType
+  setIsChangedComments: setActiveElementPropType
 };
 
 export default ReviewForm;

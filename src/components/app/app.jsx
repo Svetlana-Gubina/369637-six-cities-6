@@ -5,16 +5,13 @@ import Favorites from '../favorites/favorites';
 import PageNotFound from '../page-not-found/page-not-found';
 import Room from '../room/room';
 import SignIn from '../sign-in/sign-in';
-import {AppRoute} from '../../constants';
-import {locationPropType, citiesPropType, sortTypesPropType} from '../../prop-types';
+import {AppRoute, AVAILABLE_CITIES, SortType} from '../../constants';
 
-const App = (props) => {
-  const {typesOfSort, cities, city} = props;
-
+const App = () => {
   return (
     <Switch>
       <Route exact path={AppRoute.ROOT}>
-        <WelcomeScreen cities={cities} typesOfSort={typesOfSort} city={city} />;
+        <WelcomeScreen cities={AVAILABLE_CITIES} typesOfSort={SortType} />;
       </Route>
       <Route exact path={AppRoute.FAVORITES} component={Favorites} />
       <Route exact path={AppRoute.OFFER} component={Room} />
@@ -22,12 +19,6 @@ const App = (props) => {
       <Route component={PageNotFound} />
     </Switch>
   );
-};
-
-App.propTypes = {
-  cities: citiesPropType,
-  city: locationPropType,
-  typesOfSort: sortTypesPropType,
 };
 
 export default App;
