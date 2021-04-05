@@ -1,11 +1,11 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
-import WelcomeScreen from './welcome-screen';
-import {AVAILABLE_CITIES, SortType, DEFAULT_CITY, AuthorizationStatus} from '../../constants';
+import {render} from '@testing-library/react';
+import {SortType, DEFAULT_CITY, AuthorizationStatus} from '../../constants';
+import Map from './map';
 
 const notParsedData = [
   {
@@ -54,8 +54,7 @@ jest.mock(`../../store/api-actions`, () => {
   };
 });
 
-describe(`Test WelcomeScreen`, () => {
-
+test(`Should Map render correctly`, () => {
   const state = {
     AUTH: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -74,23 +73,18 @@ describe(`Test WelcomeScreen`, () => {
       userLogin: ``
     }
   };
+  const history = createMemoryHistory();
   const mockStore = configureStore();
-  let store;
-  beforeEach(() => {
-    store = mockStore(state);
-  });
-  it(`Render 'WelcomeScreen' correctly`, () => {
-    const history = createMemoryHistory();
-    const cities = AVAILABLE_CITIES;
+  const store = mockStore(state);
+  const activePlaceCardId = 2;
+  const points = [];
 
-    render(
-        <redux.Provider store={store}>
-          <Router history={history}>
-            <WelcomeScreen typesOfSort={SortType} cities={cities} />
-          </Router>
-        </redux.Provider>
-    );
-
-    expect(screen.getByText(/Beautiful & luxurious studio/i)).toBeInTheDocument();
-  });
+  const {container} = render(
+      <redux.Provider store={store}>
+        <Router history={history}>
+          <Map activePlaceCardId={activePlaceCardId} points={points} />
+        </Router>
+      </redux.Provider>
+  );
+  expect(container).toMatchSnapshot();
 });
