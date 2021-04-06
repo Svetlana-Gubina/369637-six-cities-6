@@ -14,7 +14,7 @@ import GalleryImage from '../gallery-image/gallery-image';
 import PropertyInside from '../property-inside/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
 import UserNav from '../user-nav/user-nav';
-import Map from '../map/map';
+import MapSm from '../map-sm/map-sm';
 import {redirectToRoute} from '../../store/action';
 import {ratingStarsToPercent} from '../../utils';
 import {AuthorizationStatus, AppRoute} from '../../constants';
@@ -144,7 +144,7 @@ const Room = () => {
                     }}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
-                  <span className="property__rating-value rating__value">4.8</span>
+                  <span className="property__rating-value rating__value">{hotel.rating}</span>
                 </div>
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
@@ -194,7 +194,7 @@ const Room = () => {
               </div>
             </div>
             <section className="property__map map">
-              <Map cityName={hotel.city.name} activePlaceCardId={activePlaceCardId} points={nearby} />
+              <MapSm location={hotel.city.location} activePlaceCardId={activePlaceCardId} points={nearby} />
             </section>
           </section>
           <div className="container">

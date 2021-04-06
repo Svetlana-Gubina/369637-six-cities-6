@@ -1,37 +1,30 @@
 import React, {useEffect, useRef} from 'react';
-import {useSelector} from 'react-redux';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {getOffersForCity, getActiveCityLocation} from '../../utils';
-import {getParsedHotelsData} from '../../selectors';
-import {placesInfoPropType, idPropType, cityNamePropType} from '../../prop-types';
+import {placesInfoPropType, idPropType, locationPropType} from '../../prop-types';
 
 const getIcon = (pointId, activeId, icon, activeIcon) => {
   return pointId === activeId ? activeIcon : icon;
 };
 
-const Map = ({cityName, activePlaceCardId}) => {
-  const placesInfo = useSelector(getParsedHotelsData);
-  const {isDataLoaded} = useSelector((state) => state.DATA);
-  const activeCityOffers = getOffersForCity(cityName, placesInfo);
+const MapSm = ({location, activePlaceCardId, points}) => {
   const mapRef = useRef();
 
-  if (!placesInfo) {
+  if (!points) {
     return (
       <LoadingScreen />
     );
   }
 
   useEffect(()=> {
-    if (isDataLoaded) {
-      const city = getActiveCityLocation(cityName, placesInfo);
+    if (points) {
       mapRef.current = leaflet.map(`map`, {
         center: {
-          lat: city.latitude,
-          lng: city.longitude,
+          lat: location.latitude,
+          lng: location.longitude,
         },
-        zoom: city.zoom,
+        zoom: location.zoom,
         zoomControl: true,
         marker: true
       });
@@ -47,10 +40,10 @@ const Map = ({cityName, activePlaceCardId}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [cityName]);
+  }, [points]);
 
   useEffect(() => {
-    activeCityOffers.forEach((point) => {
+    points.forEach((point) => {
       const customIcon = leaflet.icon({
         iconUrl: `img/pin.svg`,
         iconSize: [30, 30]
@@ -71,7 +64,7 @@ const Map = ({cityName, activePlaceCardId}) => {
       .addTo(mapRef.current)
       .bindPopup(point.title);
     });
-  }, [cityName, activePlaceCardId]);
+  }, [activePlaceCardId]);
 
 
   return (
@@ -81,10 +74,10 @@ const Map = ({cityName, activePlaceCardId}) => {
   );
 };
 
-Map.propTypes = {
-  cityName: cityNamePropType,
+MapSm.propTypes = {
   points: placesInfoPropType,
   activePlaceCardId: idPropType,
+  location: locationPropType
 };
 
-export default React.memo(Map);
+export default MapSm;
