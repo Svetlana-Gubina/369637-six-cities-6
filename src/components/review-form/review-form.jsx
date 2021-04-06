@@ -1,10 +1,13 @@
 import React, {useState, useRef} from 'react';
+import {useDispatch} from 'react-redux';
 import {api} from '../../store';
-import {REVIEW_MIN_LENGTH} from '../../constants';
-import {idPropType, isFavoritePropType, setActiveElementPropType} from '../../prop-types';
+import {updateReviews} from '../../store/action';
+import CommentModel from '../../models/comment-model';
+import {REVIEW_MIN_LENGTH, REVIEW_MAX_LENGTH} from '../../constants';
+import {idPropType, setActiveElementPropType} from '../../prop-types';
 
 const ReviewForm = (props) => {
-  const {id, isChangedComments, setIsChangedComments} = props;
+  const {id, setComments} = props;
   const [review, setReview] = useState({
     comment: ``,
     rating: 0
@@ -29,6 +32,8 @@ const ReviewForm = (props) => {
     });
   };
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setIsLoading(true);
@@ -37,10 +42,11 @@ const ReviewForm = (props) => {
       "comment": review.comment,
       "rating": review.rating
     })
-    .then(() => {
+    .then((res) => {
+      dispatch(updateReviews(review));
       setIsLoading(false);
       handleReset();
-      setIsChangedComments(!isChangedComments);
+      setComments(CommentModel.parseCommentsData(res.data));
     })
     .catch(() => {
       setIsLoading(false);
@@ -102,12 +108,12 @@ const ReviewForm = (props) => {
           </svg>
         </label>
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" defaultValue={``} onChange={handleCommentChange} />
+      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" defaultValue={``} onChange={handleCommentChange} maxLength={REVIEW_MAX_LENGTH} />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{REVIEW_MIN_LENGTH} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < REVIEW_MIN_LENGTH || review.rating === 0 || isLoading} >{isLoading ? `...` : `Submit`}</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length > REVIEW_MAX_LENGTH || review.comment.length < REVIEW_MIN_LENGTH || review.rating === 0 || isLoading} >{isLoading ? `...` : `Submit`}</button>
       </div>
     </form>
   );
@@ -115,8 +121,7 @@ const ReviewForm = (props) => {
 
 ReviewForm.propTypes = {
   id: idPropType,
-  isChangedComments: isFavoritePropType,
-  setIsChangedComments: setActiveElementPropType
+  setComments: setActiveElementPropType
 };
 
 export default ReviewForm;

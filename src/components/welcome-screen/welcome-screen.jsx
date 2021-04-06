@@ -22,7 +22,6 @@ const WelcomeScreen = (props) => {
   const activeCityOffers = getOffersForCity(activeCityItem, placesInfo);
   const offersToRender = sortOffersBy(activeSortType, activeCityOffers);
 
-
   const dispatch = useDispatch();
 
   useEffect(() => {

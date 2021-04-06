@@ -1,11 +1,11 @@
-import {setLogin, loadHotels, requireAuthorization, redirectToRoute} from "./action";
+import {setLogin, setServerError, loadHotels, requireAuthorization, redirectToRoute} from "./action";
 import {AuthorizationStatus, AppRoute} from "../constants";
 
 export const getHotelsList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
     .then(({data}) => dispatch(loadHotels(data)))
-    .catch(() => {
-      throw new Error(`No data!`);
+    .catch((err) => {
+      dispatch(setServerError(err.message));
     })
 );
 
@@ -24,6 +24,9 @@ export const login = ({login: email, password: password}) => (dispatch, _getStat
   api.post(`/login`, {email, password})
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
+    .catch(() => {
+      throw new Error(`User is not authorized!`);
+    })
 );
 
 export const logOut = () => (dispatch, _getState, api) => (

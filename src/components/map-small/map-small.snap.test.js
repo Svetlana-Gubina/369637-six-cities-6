@@ -4,8 +4,24 @@ import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import {render} from '@testing-library/react';
-import MapSm from './map-sm';
+import MapSmall from './map-small';
 
+const data = [
+  {
+    id: 1,
+    previewImage: `img/1.png`,
+    price: 120,
+    title: `Beautiful & luxurious studio at great location`,
+    type: `apartment`,
+    city: {
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10
+      }
+    }
+  },
+];
 
 const pointsData = [
   {
@@ -14,6 +30,7 @@ const pointsData = [
       longitude: 4.895177,
       zoom: 10
     },
+    id: 2
   },
   {
     location: {
@@ -21,6 +38,7 @@ const pointsData = [
       longitude: 4.895169,
       zoom: 10
     },
+    id: 3
   },
   {
     location: {
@@ -28,6 +46,7 @@ const pointsData = [
       longitude: 4.895133,
       zoom: 10
     },
+    id: 4
   },
 ];
 
@@ -41,21 +60,17 @@ jest.mock(`../../store/api-actions`, () => {
   };
 });
 
-test(`Should MapSm render correctly`, () => {
+test(`Should MapSmall render correctly`, () => {
   const history = createMemoryHistory();
   const mockStore = configureStore();
   const store = mockStore({});
   const points = pointsData;
-  const location = {
-    latitude: 52.370216,
-    longitude: 4.895168,
-    zoom: 10
-  };
+
 
   const {container} = render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <MapSm location={location} points={points} />
+          <MapSmall points={points} hotel={data} />
         </Router>
       </redux.Provider>
   );

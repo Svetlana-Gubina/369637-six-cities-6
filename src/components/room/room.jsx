@@ -14,7 +14,7 @@ import GalleryImage from '../gallery-image/gallery-image';
 import PropertyInside from '../property-inside/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
 import UserNav from '../user-nav/user-nav';
-import MapSm from '../map-sm/map-sm';
+import MapSmall from '../map-small/map-small';
 import {redirectToRoute} from '../../store/action';
 import {ratingStarsToPercent} from '../../utils';
 import {AuthorizationStatus, AppRoute} from '../../constants';
@@ -23,7 +23,6 @@ const Room = () => {
   let {id} = useParams();
   const {authorizationStatus} = useSelector((state) => state.AUTH);
   const {hotelsList} = useSelector((state) => state.DATA);
-  const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,7 +58,6 @@ const Room = () => {
   const [comments, setComments] = useState([]);
   const [hasCommentsError, setHasCommentsError] = useState(false);
   const [isCommentsLoading, setIsCommentsLoading] = useState(true);
-  const [isChangedComments, setIsChangedComments] = useState(false);
   useEffect(() => {
     api.get(`/comments/${id}`)
     .then((res) => {
@@ -70,7 +68,7 @@ const Room = () => {
       setHasCommentsError(true);
       setIsCommentsLoading(false);
     });
-  }, [id, isChangedComments]);
+  }, [id]);
 
   const [nearby, setNearby] = useState([]);
   useEffect(() => {
@@ -188,19 +186,19 @@ const Room = () => {
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                   <ReviewsList comments={comments} hasCommentsError={hasCommentsError} isCommentsLoading={isCommentsLoading} />
                   {authorizationStatus === AuthorizationStatus.AUTH ?
-                    <ReviewForm id={parseInt(id, 10)} isChangedComments={isChangedComments} setIsChangedComments={setIsChangedComments} /> : ``
+                    <ReviewForm id={parseInt(id, 10)} setComments={setComments} /> : ``
                   }
                 </section>
               </div>
             </div>
             <section className="property__map map">
-              <MapSm location={hotel.city.location} activePlaceCardId={activePlaceCardId} points={nearby} />
+              <MapSmall points={nearby} hotel={hotel} />
             </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <NearPlacesList setActivePlaceCard={setActivePlaceCard} placesInfo={nearby} />
+              <NearPlacesList placesInfo={nearby} />
             </section>
           </div>
         </main>
