@@ -8,11 +8,11 @@ const NearPlacesList = (props) => {
   const className = `near-places`;
   const specialCardClass = className + `__card`;
 
-  const scroll = () => {
+  const handleElementClick = () => {
     window.scrollTo(0, 0);
   };
 
-  return <div className={className + `__list places__list`} onClick={() => scroll()}>
+  return <div className={className + `__list places__list`} onClick={() => handleElementClick()}>
     {placesInfo.map((placeInfo) => <PlaceCard
       key={placeInfo.id}
       id={placeInfo.id}

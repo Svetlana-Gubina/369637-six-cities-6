@@ -78,7 +78,7 @@ const Room = () => {
     .then((res) => {
       setNearby(HotelsModel.parseHotelsData(res.data));
     });
-  }, [id, hotelsList]);
+  }, [id]);
 
   if (isLoading) {
     return (
