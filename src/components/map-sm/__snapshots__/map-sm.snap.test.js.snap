@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should Map render correctly 1`] = `
+exports[`Should MapSm render correctly 1`] = `
 <div>
   <div
     class="leaflet-container leaflet-grab leaflet-touch-drag"
@@ -46,7 +46,21 @@ exports[`Should Map render correctly 1`] = `
           alt=""
           class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
           src="img/pin.svg"
-          style="margin-left: -15px; margin-top: -15px; width: 30px; height: 30px; left: -162px; top: 18px; z-index: 18;"
+          style="margin-left: -15px; margin-top: -15px; width: 30px; height: 30px; left: 0px; top: 0px; z-index: 0;"
+          tabindex="0"
+        />
+        <img
+          alt=""
+          class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
+          src="img/pin.svg"
+          style="margin-left: -15px; margin-top: -15px; width: 30px; height: 30px; left: 0px; top: 0px; z-index: 0;"
+          tabindex="0"
+        />
+        <img
+          alt=""
+          class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
+          src="img/pin.svg"
+          style="margin-left: -15px; margin-top: -15px; width: 30px; height: 30px; left: 0px; top: 0px; z-index: 0;"
           tabindex="0"
         />
       </div>

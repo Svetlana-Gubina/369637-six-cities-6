@@ -13,8 +13,8 @@ export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then((res) => {
       dispatch(setLogin(JSON.stringify(res.data.name)));
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
     })
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {
       throw new Error(`User is not authorized!`);
     })

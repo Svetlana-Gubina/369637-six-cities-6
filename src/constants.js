@@ -1,8 +1,8 @@
 export const DEBOUNCE_INTERVAL = 600;
 
-export const REVIEW_MIN_LENGTH = 50;
+export const MAX_RATING = 5;
 
-export const authorized = true;
+export const REVIEW_MIN_LENGTH = 50;
 
 export const AuthorizationStatus = {
   AUTH: `AUTH`,

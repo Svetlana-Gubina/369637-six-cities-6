@@ -4,6 +4,7 @@ import {createMemoryHistory} from 'history';
 import {Router} from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import * as reactRedux from 'react-redux';
+import {act} from 'react-dom/test-utils';
 import {AuthorizationStatus} from '../../constants';
 import Room from './room';
 
@@ -12,7 +13,7 @@ let history;
 let store;
 
 
-describe(`Test Favorites`, () => {
+describe(`Test Room`, () => {
   const useSelectorMock = jest.spyOn(reactRedux, `useSelector`);
   beforeEach(() => {
     history = createMemoryHistory();
@@ -25,13 +26,16 @@ describe(`Test Favorites`, () => {
     useSelectorMock.mockReturnValue({
       authorizationStatus: AuthorizationStatus.NO_AUTH
     });
-    render(
-        <reactRedux.Provider store={store}>
-          <Router history={history}>
-            <Room />
-          </Router>
-        </reactRedux.Provider>
-    );
+
+    act(() => {
+      render(
+          <reactRedux.Provider store={store}>
+            <Router history={history}>
+              <Room />
+            </Router>
+          </reactRedux.Provider>
+      );
+    });
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });

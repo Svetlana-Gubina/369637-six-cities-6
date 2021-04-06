@@ -5,7 +5,10 @@ const LoadingScreen = () => {
     <div style={{
       display: `flex`,
       justifyContent: `center`,
-      alignItems: `center`
+      alignItems: `center`,
+      backgroundColor: `#DCDCDC`,
+      width: `100%`,
+      height: `100%`
     }}>
       <p style={{
         marginTop: `20%`,

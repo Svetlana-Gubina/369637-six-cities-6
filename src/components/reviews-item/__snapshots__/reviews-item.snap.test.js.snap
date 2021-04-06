@@ -34,13 +34,8 @@ exports[`Should ReviewsItem render correctly 1`] = `
         <div
           class="reviews__stars rating__stars"
         >
-          <div
-            style="display: none;"
-          >
-            3
-          </div>
           <span
-            style="width: 80%;"
+            style="width: 60%;"
           />
           <span
             class="visually-hidden"

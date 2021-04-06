@@ -11,15 +11,18 @@ import PageNotFound from '../page-not-found/page-not-found';
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import GalleryImage from '../gallery-image/gallery-image';
-import PropertyInside from '../property-inside-list/property-inside';
+import PropertyInside from '../property-inside/property-inside';
 import NearPlacesList from '../near-places-list/near-places-list';
 import UserNav from '../user-nav/user-nav';
-import Map from '../map/map';
-import {AuthorizationStatus} from '../../constants';
+import MapSm from '../map-sm/map-sm';
+import {redirectToRoute} from '../../store/action';
+import {ratingStarsToPercent} from '../../utils';
+import {AuthorizationStatus, AppRoute} from '../../constants';
 
 const Room = () => {
   let {id} = useParams();
   const {authorizationStatus} = useSelector((state) => state.AUTH);
+  const {hotelsList} = useSelector((state) => state.DATA);
   const [activePlaceCardId, setActivePlaceCard] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,17 +39,21 @@ const Room = () => {
       setHasError(true);
       setIsLoading(false);
     });
-  }, [id]);
+  }, [id, hotelsList]);
 
   const dispatch = useDispatch();
   const handleBookmarkButtonClick = () => {
-    api.post(`/favorite/${id}/${Number(!hotel.isFavorite)}`)
-    .then(() => {
-      dispatch(getHotelsList());
-    })
-    .catch(() => {
-      throw new Error(`Something went wrong! Please try again`);
-    });
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      dispatch(redirectToRoute(AppRoute.LOGIN));
+    } else {
+      api.post(`/favorite/${id}/${Number(!hotel.isFavorite)}`)
+      .then(() => {
+        dispatch(getHotelsList());
+      })
+      .catch(() => {
+        throw new Error(`Something went wrong! Please try again`);
+      });
+    }
   };
 
   const [comments, setComments] = useState([]);
@@ -133,11 +140,11 @@ const Room = () => {
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
                     <span style={{
-                      width: `80%`,
+                      width: ` ${ratingStarsToPercent(hotel.rating)}`,
                     }}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
-                  <span className="property__rating-value rating__value">4.8</span>
+                  <span className="property__rating-value rating__value">{hotel.rating}</span>
                 </div>
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
@@ -178,7 +185,7 @@ const Room = () => {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                   <ReviewsList comments={comments} hasCommentsError={hasCommentsError} isCommentsLoading={isCommentsLoading} />
                   {authorizationStatus === AuthorizationStatus.AUTH ?
                     <ReviewForm id={parseInt(id, 10)} isChangedComments={isChangedComments} setIsChangedComments={setIsChangedComments} /> : ``
@@ -187,13 +194,13 @@ const Room = () => {
               </div>
             </div>
             <section className="property__map map">
-              <Map activePlaceCardId={activePlaceCardId} points={nearby} />
+              <MapSm location={hotel.city.location} activePlaceCardId={activePlaceCardId} points={nearby} />
             </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <NearPlacesList activePlaceCardId={activePlaceCardId} setActivePlaceCard={setActivePlaceCard} placesInfo={nearby} />
+              <NearPlacesList setActivePlaceCard={setActivePlaceCard} placesInfo={nearby} />
             </section>
           </div>
         </main>

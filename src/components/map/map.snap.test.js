@@ -82,7 +82,7 @@ test(`Should Map render correctly`, () => {
   const {container} = render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <Map activePlaceCardId={activePlaceCardId} points={points} />
+          <Map cityName={DEFAULT_CITY} activePlaceCardId={activePlaceCardId} points={points} />
         </Router>
       </redux.Provider>
   );
