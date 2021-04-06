@@ -4,11 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {placesInfoPropType, idPropType, locationPropType} from '../../prop-types';
 
-const getIcon = (pointId, activeId, icon, activeIcon) => {
-  return pointId === activeId ? activeIcon : icon;
-};
-
-const MapSm = ({location, activePlaceCardId, points}) => {
+const MapSm = ({location, points}) => {
   const mapRef = useRef();
 
   if (!points) {
@@ -41,30 +37,6 @@ const MapSm = ({location, activePlaceCardId, points}) => {
       mapRef.current.remove();
     };
   }, [points]);
-
-  useEffect(() => {
-    points.forEach((point) => {
-      const customIcon = leaflet.icon({
-        iconUrl: `img/pin.svg`,
-        iconSize: [30, 30]
-      });
-
-      const activeIcon = leaflet.icon({
-        iconUrl: `img/pin-active.svg`,
-        iconSize: [30, 30]
-      });
-
-      leaflet.marker({
-        lat: point.location.latitude,
-        lng: point.location.longitude,
-      },
-      {
-        icon: getIcon(point.id, activePlaceCardId, customIcon, activeIcon)
-      })
-      .addTo(mapRef.current)
-      .bindPopup(point.title);
-    });
-  }, [activePlaceCardId]);
 
 
   return (

@@ -45,7 +45,6 @@ test(`Should MapSm render correctly`, () => {
   const history = createMemoryHistory();
   const mockStore = configureStore();
   const store = mockStore({});
-  const activePlaceCardId = 1;
   const points = pointsData;
   const location = {
     latitude: 52.370216,
@@ -56,7 +55,7 @@ test(`Should MapSm render correctly`, () => {
   const {container} = render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <MapSm location={location} activePlaceCardId={activePlaceCardId} points={points} />
+          <MapSm location={location} points={points} />
         </Router>
       </redux.Provider>
   );
