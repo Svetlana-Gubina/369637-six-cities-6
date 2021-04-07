@@ -25,7 +25,6 @@ const WelcomeScreen = (props) => {
 
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (!isDataLoaded) {
       dispatch(getHotelsList());

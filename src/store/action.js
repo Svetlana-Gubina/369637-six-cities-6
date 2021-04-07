@@ -9,7 +9,8 @@ export const ActionType = {
   SET_LOGIN: `signIn/setLogin`,
   SET_FAVORITES: `favorites/setFavorites`,
   UPDATE_REVIEWS: `reviewForm/updateReviews`,
-  SET_SERVER_ERROR: `welcomeScreen/setServerError`
+  SET_SERVER_ERROR: `welcomeScreen/setServerError`,
+  SET_LOGIN_ERROR: `signIn/setLoginError`
 };
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
@@ -61,6 +62,12 @@ export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (review) =>
 });
 
 export const setServerError = createAction(ActionType.SET_SERVER_ERROR, (message) => {
+  return {
+    payload: message
+  };
+});
+
+export const setLoginError = createAction(ActionType.SET_LOGIN_ERROR, (message) => {
   return {
     payload: message
   };

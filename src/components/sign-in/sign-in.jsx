@@ -10,6 +10,14 @@ const SignIn = () => {
   const {authorizationStatus} = useSelector((state) => state.AUTH);
   const [userEmail, setUserEmail] = useState(``);
   const [userPassword, setUserPassword] = useState(``);
+  const {loginErrorMessage} = useSelector((state) => state.LOGIN_ERROR_MESSAGE);
+
+  const badRequest = useRef();
+  useEffect(() => {
+    if (loginErrorMessage) {
+      badRequest.current.style.display = `block`;
+    }
+  }, [loginErrorMessage]);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
@@ -76,6 +84,10 @@ const SignIn = () => {
                 display: `none`,
                 color: `red`
               }} ref={error}>Please enter correct email</div>
+              <div style={{
+                display: `none`,
+                color: `red`
+              }} ref={badRequest}>Somethig went wrong! Please try again</div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input

@@ -9,25 +9,39 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import UserNav from '../user-nav/user-nav';
 import PageNotFound from '../page-not-found/page-not-found';
 import HotelsModel from '../../models/hotels-model';
+import {redirectToRoute} from '../../store/action';
+import {AuthorizationStatus, AppRoute} from '../../constants';
 
 const Favorites = () => {
+  const {authorizationStatus} = useSelector((state) => state.AUTH);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const {hotelsList} = useSelector((state) => state.DATA);
   const {favorites} = useSelector((state) => state.FAVORITES);
 
+  let mount = true;
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      dispatch(redirectToRoute(AppRoute.LOGIN));
+      mount = false;
+    }
+  }, [authorizationStatus]);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    api.get(`/favorite`)
-    .then((res) => {
-      dispatch(setFavorites(res.data));
-      setIsLoading(false);
-    })
-    .catch(() => {
-      setHasError(true);
-      setIsLoading(false);
-    });
+    if (mount) {
+      api.get(`/favorite`)
+      .then((res) => {
+        dispatch(setFavorites(res.data));
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setHasError(true);
+        setIsLoading(false);
+      });
+    }
   }, [hotelsList]);
 
   if (isLoading) {

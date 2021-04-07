@@ -18,9 +18,9 @@ const ReviewsList = (props) => {
       {hasCommentsError ? <div>Error occured fetching data</div> : (<ul className="reviews__list">
         {comments
         .sort((a, b) => {
-          return a.date - b.date;
+          return b.date - a.date;
         })
-        .slice(0, MAX_COMMENTS_TO_RENDER - 1)
+        .slice(0, MAX_COMMENTS_TO_RENDER)
         .map((commentItem) => <ReviewsItem
           key={commentItem.id}
           userAvatar={commentItem.user.avatarUrl}
