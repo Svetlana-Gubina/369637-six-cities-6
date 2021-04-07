@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PlaceCard from '../place-card/place-card';
 import {placesInfoPropType, idPropType, setActiveElementPropType} from '../../prop-types';
 
 
 const NearPlacesList = (props) => {
-  const {placesInfo, setActivePlaceCard} = props;
+  const [activePlaceCardId, setActivePlaceCard] = useState(0);
+  const {placesInfo} = props;
   const className = `near-places`;
   const specialCardClass = className + `__card`;
 
@@ -13,6 +14,9 @@ const NearPlacesList = (props) => {
   };
 
   return <div className={className + `__list places__list`} onClick={() => handleElementClick()}>
+    <div style={{
+      display: `none`,
+    }}>{activePlaceCardId}</div>
     {placesInfo.map((placeInfo) => <PlaceCard
       key={placeInfo.id}
       id={placeInfo.id}

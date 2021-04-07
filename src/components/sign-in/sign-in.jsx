@@ -1,12 +1,21 @@
-import React, {useState} from "react";
-import {useDispatch} from 'react-redux';
+import React, {useState, useRef, useEffect} from "react";
+import {useSelector, useDispatch} from 'react-redux';
 import {Link} from "react-router-dom";
 import {login} from "../../store/api-actions";
+import {redirectToRoute} from '../../store/action';
+import {AuthorizationStatus, AppRoute} from '../../constants';
 
 
 const SignIn = () => {
+  const {authorizationStatus} = useSelector((state) => state.AUTH);
   const [userEmail, setUserEmail] = useState(``);
   const [userPassword, setUserPassword] = useState(``);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      dispatch(redirectToRoute(AppRoute.ROOT));
+    }
+  }, [authorizationStatus]);
 
   const handleEmailChange = (evt) => {
     setUserEmail(evt.target.value);
@@ -17,9 +26,15 @@ const SignIn = () => {
   };
 
   const dispatch = useDispatch();
+  const error = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(userEmail)) {
+      error.current.style.display = `block`;
+      return;
+    }
 
     dispatch(login({
       login: userEmail,
@@ -57,6 +72,10 @@ const SignIn = () => {
           <section className="login">
             <h1 className="login__title">Sign in</h1>
             <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
+              <div style={{
+                display: `none`,
+                color: `red`
+              }} ref={error}>Please enter correct email</div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input

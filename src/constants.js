@@ -4,6 +4,12 @@ export const MAX_RATING = 5;
 
 export const REVIEW_MIN_LENGTH = 50;
 
+export const REVIEW_MAX_LENGTH = 300;
+
+export const MAX_COMMENTS_TO_RENDER = 10;
+
+export const MAX_NEARBY_TO_RENDER = 3;
+
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,

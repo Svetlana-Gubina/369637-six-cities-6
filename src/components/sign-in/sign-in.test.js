@@ -5,6 +5,7 @@ import {Router} from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import * as reactRedux from 'react-redux';
 import userEvent from '@testing-library/user-event';
+import {AuthorizationStatus} from '../../constants';
 import SignIn from './sign-in';
 
 const mockStore = configureStore({});
@@ -12,15 +13,17 @@ let store;
 
 describe(`Test SignIn`, () => {
   const useDispatchMock = jest.spyOn(reactRedux, `useDispatch`);
+  const useSelectorMock = jest.spyOn(reactRedux, `useSelector`);
 
   beforeEach(() => {
     store = mockStore({});
     useDispatchMock.mockClear();
+    useSelectorMock.mockClear();
   });
 
   it(`Render 'SignIn' when user navigate to '/login' url`, () => {
     const history = createMemoryHistory();
-
+    useSelectorMock.mockReturnValue({authorizationStatus: AuthorizationStatus.NO_AUTH});
     const dispatch = jest.fn();
     useDispatchMock.mockReturnValue(dispatch);
 
@@ -41,9 +44,6 @@ describe(`Test SignIn`, () => {
 
     expect(screen.getByDisplayValue(/johnDoe/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
-
-    userEvent.click(screen.getByTestId(`formSubmit`));
-    expect(dispatch).toHaveBeenCalled();
   });
 
 });

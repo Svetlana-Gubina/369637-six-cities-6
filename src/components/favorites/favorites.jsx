@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {Link} from "react-router-dom";
 import {api} from '../../store';
+import {setFavorites} from '../../store/action';
 import FavoritesList from '../favorites-list/favorites-list';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -10,15 +11,17 @@ import PageNotFound from '../page-not-found/page-not-found';
 import HotelsModel from '../../models/hotels-model';
 
 const Favorites = () => {
-  const [favorites, setFavorites] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const {hotelsList} = useSelector((state) => state.DATA);
+  const {favorites} = useSelector((state) => state.FAVORITES);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     api.get(`/favorite`)
     .then((res) => {
-      setFavorites(HotelsModel.parseHotelsData(res.data));
+      dispatch(setFavorites(res.data));
       setIsLoading(false);
     })
     .catch(() => {
@@ -66,7 +69,7 @@ const Favorites = () => {
             {favorites.length === 0 ? <FavoritesEmpty /> :
               <section className="favorites">
                 <h1 className="favorites__title">Saved listing</h1>
-                <FavoritesList placesInfo={favorites} />
+                <FavoritesList placesInfo={HotelsModel.parseHotelsData(favorites)} />
               </section>}
           </div>
         </main>

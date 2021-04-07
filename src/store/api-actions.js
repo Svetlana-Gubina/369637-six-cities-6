@@ -1,4 +1,4 @@
-import {setLogin, loadHotels, requireAuthorization, redirectToRoute} from "./action";
+import {setLogin, setServerError, loadHotels, requireAuthorization, redirectToRoute} from "./action";
 import {AuthorizationStatus, AppRoute} from "../constants";
 
 export const getHotelsList = () => (dispatch, _getState, api) => (
@@ -14,8 +14,12 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     .then((res) => {
       dispatch(setLogin(JSON.stringify(res.data.name)));
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(setServerError(``));
     })
-    .catch(() => {
+    .catch((error) => {
+      if (error.response.status >= 500) {
+        dispatch(setServerError(`${error.message}`));
+      }
       throw new Error(`User is not authorized!`);
     })
 );
@@ -24,6 +28,9 @@ export const login = ({login: email, password: password}) => (dispatch, _getStat
   api.post(`/login`, {email, password})
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
+    .catch(() => {
+      throw new Error(`User is not authorized!`);
+    })
 );
 
 export const logOut = () => (dispatch, _getState, api) => (

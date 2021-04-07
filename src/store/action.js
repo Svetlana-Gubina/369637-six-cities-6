@@ -7,6 +7,9 @@ export const ActionType = {
   LOAD_HOTELS: `store/loadHotels`,
   REDIRECT_TO_ROUTE: `signIn/redirectToRoute`,
   SET_LOGIN: `signIn/setLogin`,
+  SET_FAVORITES: `favorites/setFavorites`,
+  UPDATE_REVIEWS: `reviewForm/updateReviews`,
+  SET_SERVER_ERROR: `welcomeScreen/setServerError`
 };
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
@@ -42,5 +45,23 @@ export const setSortType = createAction(ActionType.SET_SORT_TYPE, (sortType) => 
 export const setLogin = createAction(ActionType.SET_LOGIN, (userData) => {
   return {
     payload: userData
+  };
+});
+
+export const setFavorites = createAction(ActionType.SET_FAVORITES, (favorites) => {
+  return {
+    payload: favorites
+  };
+});
+
+export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (review) => {
+  return {
+    payload: review
+  };
+});
+
+export const setServerError = createAction(ActionType.SET_SERVER_ERROR, (message) => {
+  return {
+    payload: message
   };
 });

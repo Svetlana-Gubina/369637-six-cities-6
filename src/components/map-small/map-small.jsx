@@ -2,13 +2,17 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {placesInfoPropType, idPropType, locationPropType} from '../../prop-types';
+import {MAX_NEARBY_TO_RENDER} from '../../constants';
+import {placesInfoPropType, idPropType, locationPropType, placeInfoPropType} from '../../prop-types';
 
-const getIcon = (pointId, activeId, icon, activeIcon) => {
-  return pointId === activeId ? activeIcon : icon;
+const getIcon = (pointId, currentId, currentIcon, pointsIcon) => {
+  return pointId === currentId ? currentIcon : pointsIcon;
 };
 
-const MapSm = ({location, activePlaceCardId, points}) => {
+const MapSmall = ({points, hotel}) => {
+  const location = hotel.city.location;
+  const nearbyToRender = points.slice(0, MAX_NEARBY_TO_RENDER - 1);
+  const pointsToRender = [...nearbyToRender, hotel];
   const mapRef = useRef();
 
   if (!points) {
@@ -40,16 +44,16 @@ const MapSm = ({location, activePlaceCardId, points}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [points]);
+  }, [hotel]);
 
   useEffect(() => {
-    points.forEach((point) => {
-      const customIcon = leaflet.icon({
+    pointsToRender.forEach((point) => {
+      const pointsIcon = leaflet.icon({
         iconUrl: `img/pin.svg`,
         iconSize: [30, 30]
       });
 
-      const activeIcon = leaflet.icon({
+      const currentIcon = leaflet.icon({
         iconUrl: `img/pin-active.svg`,
         iconSize: [30, 30]
       });
@@ -59,12 +63,12 @@ const MapSm = ({location, activePlaceCardId, points}) => {
         lng: point.location.longitude,
       },
       {
-        icon: getIcon(point.id, activePlaceCardId, customIcon, activeIcon)
+        icon: getIcon(point.id, hotel.id, currentIcon, pointsIcon)
       })
       .addTo(mapRef.current)
       .bindPopup(point.title);
     });
-  }, [activePlaceCardId]);
+  }, [hotel]);
 
 
   return (
@@ -74,10 +78,11 @@ const MapSm = ({location, activePlaceCardId, points}) => {
   );
 };
 
-MapSm.propTypes = {
+MapSmall.propTypes = {
+  hotel: placeInfoPropType,
   points: placesInfoPropType,
   activePlaceCardId: idPropType,
   location: locationPropType
 };
 
-export default MapSm;
+export default MapSmall;
