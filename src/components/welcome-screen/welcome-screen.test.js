@@ -72,6 +72,9 @@ describe(`Test WelcomeScreen`, () => {
     },
     LOGIN: {
       userLogin: ``
+    },
+    SERVER_ERROR_MESSAGE: {
+      serverErrorMessage: ``,
     }
   };
   const mockStore = configureStore();

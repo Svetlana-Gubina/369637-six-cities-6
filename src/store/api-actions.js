@@ -4,8 +4,8 @@ import {AuthorizationStatus, AppRoute} from "../constants";
 export const getHotelsList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
     .then(({data}) => dispatch(loadHotels(data)))
-    .catch((err) => {
-      dispatch(setServerError(err.message));
+    .catch(() => {
+      throw new Error(`No data!`);
     })
 );
 
@@ -14,8 +14,12 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     .then((res) => {
       dispatch(setLogin(JSON.stringify(res.data.name)));
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(setServerError(``));
     })
-    .catch(() => {
+    .catch((error) => {
+      if (error.response.status >= 500) {
+        dispatch(setServerError(`${error.message}`));
+      }
       throw new Error(`User is not authorized!`);
     })
 );

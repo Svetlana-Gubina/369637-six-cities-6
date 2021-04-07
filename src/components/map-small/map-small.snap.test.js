@@ -6,22 +6,21 @@ import configureStore from 'redux-mock-store';
 import {render} from '@testing-library/react';
 import MapSmall from './map-small';
 
-const data = [
-  {
-    id: 1,
-    previewImage: `img/1.png`,
-    price: 120,
-    title: `Beautiful & luxurious studio at great location`,
-    type: `apartment`,
-    city: {
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10
-      }
-    }
+const data = {
+  city: {
+    location: {
+      latitude: 52.370216,
+      longitude: 4.895168,
+      zoom: 10
+    },
+    name: `Paris`
   },
-];
+  location: {
+    latitude: 52.370216,
+    longitude: 4.895168,
+    zoom: 10
+  },
+};
 
 const pointsData = [
   {
