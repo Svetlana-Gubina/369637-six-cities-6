@@ -113,7 +113,7 @@ const ReviewForm = (props) => {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{REVIEW_MIN_LENGTH} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length > REVIEW_MAX_LENGTH || review.comment.length < REVIEW_MIN_LENGTH || review.rating === 0 || isLoading} >{isLoading ? `...` : `Submit`}</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < REVIEW_MIN_LENGTH || review.rating === 0 || isLoading} >{isLoading ? `...` : `Submit`}</button>
       </div>
     </form>
   );
